@@ -1,0 +1,74 @@
+div#header * {
+	display: inline;
+}
+
+div.container {
+	width: auto;
+}
+
+div.row {
+	width: auto;
+}
+
+div.col {
+	float: left;
+}
+
+div.hide {
+	display: none;
+}
+
+div#map {
+}
+
+div#controlPanel {
+}
+
+div#blocklyDiv {
+	margin-left: 5px;
+	width: 550px;
+}
+
+div.clear {
+	clear: both;
+}
+
+div#controlPanel > p {
+	text-align: center;
+}
+
+div#controlPanel button {
+	padding: 6px 10px;
+}
+
+button#runButton {
+	border-radius: 4px;
+}
+
+button#stopButton {
+	border-radius: 4px;
+}
+button.hide, select.hide {
+	visibility: hidden;
+}
+
+div#robotBalloon > p {
+	border: 1px solid #888888;
+	border-radius: 8px;
+	padding: 8px 10px;
+	width: 360px;
+	height: 70px;
+}
+
+div#registers table {
+	border: 1px solid black;
+	border-collapse: collapse;
+}
+div#registers th {
+	border: 1px solid black;
+	padding: 2px 4px;
+}
+div#registers td {
+	border: 1px solid black;
+	padding: 2px 4px;
+}
