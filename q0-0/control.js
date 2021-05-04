@@ -270,6 +270,13 @@ Control.prototype.getTextBox = function(pos) {
 Control.prototype.drawRobot = function() {
 	var cell = Control.prototype.getCell(Robot.prototype.position);
 	cell.getElementsByTagName('img')[0].setAttribute('src', 'img/'+Robot.prototype.getImage());
+	/*
+	var ptr = cell.children[0];
+	ptr.removeChild(ptr.getElementsByTagName('img')[0]);
+	var img = document.createElement('img');
+	img.setAttribute('src', 'img/'+Robot.prototype.getImage());
+	ptr.appendChild(img);
+	*/
 };
 
 /**

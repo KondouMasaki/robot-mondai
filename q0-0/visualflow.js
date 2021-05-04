@@ -32,11 +32,47 @@ workspace.addChangeListener(function(event) {
 	}
 });
 
+createNavigate();
+
 Control.prototype.initGame();
 runButton.addEventListener("click", runCode, false);
 stopButton.addEventListener("click", forceStop, false);
 stopButton.disabled = true;
 stopButton.setAttribute('class', 'hide');
+
+function createNavigate() {
+	var pre = document.getElementById('previousLink');
+	var nex = document.getElementById('nextLink');
+	var linkText;
+	if (Map.prototype.links.previous != "") {
+		pre.setAttribute('href', '../' + Map.prototype.links.previous);
+		linkText = Map.prototype.links.previous;
+	}
+	else {
+		pre.removeAttribute('href');
+		linkText = '前の問題';
+	}
+	for (var i = pre.childNodes.length - 1; i >= 0; i--) {
+		pre.removeChild(pre.childNodes[i]);
+	}
+	pre.appendChild(document.createTextNode(linkText));
+	if (Map.prototype.links.next != "") {
+		nex.setAttribute('href', '../' + Map.prototype.links.next);
+		linkText = Map.prototype.links.next;
+	}
+	else {
+		nex.removeAttribute('href');
+		linkText = '次の問題';
+	}
+	for (var i = nex.childNodes.length - 1; i >= 0; i--) {
+		nex.removeChild(nex.childNodes[i]);
+	}
+	nex.appendChild(document.createTextNode(linkText));
+	
+	if (Map.prototype.links.question != "") {
+		document.getElementById('title').appendChild(document.createTextNode(' (' + Map.prototype.links.question + ')'));
+	}
+}
 
 function initApi(interpreter, globalObject) {
 	// Add an API function for the alert() block, generated for "text_print" blocks.
@@ -93,7 +129,12 @@ function stepOneBlock() {
 	if (myInterpreter instanceof Interpreter) {
 		do {
 			try {
-				hasMoreCode = myInterpreter.step();
+				if ((myInterpreter !== null) && (typeof myInterpreter.step == 'function')) {
+					hasMoreCode = myInterpreter.step();
+				}
+				else {
+					hasMoreCode = false;
+				}
 			}
 			finally {
 				if (!hasMoreCode) {
@@ -161,13 +202,17 @@ function ControlOneTurn(cmd, arg1, arg2, arg3) {
 	
 	if (Control.prototype.goal) {
 		stopStep();
-		alert("やったー！ゴールに着いたよ！");
+		setTimeout(function() {
+			alert("やったー！ゴールに着いたよ！");
+		}, 1000);
 		return ret;
 	}
 	
 	if (Control.prototype.emptyLife) {
 		stopStep();
-		alert("命令が多くて、\nつかれちゃった……");
+		setTimeout(function() {
+			alert("命令が多くて、\nつかれちゃった……");
+		}, 1000);
 		return ret;
 	}
 	

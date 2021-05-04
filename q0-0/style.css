@@ -2,6 +2,10 @@ div#header * {
 	display: inline;
 }
 
+div#links {
+	margin-left: 40px;
+}
+
 div.container {
 	width: auto;
 }
