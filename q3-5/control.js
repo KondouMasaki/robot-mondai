@@ -601,7 +601,35 @@ Control.prototype.nop = function() {
 
 // Standard
 Control.prototype.getFloorColor = function() {
-	return Control.prototype.getRobotFloor();
+	switch(Control.prototype.getRobotFloor()) {
+		case 0:	// whitle
+			return 0;
+			break;
+			
+		case 1:	// black
+			return 5;
+			break;
+		
+		case 2:	// red
+			return 1;
+			break;
+		
+		case 3:	// blue
+			return 2;
+			break;
+		
+		case 4:	// green
+			return 3;
+			break;
+		
+		case 5:	// yellow
+			return 4;
+			break;
+			
+		default:
+			return 0;
+			break;
+	}
 };
 Control.prototype.getDirection = function() {
 	return Robot.prototype.direction;
@@ -659,14 +687,14 @@ Control.prototype.getRegister = function(reg) {
 Control.prototype.addRegister = function(reg, value) {
 	if (reg >= 0 && reg <= 7) {
 		var v = Robot.prototype.registers[Robot.prototype.getRegisterName(reg)];
-		Robot.prototype.registers[Robot.prototype.getRegisterName(reg)] = (v + value) % 65535;
+		Robot.prototype.registers[Robot.prototype.getRegisterName(reg)] = (v + value) % 65536;
 	}
 	return true;
 };
 Control.prototype.subRegister = function(reg, value) {
 	if (reg >= 0 && reg <= 7) {
 		var v = Robot.prototype.registers[Robot.prototype.getRegisterName(reg)];
-		Robot.prototype.registers[Robot.prototype.getRegisterName(reg)] = (v - value + 65535) % 65535;
+		Robot.prototype.registers[Robot.prototype.getRegisterName(reg)] = (v - value + 65535) % 65536;
 	}
 	return true;
 };
