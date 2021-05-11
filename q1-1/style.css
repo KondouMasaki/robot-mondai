@@ -1,3 +1,8 @@
+div#header {
+	border-bottom: #dddddd dashed 5px;
+	margin-bottom: 30px;
+}
+
 div#header * {
 	display: inline;
 }
@@ -75,4 +80,15 @@ div#registers th {
 div#registers td {
 	border: 1px solid black;
 	padding: 2px 4px;
+}
+
+.blocklyTreeRow {
+	height: 44px;
+	line-height: 22px;
+	margin-bottom: 12px;
+}
+
+.blocklyTreeLabel {
+	height: 42px;
+	line-height: 42px;
 }
