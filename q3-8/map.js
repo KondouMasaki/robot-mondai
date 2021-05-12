@@ -24,6 +24,7 @@ Map.prototype = {
 	"hint": "かべがあったら右に進むといいよ!!",
 	"state": 0,
 	"goals": 1,
+	"patterns": 3,
 	"links": {
 		"question": "Q3-8",
 		"previous": "q3-7",
@@ -99,13 +100,39 @@ Map.prototype = {
 /**
  * コード実行前の処理
  */
-Map.prototype.beforeStart = function() {
-	var w1 = parseInt(Math.random() * 9);
+Map.prototype.beforeStart = function(pattern) {
+	var w1;
+	var w2;
+	if (pattern != "") {
+		switch(parseInt(pattern)) {
+			case 0:
+				w1 = 3;
+				w2 = 6;
+				break;
+				
+			case 1:
+				w1 = 4;
+				w2 = 4;
+				break;
+				
+			case 2:
+				do {
+					w1 = parseInt(Math.random() * 9);
+				}while(w1 == Map.prototype.state);
+				w2 = parseInt(Math.random() * 9) + 3;
+				break;
+		}
+	}
+	else {
+		do {
+			w1 = parseInt(Math.random() * 9);
+		}while(w1 == Map.prototype.state);
+		w2 = parseInt(Math.random() * 9) + 3;
+	}
+	Map.prototype.state = w1;
+	
 	Map.prototype.map[w1][1] = 1;
-	
-	var w2 = parseInt(Math.random() * 9) + 3;
 	Map.prototype.map[w1 + 1][w2] = 1;
-	
 	Map.prototype.map[w1 + 2][w2 - 1] = 5;
 };
 /**

@@ -24,6 +24,7 @@ Map.prototype = {
 	"hint": "赤いマスの先のあたりにゴールがあるよ",
 	"state": 0,
 	"goals": 1,
+	"patterns": 3,
 	"links": {
 		"question": "Q3-5",
 		"previous": "q3-4",
@@ -99,8 +100,33 @@ Map.prototype = {
 /**
  * コード実行前の処理
  */
-Map.prototype.beforeStart = function() {
-	var v = parseInt(Math.random() * 8) + 2;
+Map.prototype.beforeStart = function(pattern) {
+	if (pattern != "") {
+		switch(parseInt(pattern)) {
+			case 0:
+				var v = 2;
+				break;
+			case 1:
+				var v = 5;
+				break;
+			case 2:
+				var v;
+				do {
+					v = parseInt(Math.random() * 8);
+				}while(v == Map.prototype.state);
+				break;
+		}
+	}
+	else {
+		var v;
+		do {
+			v = parseInt(Math.random() * 8);
+		}while(v == Map.prototype.state);
+	}
+	Map.prototype.state = v;
+	
+	v = v + 2;
+	
 	for (var i = 10; i >= v; i--) {
 		Map.prototype.map[i][5] = 2;
 	}

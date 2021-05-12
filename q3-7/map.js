@@ -24,6 +24,7 @@ Map.prototype = {
 	"hint": "左に進めるときは、右に進めない。左に進めないときは、右に……？",
 	"state": 0,
 	"goals": 1,
+	"patterns": 3,
 	"links": {
 		"question": "Q3-7",
 		"previous": "q3-6",
@@ -99,8 +100,31 @@ Map.prototype = {
 /**
  * コード実行前の処理
  */
-Map.prototype.beforeStart = function() {
-	var y = parseInt(Math.random() * 8) + 2;
+Map.prototype.beforeStart = function(pattern) {
+	var y;
+	if (pattern != "") {
+		switch(parseInt(pattern)) {
+			case 0:
+				y = 2;
+				break;
+			case 1:
+				y = 4;
+				break;
+			case 2:
+				do {
+					y = parseInt(Math.random() * 8)
+				}while(y == Map.prototype.state);
+				break;
+		}
+	}
+	else {
+		do {
+			y = parseInt(Math.random() * 8)
+		}while(y == Map.prototype.state);
+	}
+	Map.prototype.state = y;
+	
+	y = y + 2;
 	for (var i = 10; i > y; i--) {
 		Map.prototype.map[i][4] = 0;
 	}
