@@ -61,6 +61,11 @@ button.hide, select.hide {
 	visibility: hidden;
 }
 
+option.pass {
+	color: #888888;
+	background-color: #aaffaa;
+}
+
 div#robotBalloon > p {
 	border: 1px solid #888888;
 	border-radius: 8px;

@@ -24,6 +24,7 @@ Map.prototype = {
 	"hint": "マスの色とゴールにかん係はあるのかな？",
 	"state": 0,
 	"goals": 1,
+	"patterns": 4,
 	"links": {
 		"question": "Q2-3",
 		"previous": "q2-2",
@@ -99,7 +100,10 @@ Map.prototype = {
 /**
  * コード実行前の処理
  */
-Map.prototype.beforeStart = function() {
+Map.prototype.beforeStart = function(pattern) {
+	if (pattern != "") {
+		Map.prototype.state = parseInt(pattern);
+	}
 	switch(Map.prototype.state) {
 		case 0:
 			Map.prototype.map[4][5] = 2;
