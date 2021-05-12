@@ -24,6 +24,7 @@ Map.prototype = {
 	"hint": "マスの色の数字でゴールの向きが分かるかも。",
 	"state": 0,
 	"goals": 1,
+	"patterns": 3,
 	"links": {
 		"question": "Q4-1",
 		"previous": "q3-8",
@@ -99,7 +100,10 @@ Map.prototype = {
 /**
  * コード実行前の処理
  */
-Map.prototype.beforeStart = function() {
+Map.prototype.beforeStart = function(pattern) {
+	if (pattern != "") {
+		Map.prototype.state = parseInt(pattern);
+	}
 	switch(Map.prototype.state) {
 		case 0:
 			Map.prototype.map[5][5] = 2;

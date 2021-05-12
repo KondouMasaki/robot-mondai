@@ -24,6 +24,7 @@ Map.prototype = {
 	"hint": "はじめの向きの数字が、ゴールのヒントだよ",
 	"state": 0,
 	"goals": 1,
+	"patterns": 4,
 	"links": {
 		"question": "Q4-2",
 		"previous": "q4-1",
@@ -99,10 +100,16 @@ Map.prototype = {
 /**
  * コード実行前の処理
  */
-Map.prototype.beforeStart = function() {
-	do {
-		var d = parseInt(Math.random() * 4);
-	}while(d == Map.prototype.state);
+Map.prototype.beforeStart = function(pattern) {
+	var d;
+	if (pattern != "") {
+		d = parseInt(pattern);
+	}
+	else {
+		do {
+			d = parseInt(Math.random() * 4);
+		}while(d == Map.prototype.state);
+	}
 	
 	Map.prototype.map[2][5] = 5;
 	Robot.prototype.direction = d;

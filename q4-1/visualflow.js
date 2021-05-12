@@ -48,6 +48,7 @@ runButton.addEventListener("click", runCode, false);
 stopButton.addEventListener("click", forceStop, false);
 stopButton.disabled = true;
 stopButton.setAttribute('class', 'hide');
+Control.prototype.patternSelector.addEventListener("change", Control.prototype.beforeRun);
 
 function createNavigate() {
 	var pre = document.getElementById('previousLink');
@@ -164,7 +165,9 @@ function stopStep() {
 		stopButton.disabled = true;
 		stopButton.setAttribute('class', 'hide');
 		robotSpeed.setAttribute('class', '');
+		
 		Control.prototype.balloon.setAttribute('class', '');
+		Control.prototype.showPatternSelector();
 	}, 1000);
 }
 
@@ -182,6 +185,8 @@ function runCode() {
 		robotSpeed.setAttribute('class', 'hide');
 
 		Control.prototype.balloon.setAttribute('class', 'hide');
+		
+		Control.prototype.patternSelector.setAttribute('class', 'hide');
 		
 		resetStepUi(true);
 		myInterpreter = new Interpreter(latestCode, initApi);
@@ -211,6 +216,7 @@ function ControlOneTurn(cmd, arg1, arg2, arg3) {
 	
 	if (Control.prototype.goal) {
 		stopStep();
+		Control.prototype.patternSelector.children[Control.prototype.patternSelector.selectedIndex].setAttribute('class', 'pass');
 		setTimeout(function() {
 			alert("やったー！ゴールに着いたよ！");
 		}, 1000);

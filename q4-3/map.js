@@ -24,6 +24,7 @@ Map.prototype = {
 	"hint": "はじめのマスの色がゴールのヒントだよ",
 	"state": 0,
 	"goals": 1,
+	"patterns": 3,
 	"links": {
 		"question": "Q4-3",
 		"previous": "q4-2",
@@ -99,10 +100,16 @@ Map.prototype = {
 /**
  * コード実行前の処理
  */
-Map.prototype.beforeStart = function() {
-	do {
-		var x = parseInt(Math.random() * 3);
-	} while(Map.prototype.state == x);
+Map.prototype.beforeStart = function(pattern) {
+	var x;
+	if (pattern != "") {
+		x = parseInt(pattern);
+	}
+	else {
+		do {
+			x = parseInt(Math.random() * 3);
+		} while(Map.prototype.state == x);
+	}
 	
 	switch(x) {
 		case 0:
