@@ -6,7 +6,8 @@ Control.prototype = {
 	"goalNum": 1,
 	"time": 0,
 	"balloon": null,
-	"registers": null
+	"registers": null,
+	"patternSelector": null
 };
 
 /**
@@ -181,6 +182,21 @@ Control.prototype.initGame = function() {
 	Control.prototype.balloon.children[0].appendChild(document.createTextNode(Map.prototype.hint));
 	
 	Control.prototype.registers = document.getElementById('registers');
+	
+	Control.prototype.patternSelector = document.getElementById('patternSelector');
+	if ((Map.prototype.patterns > 1) && (Map.prototype.patterns <= 16)) {
+		var frg = document.createDocumentFragment();
+		for (var i = 0; i < Map.prototype.patterns; i++) {
+			var op = document.createElement('option');
+			op.appendChild(document.createTextNode('パターン '+(i+1)));
+			op.setAttribute('value', i);
+			frg.appendChild(op);
+		}
+		Control.prototype.patternSelector.appendChild(frg);
+	}
+	else {
+		Control.prototype.patternSelector.setAttribute('class', 'hide');
+	}
 
 	Control.prototype.beforeRun();
 };
@@ -192,9 +208,7 @@ Control.prototype.beforeRun = function() {
 	
 	Map.prototype.restoreMap();
 	Map.prototype.restoreChars();
-	Map.prototype.beforeStart();
-	
-	//console.log(JSON.stringify(Map.prototype.chars2));
+	Map.prototype.beforeStart(Control.prototype.patternSelector.value);
 	
 	Control.prototype.drawMap();
 	Control.prototype.drawRobot();
@@ -215,6 +229,15 @@ Control.prototype.initRobot = function() {
 	Robot.prototype.direction = start.direction;
 	Robot.prototype.life = start.life;
 	Robot.prototype.initRegisters();
+};
+
+/**
+ * マップパターン選択を開く
+ */
+Control.prototype.showPatternSelector = function() {
+	if ((Map.prototype.patterns > 1) && (Map.prototype.patterns <= 16)) {
+		Control.prototype.patternSelector.setAttribute('class', '');
+	}
 };
 
 /**
@@ -270,13 +293,6 @@ Control.prototype.getTextBox = function(pos) {
 Control.prototype.drawRobot = function() {
 	var cell = Control.prototype.getCell(Robot.prototype.position);
 	cell.getElementsByTagName('img')[0].setAttribute('src', 'img/'+Robot.prototype.getImage());
-	/*
-	var ptr = cell.children[0];
-	ptr.removeChild(ptr.getElementsByTagName('img')[0]);
-	var img = document.createElement('img');
-	img.setAttribute('src', 'img/'+Robot.prototype.getImage());
-	ptr.appendChild(img);
-	*/
 };
 
 /**
@@ -601,7 +617,35 @@ Control.prototype.nop = function() {
 
 // Standard
 Control.prototype.getFloorColor = function() {
-	return Control.prototype.getRobotFloor();
+	switch(Control.prototype.getRobotFloor()) {
+		case 0:	// whitle
+			return 0;
+			break;
+			
+		case 1:	// black
+			return 5;
+			break;
+		
+		case 2:	// red
+			return 1;
+			break;
+		
+		case 3:	// blue
+			return 2;
+			break;
+		
+		case 4:	// green
+			return 3;
+			break;
+		
+		case 5:	// yellow
+			return 4;
+			break;
+			
+		default:
+			return 0;
+			break;
+	}
 };
 Control.prototype.getDirection = function() {
 	return Robot.prototype.direction;
@@ -659,14 +703,14 @@ Control.prototype.getRegister = function(reg) {
 Control.prototype.addRegister = function(reg, value) {
 	if (reg >= 0 && reg <= 7) {
 		var v = Robot.prototype.registers[Robot.prototype.getRegisterName(reg)];
-		Robot.prototype.registers[Robot.prototype.getRegisterName(reg)] = (v + value) % 65535;
+		Robot.prototype.registers[Robot.prototype.getRegisterName(reg)] = (v + value) % 65536;
 	}
 	return true;
 };
 Control.prototype.subRegister = function(reg, value) {
 	if (reg >= 0 && reg <= 7) {
 		var v = Robot.prototype.registers[Robot.prototype.getRegisterName(reg)];
-		Robot.prototype.registers[Robot.prototype.getRegisterName(reg)] = (v - value + 65535) % 65535;
+		Robot.prototype.registers[Robot.prototype.getRegisterName(reg)] = (v - value + 65535) % 65536;
 	}
 	return true;
 };

@@ -24,6 +24,7 @@ Map.prototype = {
 	"hint": "進めるか調べてみよう",
 	"state": 0,
 	"goals": 1,
+	"patterns": 4,
 	"links": {
 		"question": "Q2-9",
 		"previous": "q2-8",
@@ -99,7 +100,10 @@ Map.prototype = {
 /**
  * コード実行前の処理
  */
-Map.prototype.beforeStart = function() {
+Map.prototype.beforeStart = function(pattern) {
+	if (pattern != "") {
+		Map.prototype.statte = parseInt(pattern);
+	}
 	switch(Map.prototype.state) {
 		case 0:
 			Map.prototype.map[5][4] = 1;
