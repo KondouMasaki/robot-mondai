@@ -24,6 +24,7 @@ Map.prototype = {
 	"hint": "今どこを向いているか調べてみよう",
 	"state": 0,
 	"goals": 1,
+	"patterns": 2,
 	"links": {
 		"question": "Q2-6",
 		"previous": "q2-5",
@@ -99,7 +100,10 @@ Map.prototype = {
 /**
  * コード実行前の処理
  */
-Map.prototype.beforeStart = function() {
+Map.prototype.beforeStart = function(pattern) {
+	if (pattern != "") {
+		Map.prototype.state = parseInt(pattern);
+	}
 	if (Map.prototype.state == 0) {
 		Robot.prototype.direction = 1;
 	}
