@@ -3,34 +3,36 @@ var Map = function() {
 Map.prototype = {
 	"map": [
 		[1,1,1,1,1,1,1,1,1,1,1,1],
-		[1,0,0,0,0,0,0,0,0,0,0,1],
-		[1,0,0,0,0,0,0,0,0,0,0,1],
-		[1,0,0,0,0,0,0,0,0,0,0,1],
-		[1,0,0,0,0,0,0,0,0,0,0,1],
-		[1,0,0,0,0,0,0,0,0,0,0,1],
-		[1,0,0,0,0,0,0,0,0,0,0,1],
-		[1,0,0,0,0,0,0,0,0,0,0,1],
-		[1,0,0,0,0,0,0,0,0,0,0,1],
-		[1,0,0,0,0,0,0,0,0,0,0,1],
-		[1,0,0,0,0,0,0,0,0,0,0,1],
+		[1,1,1,1,1,0,0,1,1,1,1,1],
+		[1,1,1,1,1,0,0,1,1,1,1,1],
+		[1,1,1,1,1,0,0,1,1,1,1,1],
+		[1,1,1,1,1,0,0,1,1,1,1,1],
+		[1,1,1,1,1,0,0,1,1,1,1,1],
+		[1,1,1,1,1,0,0,1,1,1,1,1],
+		[1,1,1,1,1,0,0,1,1,1,1,1],
+		[1,1,1,1,1,0,0,1,1,1,1,1],
+		[1,1,1,1,1,0,0,1,1,1,1,1],
+		[1,1,1,1,1,0,0,1,1,1,1,1],
 		[1,1,1,1,1,1,1,1,1,1,1,1]
 	],
 	"start": {
-		"x": 1,
+		"x": 5,
 		"y": 10,
 		"direction": 0,
-		"life": 65534,
+		"life": 65535,
 	},
-	"hint": "色のついたマスから、右、左のじゅんで曲がるといいらしいよ。何マス進むかは考えてみよう。",
+	"hint": "はじめのマスと違う色のマスのそばにゴールがあるよ",
 	"state": 0,
 	"goals": 1,
+	"patterns": 3,
+	"blocksLimit": 0,
 	"links": {
-		"question": "Q4-4",
-		"previous": "q4-3",
-		"next": "q5-1"
+		"question": "Q5-1",
+		"previous": "q4-4",
+		"next": "q5-2"
 	},
 	"robot": {
-		"type": 3,
+		"type": 4,
 		"Basic": {
 			"forward": true,
 			"turn_right": true,
@@ -40,12 +42,12 @@ Map.prototype = {
 		"Standard": {
 			"floor_color_is": true,
 			"robot_direction_is": true,
-			"movable_is": true
+			"movable_is": false
 		},
 		"Advanced": {
 			"times_loop": true,
 			"floor_color_loop": true,
-			"movable_loop": true
+			"movable_loop": false
 		},
 		"Expert": {
 			"write_register": true,
@@ -54,10 +56,10 @@ Map.prototype = {
 			"get_direction": true
 		},
 		"Enhanced": {
-			"values_equal_is": true,
+			"values_equal_is": false,
 			"values_equal_loop": true,
-			"infinity_loop": true,
-			"is_movable_to": true
+			"infinity_loop": false,
+			"is_movable_to": false
 		},
 		"Superior": {
 			"add_register": true,
@@ -99,59 +101,60 @@ Map.prototype = {
 /**
  * コード実行前の処理
  */
-Map.prototype.beforeStart = function() {
-	var f = parseInt(Math.random() * 3) + 1;
-	switch(f) {
-		case 1:
-			Map.prototype.map[10][1] = Map.prototype.colorValue.red;
-			break;
-			
-		case 2:
-			Map.prototype.map[10][1] = Map.prototype.colorValue.blue;
-			break;
-			
-		case 3:
-			Map.prototype.map[10][1] = Map.prototype.colorValue.green;
-			break;
+Map.prototype.beforeStart = function(pattern) {
+	// if pettern is <empty string> selected "どれか"
+	var y, c;
+	if (pattern != "") {
+		switch(parseInt(pattern)) {
+			case 0:
+				y = 5;
+				c = 0;
+				break;
+			case 1:
+				y = 6;
+				c = 2;
+				break;
+			case 2:
+				do {
+					y = parseInt(Math.random() * 9);
+				} while(Map.prototype.state == y);
+				c = parseInt(Math.random() * 3);
+				break;
+		}
 	}
-	var y = 10 - f;
-	
-	f = parseInt(Math.random() * 3) + 1;
-	switch(f) {
-		case 1:
-			Map.prototype.map[y][1] = Map.prototype.colorValue.red;
-			break;
-			
-		case 2:
-			Map.prototype.map[y][1] = Map.prototype.colorValue.blue;
-			break;
-			
-		case 3:
-			Map.prototype.map[y][1] = Map.prototype.colorValue.green;
-			break;
+	else {
+		do {
+			y = parseInt(Math.random() * 9);
+		} while(Map.prototype.state == y);
+		c = parseInt(Math.random() * 3);
 	}
 	
-	var x = 1 + f;
+	Map.prototype.state = y;
+	y++;
 	
-	f = parseInt(Math.random() * 3) + 1;
-	switch(f) {
+	Map.prototype.map[y][6] = 5;
+	Map.prototype.map[y - 1][6] = 1;
+	Map.prototype.map[y + 1][6] = 1;
+	
+	var t;
+	switch(c) {
+		case 0:
+			t = 2;
+			break;
 		case 1:
-			Map.prototype.map[y][x] = Map.prototype.colorValue.red;
+			t = 3;
 			break;
-			
 		case 2:
-			Map.prototype.map[y][x] = Map.prototype.colorValue.blue;
-			break;
-			
-		case 3:
-			Map.prototype.map[y][x] = Map.prototype.colorValue.green;
+			t = 4;
 			break;
 	}
-	
-	Map.prototype.map[y - f][x] = Map.prototype.colorValue.yellow;
+	for (var i = y + 1; i <= 10; i++) {
+		Map.prototype.map[i][5] = t;
+	}
 };
 /**
  * ターンごとに発生する処理
  */
 Map.prototype.afterMoved = function(t, pos) {
+	// t is turns value, pos is robot info { "x": num, "y": num, "direction": num }
 };

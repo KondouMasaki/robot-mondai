@@ -3,34 +3,36 @@ var Map = function() {
 Map.prototype = {
 	"map": [
 		[1,1,1,1,1,1,1,1,1,1,1,1],
-		[1,0,0,0,0,0,0,0,0,0,0,1],
-		[1,0,0,0,0,0,0,0,0,0,0,1],
-		[1,0,0,0,0,0,0,0,0,0,0,1],
-		[1,0,0,0,0,0,0,0,0,0,0,1],
-		[1,0,0,0,0,0,0,0,0,0,0,1],
-		[1,0,0,0,0,0,0,0,0,0,0,1],
-		[1,0,0,0,0,0,0,0,0,0,0,1],
-		[1,0,0,0,0,0,0,0,0,0,0,1],
-		[1,0,0,0,0,0,0,0,0,0,0,1],
-		[1,0,0,0,0,0,0,0,0,0,0,1],
+		[1,1,1,1,1,1,1,1,1,1,1,1],
+		[1,1,1,1,1,1,1,1,1,1,1,1],
+		[1,1,1,1,1,1,1,1,1,1,1,1],
+		[1,1,1,1,0,0,0,1,1,1,1,1],
+		[1,1,1,1,1,0,1,1,1,1,1,1],
+		[1,1,1,1,1,0,1,1,1,1,1,1],
+		[1,1,1,1,1,1,1,1,1,1,1,1],
+		[1,1,1,1,1,1,1,1,1,1,1,1],
+		[1,1,1,1,1,1,1,1,1,1,1,1],
+		[1,1,1,1,1,1,1,1,1,1,1,1],
 		[1,1,1,1,1,1,1,1,1,1,1,1]
 	],
 	"start": {
-		"x": 1,
-		"y": 10,
+		"x": 5,
+		"y": 6,
 		"direction": 0,
-		"life": 65534,
+		"life": 10,
 	},
-	"hint": "色のついたマスから、右、左のじゅんで曲がるといいらしいよ。何マス進むかは考えてみよう。",
+	"hint": "Enhanced ロボットが使える命令をためしてみよう",
 	"state": 0,
 	"goals": 1,
+	"patterns": 2,
+	"blocksLimit": 0,
 	"links": {
-		"question": "Q4-4",
-		"previous": "q4-3",
-		"next": "q5-1"
+		"question": "Q5-3",
+		"previous": "q5-2",
+		"next": "q5-4"
 	},
 	"robot": {
-		"type": 3,
+		"type": 4,
 		"Basic": {
 			"forward": true,
 			"turn_right": true,
@@ -38,13 +40,13 @@ Map.prototype = {
 			"nop": true
 		},
 		"Standard": {
-			"floor_color_is": true,
+			"floor_color_is": false,
 			"robot_direction_is": true,
 			"movable_is": true
 		},
 		"Advanced": {
 			"times_loop": true,
-			"floor_color_loop": true,
+			"floor_color_loop": false,
 			"movable_loop": true
 		},
 		"Expert": {
@@ -99,59 +101,29 @@ Map.prototype = {
 /**
  * コード実行前の処理
  */
-Map.prototype.beforeStart = function() {
-	var f = parseInt(Math.random() * 3) + 1;
-	switch(f) {
-		case 1:
-			Map.prototype.map[10][1] = Map.prototype.colorValue.red;
-			break;
-			
-		case 2:
-			Map.prototype.map[10][1] = Map.prototype.colorValue.blue;
-			break;
-			
-		case 3:
-			Map.prototype.map[10][1] = Map.prototype.colorValue.green;
-			break;
+Map.prototype.beforeStart = function(pattern) {
+	// if pettern is <empty string> selected "どれか"
+	if (pattern != "") {
+		Map.prototype.state = parseInt(pattern);
 	}
-	var y = 10 - f;
 	
-	f = parseInt(Math.random() * 3) + 1;
-	switch(f) {
+	switch(Map.prototype.state) {
+		case 0:
+			Map.prototype.map[6][5] = Map.prototype.colorValue.red;
+			Map.prototype.map[4][7] = Map.prototype.colorValue.yellow;
+			break;
+			
 		case 1:
-			Map.prototype.map[y][1] = Map.prototype.colorValue.red;
-			break;
-			
-		case 2:
-			Map.prototype.map[y][1] = Map.prototype.colorValue.blue;
-			break;
-			
-		case 3:
-			Map.prototype.map[y][1] = Map.prototype.colorValue.green;
+			Map.prototype.map[6][5] = Map.prototype.colorValue.blue;
+			Map.prototype.map[4][3] = Map.prototype.colorValue.yellow;
 			break;
 	}
 	
-	var x = 1 + f;
-	
-	f = parseInt(Math.random() * 3) + 1;
-	switch(f) {
-		case 1:
-			Map.prototype.map[y][x] = Map.prototype.colorValue.red;
-			break;
-			
-		case 2:
-			Map.prototype.map[y][x] = Map.prototype.colorValue.blue;
-			break;
-			
-		case 3:
-			Map.prototype.map[y][x] = Map.prototype.colorValue.green;
-			break;
-	}
-	
-	Map.prototype.map[y - f][x] = Map.prototype.colorValue.yellow;
+	Map.prototype.state = (Map.prototype.state + 1) % 2;
 };
 /**
  * ターンごとに発生する処理
  */
 Map.prototype.afterMoved = function(t, pos) {
+	// t is turns value, pos is robot info { "x": num, "y": num, "direction": num }
 };
