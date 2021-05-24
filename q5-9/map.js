@@ -45,9 +45,9 @@ Map.prototype = {
 			"movable_is": true
 		},
 		"Advanced": {
-			"times_loop": true,
+			"times_loop": false,
 			"floor_color_loop": true,
-			"movable_loop": true
+			"movable_loop": false
 		},
 		"Expert": {
 			"write_register": true,
@@ -57,7 +57,7 @@ Map.prototype = {
 		},
 		"Enhanced": {
 			"values_equal_is": true,
-			"values_equal_loop": true,
+			"values_equal_loop": false,
 			"infinity_loop": true,
 			"is_movable_to": true
 		},
