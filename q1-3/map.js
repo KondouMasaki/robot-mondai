@@ -30,7 +30,7 @@ Map.prototype = {
 		"next": "q1-4"
 	},
 	"robot": {
-		"type": 6,
+		"type": 0,
 		"Basic": {
 			"forward": true,
 			"turn_right": true,
