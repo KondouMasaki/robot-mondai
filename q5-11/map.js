@@ -3,33 +3,33 @@ var Map = function() {
 Map.prototype = {
 	"map": [
 		[1,1,1,1,1,1,1,1,1,1,1,1],
-		[1,0,0,0,0,0,0,0,0,0,0,1],
-		[1,0,1,1,1,1,1,1,1,1,0,1],
-		[1,0,1,0,0,0,0,0,0,1,0,1],
-		[1,0,1,0,1,1,1,1,0,1,0,1],
-		[1,0,1,0,1,5,0,0,0,1,0,1],
-		[1,0,1,0,1,0,0,1,0,1,0,1],
-		[1,0,1,0,1,1,1,1,0,1,0,1],
-		[1,0,0,0,0,0,0,0,0,1,0,1],
-		[1,0,1,0,1,1,1,1,1,1,0,1],
-		[1,0,0,0,0,0,0,0,0,0,0,1],
+		[1,1,1,1,1,1,1,1,1,1,1,1],
+		[1,1,1,1,1,1,1,1,1,1,1,1],
+		[1,1,1,1,1,0,1,1,1,1,1,1],
+		[1,1,1,1,1,0,1,1,1,1,1,1],
+		[1,1,1,0,0,0,0,0,1,1,1,1],
+		[1,1,1,1,1,1,1,1,1,1,1,1],
+		[1,1,1,1,1,1,1,1,1,1,1,1],
+		[1,1,1,1,1,1,1,1,1,1,1,1],
+		[1,1,1,1,1,1,1,1,1,1,1,1],
+		[1,1,1,1,1,1,1,1,1,1,1,1],
 		[1,1,1,1,1,1,1,1,1,1,1,1]
 	],
 	"start": {
-		"x": 2,
-		"y": 1,
-		"direction": 1,
+		"x": 5,
+		"y": 5,
+		"direction": 0,
 		"life": 65534,
 	},
-	"hint": "右に進めるときは、右に進むといいよ。ただし、左右に進めるときは、まっすぐ進もう。",
+	"hint": "Enjoy BlocklyRbt Visal Flow !! ブロックリーロボット問題 ビジュアルフローを楽しんでね!!",
 	"state": 0,
 	"goals": 1,
-	"patterns": 1,
-	"blocksLimit": 16,
+	"patterns": 3,
+	"blocksLimit": 0,
 	"links": {
-		"question": "Q5-9",
-		"previous": "q5-8",
-		"next": "q5-10"
+		"question": "Q5-11",
+		"previous": "q5-10",
+		"next": ""
 	},
 	"robot": {
 		"type": 4,
@@ -42,10 +42,10 @@ Map.prototype = {
 		"Standard": {
 			"floor_color_is": true,
 			"robot_direction_is": true,
-			"movable_is": true
+			"movable_is": false
 		},
 		"Advanced": {
-			"times_loop": false,
+			"times_loop": true,
 			"floor_color_loop": true,
 			"movable_loop": false
 		},
@@ -102,7 +102,23 @@ Map.prototype = {
  * コード実行前の処理
  */
 Map.prototype.beforeStart = function(pattern) {
-	// if pettern is <empty string> selected "どれか"
+	if (pattern != "") {
+		Map.prototype.state = parseInt(pattern);
+	}
+	switch(Map.prototype.state) {
+		case 0:
+			Map.prototype.map[5][4] = Map.prototype.colorValue.black;
+			Map.prototype.map[5][7] = Map.prototype.colorValue.yellow;
+			break;
+		case 1:
+			Map.prototype.map[5][6] = Map.prototype.colorValue.black;
+			Map.prototype.map[5][3] = Map.prototype.colorValue.yellow;
+			break;
+		case 2:
+			Map.prototype.map[3][5] = Map.prototype.colorValue.yellow;
+			break;
+	}
+	Map.prototype.state = (Map.prototype.state + 1) % 3;
 };
 /**
  * ターンごとに発生する処理
