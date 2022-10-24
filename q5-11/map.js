@@ -21,7 +21,7 @@ Map.prototype = {
 		"direction": 0,
 		"life": 65534,
 	},
-	"hint": "Enjoy BlocklyRbt Visal Flow !! ブロックリーロボット問題 ビジュアルフローを楽しんでね!!",
+	"hint": "はじめに右や左に進めるしらべよう,
 	"state": 0,
 	"goals": 1,
 	"patterns": 3,
