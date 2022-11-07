@@ -24,6 +24,8 @@ Map.prototype = {
 	"hint": "どこかのゴールへ行ってみよう",
 	"state": 0,
 	"goals": 1,
+	"patterns": 1,
+	"blocksLimit": 0,
 	"links": {
 		"question": "Q1-4",
 		"previous": "q1-3",
@@ -92,8 +94,11 @@ Map.prototype = {
 		[ -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1 ],
 		[ -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1 ]
 	],
+	"hintBlocks": '',
 	"map2": [],
-	"chars2": []
+	"chars2": [],
+	
+	"image_file_dir": '../img/'
 };
 
 /**

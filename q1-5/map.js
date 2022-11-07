@@ -24,10 +24,12 @@ Map.prototype = {
 	"hint": "まずは赤いマスへ行ってみよう",
 	"state": 0,
 	"goals": 1,
+	"patterns": 1,
+	"blocksLimit": 0,
 	"links": {
 		"question": "Q1-5",
 		"previous": "q1-4",
-		"next": "q1-6"
+		"next": "q2-1"
 	},
 	"robot": {
 		"type": 0,
@@ -92,8 +94,11 @@ Map.prototype = {
 		[ -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1 ],
 		[ -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1 ]
 	],
+	"hintBlocks": '',
 	"map2": [],
-	"chars2": []
+	"chars2": [],
+	
+	"image_file_dir": '../img/'
 };
 
 /**
