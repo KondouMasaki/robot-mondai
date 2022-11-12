@@ -24,6 +24,8 @@ Map.prototype = {
 	"hint": "1だんずつ下へ行く命令をくり返してみよう",
 	"state": 0,
 	"goals": 1,
+	"patterns": 1,
+	"blocksLimit": 0,
 	"links": {
 		"question": "Q3-4",
 		"previous": "q3-3",
@@ -92,8 +94,11 @@ Map.prototype = {
 		[ -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1 ],
 		[ -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1 ]
 	],
+	"hintBlocks": '<xml xmlns="https://developers.google.com/blockly/xml"><block type="forward" x="10" y="10"><next><block type="turn_right"><next><block type="forward"><next><block type="turn_left"></block></next></block></next></block></next></block></xml>',
 	"map2": [],
-	"chars2": []
+	"chars2": [],
+	
+	"image_file_dir": '../img/'
 };
 
 /**

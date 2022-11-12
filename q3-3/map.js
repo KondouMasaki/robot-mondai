@@ -24,6 +24,8 @@ Map.prototype = {
 	"hint": "くり返しを使うと命令を短くできるよ",
 	"state": 0,
 	"goals": 1,
+	"patterns": 1,
+	"blocksLimit": 0,
 	"links": {
 		"question": "Q3-3",
 		"previous": "q3-2",
@@ -92,8 +94,11 @@ Map.prototype = {
 		[ -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1 ],
 		[ -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1 ]
 	],
+	"hintBlocks": '<xml xmlns="https://developers.google.com/blockly/xml"><block type="times_loop" x="10" y="10"></block><block type="times_loop" x="30" y="130"></block><block type="times_loop" x="30" y="230"></block></xml>',
 	"map2": [],
-	"chars2": []
+	"chars2": [],
+	
+	"image_file_dir": '../img/'
 };
 
 /**

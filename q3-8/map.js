@@ -25,10 +25,11 @@ Map.prototype = {
 	"state": 0,
 	"goals": 1,
 	"patterns": 3,
+	"blocksLimit": 0,
 	"links": {
 		"question": "Q3-8",
 		"previous": "q3-7",
-		"next": "q3-9"
+		"next": "q4-1"
 	},
 	"robot": {
 		"type": 2,
@@ -93,8 +94,11 @@ Map.prototype = {
 		[ -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1 ],
 		[ -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1 ]
 	],
+	"hintBlocks": '<xml xmlns="https://developers.google.com/blockly/xml"><block type="movable_loop" x="10" y="10"><value name="direction"><block type="math_number"><field name="NUM">0</field></block></value><next><block type="turn_right"></block></next></block></xml>',
 	"map2": [],
-	"chars2": []
+	"chars2": [],
+	
+	"image_file_dir": '../img/'
 };
 
 /**
