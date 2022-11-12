@@ -25,6 +25,7 @@ Map.prototype = {
 	"state": 0,
 	"goals": 1,
 	"patterns": 4,
+	"blocksLimit": 0,
 	"links": {
 		"question": "Q4-2",
 		"previous": "q4-1",
@@ -93,8 +94,11 @@ Map.prototype = {
 		[ -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1 ],
 		[ -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1 ]
 	],
+	"hintBlocks": '<xml xmlns="https://developers.google.com/blockly/xml"><block type="forward" x="10" y="10"><next><block type="turn_right"><next><block type="nop"><next><block type="turn_left"></block></next></block></next></block></next></block></xml>',
 	"map2": [],
-	"chars2": []
+	"chars2": [],
+	
+	"image_file_dir": '../img/'
 };
 
 /**

@@ -94,8 +94,11 @@ Map.prototype = {
 		[ -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1 ],
 		[ -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1 ]
 	],
+	"hintBlocks": '<xml xmlns="https://developers.google.com/blockly/xml"><block type="floor_color_loop" x="10" y="10"><statement name="equals"><block type="forward"></block></statement><next><block type="movable_is"><value name="direction"><block type="math_number"><field name="NUM">1</field></block></value></block></next></block></xml>',
 	"map2": [],
-	"chars2": []
+	"chars2": [],
+	
+	"image_file_dir": '../img/'
 };
 
 /**
