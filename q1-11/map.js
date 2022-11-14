@@ -5,34 +5,34 @@ Map.prototype = {
 		[1,1,1,1,1,1,1,1,1,1,1,1],
 		[1,1,1,1,1,1,1,1,1,1,1,1],
 		[1,1,1,1,1,1,1,1,1,1,1,1],
-		[1,1,1,1,1,1,1,1,1,1,1,1],
-		[1,1,1,1,1,1,1,1,1,1,1,1],
-		[1,1,1,0,0,0,0,0,1,1,1,1],
-		[1,1,1,1,1,1,1,1,1,1,1,1],
-		[1,1,1,1,1,1,1,1,1,1,1,1],
-		[1,1,1,1,1,1,1,1,1,1,1,1],
+		[1,1,1,1,1,0,1,1,1,1,1,1],
+		[1,1,1,1,1,0,1,1,1,1,1,1],
+		[1,1,1,1,1,0,1,1,1,1,1,1],
+		[1,1,1,1,1,0,1,1,1,1,1,1],
+		[1,1,1,1,1,0,1,1,1,1,1,1],
+		[1,1,1,1,1,0,1,1,1,1,1,1],
 		[1,1,1,1,1,1,1,1,1,1,1,1],
 		[1,1,1,1,1,1,1,1,1,1,1,1],
 		[1,1,1,1,1,1,1,1,1,1,1,1]
 	],
 	"start": {
 		"x": 5,
-		"y": 5,
+		"y": 7,
 		"direction": 0,
-		"life": 6,
+		"life": 65534,
 	},
-	"hint": "マスの色とゴールにかん係はあるのかな？",
+	"hint": "1 つのプログラムで、どのパターンでもゴールできるようにしてみよう",
 	"state": 0,
 	"goals": 1,
 	"patterns": 2,
 	"blocksLimit": 0,
 	"links": {
-		"question": "Q2-1",
-		"previous": "q1-15",
-		"next": "q2-2"
+		"question": "Q1-11",
+		"previous": "q1-10",
+		"next": "q1-11"
 	},
 	"robot": {
-		"type": 1,
+		"type": 0,
 		"Basic": {
 			"forward": true,
 			"turn_right": true,
@@ -41,8 +41,8 @@ Map.prototype = {
 		},
 		"Standard": {
 			"floor_color_is": true,
-			"robot_direction_is": false,
-			"movable_is": false
+			"robot_direction_is": true,
+			"movable_is": true
 		},
 		"Advanced": {
 			"times_loop": true,
@@ -94,7 +94,7 @@ Map.prototype = {
 		[ -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1 ],
 		[ -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1 ]
 	],
-	"hintBlocks": '<xml xmlns="https://developers.google.com/blockly/xml"><block type="floor_color_is" x="10" y="10"><statement name="equals"><block type="turn_right"></block></statement><statement name="not_equals"><block type="turn_left"></block></statement></block></xml>',
+	"hintBlocks": '',
 	"map2": [],
 	"chars2": [],
 	
@@ -109,12 +109,10 @@ Map.prototype.beforeStart = function(pattern) {
 		Map.prototype.state = parseInt(pattern);
 	}
 	if (Map.prototype.state == 0) {
-		Map.prototype.map[5][5] = 2;
-		Map.prototype.map[5][3] = 5;
+		Map.prototype.map[3][5] = 5;
 	}
 	else {
-		Map.prototype.map[5][5] = 3;
-		Map.prototype.map[5][7] = 5;
+		Map.prototype.map[6][5] = 5;
 	}
 	Map.prototype.state = (Map.prototype.state + 1) % 2;
 };
@@ -122,4 +120,5 @@ Map.prototype.beforeStart = function(pattern) {
  * ターンごとに発生する処理
  */
 Map.prototype.afterMoved = function(t, pos) {
+	// t is turns value, pos is robot info { "x": num, "y": num, "direction": num }
 };

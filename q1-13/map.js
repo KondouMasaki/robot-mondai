@@ -19,20 +19,20 @@ Map.prototype = {
 		"x": 5,
 		"y": 5,
 		"direction": 0,
-		"life": 6,
+		"life": 65534,
 	},
-	"hint": "マスの色とゴールにかん係はあるのかな？",
+	"hint": "1 つのプログラムで、どのパターンでもゴールできるようにしてみよう",
 	"state": 0,
 	"goals": 1,
 	"patterns": 2,
 	"blocksLimit": 0,
 	"links": {
-		"question": "Q2-1",
-		"previous": "q1-15",
-		"next": "q2-2"
+		"question": "Q1-13",
+		"previous": "q1-12",
+		"next": "q1-14"
 	},
 	"robot": {
-		"type": 1,
+		"type": 0,
 		"Basic": {
 			"forward": true,
 			"turn_right": true,
@@ -94,7 +94,7 @@ Map.prototype = {
 		[ -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1 ],
 		[ -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1 ]
 	],
-	"hintBlocks": '<xml xmlns="https://developers.google.com/blockly/xml"><block type="floor_color_is" x="10" y="10"><statement name="equals"><block type="turn_right"></block></statement><statement name="not_equals"><block type="turn_left"></block></statement></block></xml>',
+	"hintBlocks": '',
 	"map2": [],
 	"chars2": [],
 	
