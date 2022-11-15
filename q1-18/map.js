@@ -5,12 +5,12 @@ Map.prototype = {
 		[1,1,1,1,1,1,1,1,1,1,1,1],
 		[1,1,1,1,1,1,1,1,1,1,1,1],
 		[1,1,1,1,1,1,1,1,1,1,1,1],
-		[1,1,1,1,0,0,0,1,1,1,1,1],
-		[1,1,1,0,0,1,0,1,1,1,1,1],
-		[1,1,1,0,0,0,0,0,1,1,1,1],
-		[1,1,1,0,5,1,0,0,1,1,1,1],
-		[1,1,1,0,1,0,0,0,1,1,1,1],
-		[1,1,1,0,0,0,0,1,1,1,1,1],
+		[1,1,1,1,1,5,1,1,1,1,1,1],
+		[1,1,1,0,0,3,4,2,1,1,1,1],
+		[1,1,1,0,2,4,3,0,1,1,1,1],
+		[1,1,1,0,0,2,3,0,1,1,1,1],
+		[1,1,1,0,4,0,0,0,1,1,1,1],
+		[1,1,1,1,1,0,1,1,1,1,1,1],
 		[1,1,1,1,1,1,1,1,1,1,1,1],
 		[1,1,1,1,1,1,1,1,1,1,1,1],
 		[1,1,1,1,1,1,1,1,1,1,1,1]
@@ -21,15 +21,15 @@ Map.prototype = {
 		"direction": 0,
 		"life": 65534,
 	},
-	"hint": "1 つのプログラムで、どのパターンでもゴールできるようにしてみよう",
+	"hint": "緑のマスには乗らないようにしよう",
 	"state": 0,
 	"goals": 1,
-	"patterns": 2,
+	"patterns": 1,
 	"blocksLimit": 0,
 	"links": {
-		"question": "Q1-15",
-		"previous": "q1-14",
-		"next": "q1-16"
+		"question": "Q1-18",
+		"previous": "q1-17",
+		"next": "q1-19"
 	},
 	"robot": {
 		"type": 0,
@@ -105,21 +105,14 @@ Map.prototype = {
  * コード実行前の処理
  */
 Map.prototype.beforeStart = function(pattern) {
-if (pattern != "") {
-		Map.prototype.state = parseInt(pattern);
-	}
-	if (Map.prototype.state == 0) {
-		Map.prototype.map[7][3] = 1;
-		Map.prototype.map[7][5] = 1;
-	}
-	else {
-		Map.prototype.map[5][5] = 1;
-	}
-	Map.prototype.state = (Map.prototype.state + 1) % 2;
+	// if pettern is <empty string> selected "どれか"
 };
 /**
  * ターンごとに発生する処理
  */
 Map.prototype.afterMoved = function(t, pos) {
 	// t is turns value, pos is robot info { "x": num, "y": num, "direction": num }
+	if (Map.prototype.map[pos.y][pos.x] == 4) {
+		Map.prototype.map[4][5] = 1;
+	}
 };
