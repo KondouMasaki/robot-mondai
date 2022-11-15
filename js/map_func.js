@@ -14,6 +14,7 @@ Map.prototype.colorValue = {
  */
 Map.prototype.backupMap = function() {
 	Map.prototype.map2 = Map.prototype.copyMap();
+	Map.prototype.state2 = Map.prototype.state;
 };
 /**
  * マップをリストアする
@@ -26,6 +27,7 @@ Map.prototype.restoreMap = function() {
 	for (var i = 0; i < row; i++) {
 		ptr.push(Map.prototype.map2[i].slice());
 	};
+	Map.prototype.state = Map.prototype.state2;
 };
 /**
  * 文字マップをバックアップする
