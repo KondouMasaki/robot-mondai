@@ -21,7 +21,7 @@ Map.prototype = {
 		"direction": 0,
 		"life": 65534,
 	},
-	"hint": "赤いマスでA回待ってみよう",
+	"hint": "赤いマスで 3 回待ってみよう",
 	"state": 0,
 	"goals": 1,
 	"patterns": 1,
