@@ -36,20 +36,6 @@ Map.prototype = {
       1,
       1,
       1,
-      1,
-      1,
-      1,
-      1,
-      1,
-      1,
-      1
-    ],
-    [
-      1,
-      1,
-      1,
-      1,
-      1,
       5,
       1,
       1,
@@ -89,6 +75,20 @@ Map.prototype = {
     [
       1,
       1,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      1,
+      1,
+      1
+    ],
+    [
+      1,
+      1,
       1,
       1,
       1,
@@ -106,7 +106,7 @@ Map.prototype = {
       1,
       1,
       1,
-      1,
+      0,
       1,
       1,
       1,
@@ -120,7 +120,7 @@ Map.prototype = {
       1,
       1,
       1,
-      1,
+      0,
       1,
       1,
       1,
@@ -173,7 +173,7 @@ Map.prototype = {
   ],
   "start": {
     "x": 5,
-    "y": 6,
+    "y": 5,
     "direction": 0,
     "life": 6
   },
@@ -183,9 +183,9 @@ Map.prototype = {
   "patterns": 2,
   "blocksLimit": 0,
   "links": {
-    "question": "Q2-9",
-    "previous": "q2-8",
-    "next": "q2-10"
+    "question": "Q2-10",
+    "previous": "q2-9",
+    "next": "q2-11"
   },
   "robot": {
     "type": 1,
@@ -405,7 +405,7 @@ Map.prototype = {
       -1
     ]
   ],
-  "hintBlocks": "<xml xmlns=\"https://developers.google.com/blockly/xml\"><block type=\"robot_direction_is\" x=\"10\" y=\"10\"><statement name=\"equals\"><block type=\"turn_left\"></block></statement><statement name=\"not_equals\"><block type=\"turn_right\"></block></statement></block></xml>",
+  "hintBlocks": "<xml xmlns=\"https://developers.google.com/blockly/xml\"><block type=\"robot_direction_is\" x=\"10\" y=\"10\"></block></xml>",
   "map2": [],
   "chars2": [],
   "image_file_dir": "../img/"
@@ -426,7 +426,7 @@ Map.prototype.beforeStart = function(pattern) {
 		Robot.prototype.direction = 1;
 	}
 	else {
-		Robot.prototype.direction = 3;
+		Robot.prototype.direction = 2;
 	}
 	Map.prototype.state = (Map.prototype.state + 1) % 2;
 };

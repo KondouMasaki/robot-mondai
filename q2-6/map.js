@@ -1,16 +1,16 @@
 var Map = function() {
 };
 Map.prototype = {
-		"map": [
+	"map": [
 		[1,1,1,1,1,1,1,1,1,1,1,1],
 		[1,1,1,1,1,1,1,1,1,1,1,1],
-		[1,1,1,1,1,5,1,1,1,1,1,1],
+		[1,1,1,1,1,1,1,1,1,1,1,1],
 		[1,1,1,1,1,0,1,1,1,1,1,1],
 		[1,1,1,1,1,0,1,1,1,1,1,1],
-		[1,1,0,0,0,0,0,0,0,1,1,1],
+		[1,1,1,0,0,0,0,0,1,1,1,1],
 		[1,1,1,1,1,0,1,1,1,1,1,1],
 		[1,1,1,1,1,0,1,1,1,1,1,1],
-		[1,1,1,1,1,0,1,1,1,1,1,1],
+		[1,1,1,1,1,1,1,1,1,1,1,1],
 		[1,1,1,1,1,1,1,1,1,1,1,1],
 		[1,1,1,1,1,1,1,1,1,1,1,1],
 		[1,1,1,1,1,1,1,1,1,1,1,1]
@@ -19,12 +19,12 @@ Map.prototype = {
 		"x": 5,
 		"y": 5,
 		"direction": 0,
-		"life": 6,
+		"life": 12,
 	},
-	"hint": "今どこを向いているか調べてみよう",
+	"hint": "マスの色とゴールにかん係はあるのかな？",
 	"state": 0,
 	"goals": 1,
-	"patterns": 2,
+	"patterns": 4,
 	"blocksLimit": 0,
 	"links": {
 		"question": "Q2-6",
@@ -40,8 +40,8 @@ Map.prototype = {
 			"nop": true
 		},
 		"Standard": {
-			"floor_color_is": false,
-			"robot_direction_is": true,
+			"floor_color_is": true,
+			"robot_direction_is": false,
 			"movable_is": false
 		},
 		"Advanced": {
@@ -94,7 +94,7 @@ Map.prototype = {
 		[ -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1 ],
 		[ -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1 ]
 	],
-	"hintBlocks": '<xml xmlns="https://developers.google.com/blockly/xml"><block type="robot_direction_is" x="10" y="10"></block></xml>',
+	"hintBlocks": '<xml xmlns="https://developers.google.com/blockly/xml"><block type="floor_color_is" x="10" y="10"><statement name="not_equals"><block type="floor_color_is"></block></statement></block></xml>',
 	"map2": [],
 	"chars2": [],
 	
@@ -105,19 +105,33 @@ Map.prototype = {
  * コード実行前の処理
  */
 Map.prototype.beforeStart = function(pattern) {
+	// if pettern is <empty string> selected "どれか"
 	if (pattern != "") {
 		Map.prototype.state = parseInt(pattern);
 	}
-	if (Map.prototype.state == 0) {
-		Robot.prototype.direction = 1;
+	switch(Map.prototype.state) {
+		case 0:
+			Map.prototype.map[5][5] = 2;
+			Map.prototype.map[5][3] = 5;
+			break;
+		case 1:
+			Map.prototype.map[5][5] = 3;
+			Map.prototype.map[5][7] = 5;
+			break;
+		case 2:
+			Map.prototype.map[5][5] = 4;
+			Map.prototype.map[3][5] = 5;
+			break;
+		case 3:
+			Map.prototype.map[5][5] = 0;
+			Map.prototype.map[7][5] = 5;
+			break;
 	}
-	else {
-		Robot.prototype.direction = 2;
-	}
-	Map.prototype.state = (Map.prototype.state + 1) % 2;
+	Map.prototype.state = (Map.prototype.state + 1) % 3;
 };
 /**
  * ターンごとに発生する処理
  */
 Map.prototype.afterMoved = function(t, pos) {
+	// t is turns value, pos is robot info { "x": num, "y": num, "direction": num }
 };

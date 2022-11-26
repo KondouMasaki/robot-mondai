@@ -6,10 +6,10 @@ Map.prototype = {
 		[1,1,1,1,1,1,1,1,1,1,1,1],
 		[1,1,1,1,1,1,1,1,1,1,1,1],
 		[1,1,1,1,1,1,1,1,1,1,1,1],
+		[1,1,1,1,1,1,1,1,1,1,1,1],
 		[1,1,1,0,0,0,0,0,1,1,1,1],
-		[1,1,1,1,1,0,1,1,1,1,1,1],
-		[1,1,1,1,1,0,1,1,1,1,1,1],
-		[1,1,1,1,1,0,1,1,1,1,1,1],
+		[1,1,1,1,1,1,1,1,1,1,1,1],
+		[1,1,1,1,1,1,1,1,1,1,1,1],
 		[1,1,1,1,1,1,1,1,1,1,1,1],
 		[1,1,1,1,1,1,1,1,1,1,1,1],
 		[1,1,1,1,1,1,1,1,1,1,1,1],
@@ -17,11 +17,11 @@ Map.prototype = {
 	],
 	"start": {
 		"x": 5,
-		"y": 7,
+		"y": 5,
 		"direction": 0,
-		"life": 10,
+		"life": 6,
 	},
-	"hint": "マスの色とゴールにかん係はあるのかな？",
+	"hint": "マスの色とゴールにかん係があるよ。1 つのプログラムでどちらのパターンでもゴールできるようにしよう",
 	"state": 0,
 	"goals": 1,
 	"patterns": 2,
@@ -109,12 +109,12 @@ Map.prototype.beforeStart = function(pattern) {
 		Map.prototype.state = parseInt(pattern);
 	}
 	if (Map.prototype.state == 0) {
-		Map.prototype.map[4][5] = 2;
-		Map.prototype.map[4][3] = 5;
+		Map.prototype.map[5][5] = 3;
+		Map.prototype.map[5][3] = 5;
 	}
 	else {
-		Map.prototype.map[4][5] = 3;
-		Map.prototype.map[4][7] = 5;
+		Map.prototype.map[5][5] = 2;
+		Map.prototype.map[5][7] = 5;
 	}
 	Map.prototype.state = (Map.prototype.state + 1) % 2;
 };

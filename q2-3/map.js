@@ -4,12 +4,12 @@ Map.prototype = {
 	"map": [
 		[1,1,1,1,1,1,1,1,1,1,1,1],
 		[1,1,1,1,1,1,1,1,1,1,1,1],
-		[1,1,0,1,1,1,1,1,0,1,1,1],
-		[1,1,0,1,1,1,1,1,0,1,1,1],
-		[1,1,0,0,0,0,0,0,0,1,1,1],
-		[1,1,0,1,1,0,1,1,0,1,1,1],
-		[1,1,0,1,1,0,1,1,0,1,1,1],
-		[1,1,1,1,1,0,1,1,1,1,1,1],
+		[1,1,1,1,1,1,1,1,1,1,1,1],
+		[1,1,1,1,1,1,1,1,1,1,1,1],
+		[1,1,1,1,1,1,1,1,1,1,1,1],
+		[1,1,1,0,0,0,0,0,1,1,1,1],
+		[1,1,1,1,1,1,1,1,1,1,1,1],
+		[1,1,1,1,1,1,1,1,1,1,1,1],
 		[1,1,1,1,1,1,1,1,1,1,1,1],
 		[1,1,1,1,1,1,1,1,1,1,1,1],
 		[1,1,1,1,1,1,1,1,1,1,1,1],
@@ -17,14 +17,14 @@ Map.prototype = {
 	],
 	"start": {
 		"x": 5,
-		"y": 7,
+		"y": 5,
 		"direction": 0,
-		"life": 64,
+		"life": 6,
 	},
-	"hint": "マスの色とゴールにかん係はあるのかな？",
+	"hint": "マスの色とゴールにかん係があるよ。1 つのプログラムでどちらのパターンでもゴールできるようにしよう",
 	"state": 0,
 	"goals": 1,
-	"patterns": 4,
+	"patterns": 3,
 	"blocksLimit": 0,
 	"links": {
 		"question": "Q2-3",
@@ -94,7 +94,7 @@ Map.prototype = {
 		[ -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1 ],
 		[ -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1 ]
 	],
-	"hintBlocks": '<xml xmlns="https://developers.google.com/blockly/xml"><block type="floor_color_is" x="10" y="10"><next><block type="forward"><next><block type="forward"><next><block type="forward"><next><block type="floor_color_is"></block></next></block></next></block></next></block></next></block></xml>',
+	"hintBlocks": '<xml xmlns="https://developers.google.com/blockly/xml"><block type="floor_color_is" x="10" y="10"><statement name="equals"><block type="turn_right"></block></statement><statement name="not_equals"><block type="turn_left"></block></statement></block></xml>',
 	"map2": [],
 	"chars2": [],
 	
@@ -110,27 +110,19 @@ Map.prototype.beforeStart = function(pattern) {
 	}
 	switch(Map.prototype.state) {
 		case 0:
-			Map.prototype.map[4][5] = 2;
-			Map.prototype.map[4][8] = 2;
-			Map.prototype.map[6][8] = 5;
+			Map.prototype.map[5][5] = 2;
+			Map.prototype.map[5][3] = 5;
 			break;
 		case 1:
-			Map.prototype.map[4][5] = 2;
-			Map.prototype.map[4][8] = 3;
-			Map.prototype.map[2][8] = 5;
+			Map.prototype.map[5][5] = 3;
+			Map.prototype.map[5][7] = 5;
 			break;
 		case 2:
-			Map.prototype.map[4][5] = 3;
-			Map.prototype.map[4][2] = 3;
-			Map.prototype.map[6][2] = 5;
-			break;
-		case 3:
-			Map.prototype.map[4][5] = 3;
-			Map.prototype.map[4][2] = 2;
-			Map.prototype.map[2][2] = 5;
+			Map.prototype.map[5][5] = 4;
+			Map.prototype.map[5][7] = 5;
 			break;
 	}
-	Map.prototype.state = (Map.prototype.state + 1) % 4;
+	Map.prototype.state = (Map.prototype.state + 1) % 3;
 };
 /**
  * ターンごとに発生する処理

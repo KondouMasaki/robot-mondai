@@ -2,34 +2,34 @@ var Map = function() {
 };
 Map.prototype = {
 	"map": [
-	[1,1,1,1,1,1,1,1,1,1,1,1],
-	[1,1,1,1,1,1,1,1,1,1,1,1],
-	[1,1,1,1,1,1,1,1,1,1,1,1],
-	[1,1,1,1,1,0,1,1,1,1,1,1],
-	[1,1,1,1,1,0,1,1,1,1,1,1],
-	[1,1,1,0,0,0,0,0,1,1,1,1],
-	[1,1,1,1,1,1,1,1,1,1,1,1],
-	[1,1,1,1,1,1,1,1,1,1,1,1],
-	[1,1,1,1,1,1,1,1,1,1,1,1],
-	[1,1,1,1,1,1,1,1,1,1,1,1],
-	[1,1,1,1,1,1,1,1,1,1,1,1],
-	[1,1,1,1,1,1,1,1,1,1,1,1]
-],
+		[1,1,1,1,1,1,1,1,1,1,1,1],
+		[1,1,1,1,1,1,1,1,1,1,1,1],
+		[1,1,1,1,1,1,1,1,1,1,1,1],
+		[1,1,1,1,0,0,0,1,1,1,1,1],
+		[1,1,1,0,0,1,0,1,1,1,1,1],
+		[1,1,1,0,0,0,0,0,1,1,1,1],
+		[1,1,1,0,5,1,0,0,1,1,1,1],
+		[1,1,1,0,1,0,0,0,1,1,1,1],
+		[1,1,1,0,0,0,0,1,1,1,1,1],
+		[1,1,1,1,1,1,1,1,1,1,1,1],
+		[1,1,1,1,1,1,1,1,1,1,1,1],
+		[1,1,1,1,1,1,1,1,1,1,1,1]
+	],
 	"start": {
 		"x": 5,
-		"y": 5,
+		"y": 8,
 		"direction": 0,
-		"life": 12,
+		"life": 65534,
 	},
-	"hint": "マスの色とゴールにかん係はあるのかな？",
+	"hint": "はじめに前に進めるか調べてみよう",
 	"state": 0,
 	"goals": 1,
-	"patterns": 3,
+	"patterns": 2,
 	"blocksLimit": 0,
 	"links": {
-		"question": "Q2-5",
-		"previous": "q2-4",
-		"next": "q2-6"
+		"question": "Q2-13",
+		"previous": "q1-12",
+		"next": "q2-14"
 	},
 	"robot": {
 		"type": 1,
@@ -40,9 +40,9 @@ Map.prototype = {
 			"nop": true
 		},
 		"Standard": {
-			"floor_color_is": true,
+			"floor_color_is": false,
 			"robot_direction_is": false,
-			"movable_is": false
+			"movable_is": true
 		},
 		"Advanced": {
 			"times_loop": true,
@@ -94,7 +94,7 @@ Map.prototype = {
 		[ -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1 ],
 		[ -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1 ]
 	],
-	"hintBlocks": '<xml xmlns="https://developers.google.com/blockly/xml"><block type="floor_color_is" x="10" y="10"><statement name="not_equals"><block type="floor_color_is"></block></statement></block></xml>',
+	"hintBlocks": '',
 	"map2": [],
 	"chars2": [],
 	
@@ -105,25 +105,17 @@ Map.prototype = {
  * コード実行前の処理
  */
 Map.prototype.beforeStart = function(pattern) {
-	// if pettern is <empty string> selected "どれか"
-	if (pattern != "") {
+if (pattern != "") {
 		Map.prototype.state = parseInt(pattern);
 	}
-	switch(Map.prototype.state) {
-		case 0:
-			Map.prototype.map[5][5] = 2;
-			Map.prototype.map[5][3] = 5;
-			break;
-		case 1:
-			Map.prototype.map[5][5] = 3;
-			Map.prototype.map[5][7] = 5;
-			break;
-		case 2:
-			Map.prototype.map[5][5] = 4;
-			Map.prototype.map[3][5] = 5;
-			break;
+	if (Map.prototype.state == 0) {
+		Map.prototype.map[7][3] = 1;
+		Map.prototype.map[7][5] = 1;
 	}
-	Map.prototype.state = (Map.prototype.state + 1) % 3;
+	else {
+		Map.prototype.map[5][5] = 1;
+	}
+	Map.prototype.state = (Map.prototype.state + 1) % 2;
 };
 /**
  * ターンごとに発生する処理

@@ -36,20 +36,6 @@ Map.prototype = {
       1,
       1,
       1,
-      1,
-      1,
-      1,
-      1,
-      1,
-      1,
-      1
-    ],
-    [
-      1,
-      1,
-      1,
-      1,
-      1,
       5,
       1,
       1,
@@ -93,6 +79,20 @@ Map.prototype = {
       1,
       1,
       0,
+      0,
+      0,
+      5,
+      1,
+      1,
+      1
+    ],
+    [
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
       1,
       1,
       1,
@@ -173,19 +173,19 @@ Map.prototype = {
   ],
   "start": {
     "x": 5,
-    "y": 6,
+    "y": 5,
     "direction": 0,
-    "life": 6
+    "life": 12
   },
-  "hint": "今どこを向いているか調べてみよう",
+  "hint": "はじめに前に進めるか調べてみよう",
   "state": 0,
   "goals": 1,
   "patterns": 2,
   "blocksLimit": 0,
   "links": {
-    "question": "Q2-9",
-    "previous": "q2-8",
-    "next": "q2-10"
+    "question": "Q2-11",
+    "previous": "q2-10",
+    "next": "q2-12"
   },
   "robot": {
     "type": 1,
@@ -197,8 +197,8 @@ Map.prototype = {
     },
     "Standard": {
       "floor_color_is": false,
-      "robot_direction_is": true,
-      "movable_is": false
+      "robot_direction_is": false,
+      "movable_is": true
     },
     "Advanced": {
       "times_loop": true,
@@ -405,7 +405,7 @@ Map.prototype = {
       -1
     ]
   ],
-  "hintBlocks": "<xml xmlns=\"https://developers.google.com/blockly/xml\"><block type=\"robot_direction_is\" x=\"10\" y=\"10\"><statement name=\"equals\"><block type=\"turn_left\"></block></statement><statement name=\"not_equals\"><block type=\"turn_right\"></block></statement></block></xml>",
+  "hintBlocks": "<xml xmlns=\"https://developers.google.com/blockly/xml\"><block type=\"movable_is\" x=\"10\" y=\"10\"><value name=\"direction\"><block type=\"math_number\"><field name=\"NUM\">0</field></block></value><statement name=\"not_equals\"><block type=\"turn_right\"></block></statement></block></xml>",
   "map2": [],
   "chars2": [],
   "image_file_dir": "../img/"
@@ -423,10 +423,10 @@ Map.prototype.beforeStart = function(pattern) {
 		Map.prototype.state = parseInt(pattern);
 	}
 	if (Map.prototype.state == 0) {
-		Robot.prototype.direction = 1;
+		Map.prototype.map[5][6] = 1;
 	}
 	else {
-		Robot.prototype.direction = 3;
+		Map.prototype.map[4][5] = 1;
 	}
 	Map.prototype.state = (Map.prototype.state + 1) % 2;
 };
