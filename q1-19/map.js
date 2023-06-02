@@ -115,6 +115,7 @@ Map.prototype.afterMoved = function(t, pos) {
 	switch(Map.prototype.map[pos.y][pos.x]) {
 		case 0:
 		case 4:
+		case 5:
 			break;
 		default:
 			Map.prototype.map[3][7] = 1;
