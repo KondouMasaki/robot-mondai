@@ -109,10 +109,10 @@ Map.prototype.beforeStart = function(pattern) {
 		Map.prototype.state = parseInt(pattern);
 	}
 	if (Map.prototype.state == 0) {
-		Map.prototype.map[3][5] = 5;
+		Map.prototype.map[6][5] = 5;
 	}
 	else {
-		Map.prototype.map[6][5] = 5;
+		Map.prototype.map[3][5] = 5;
 	}
 	Map.prototype.state = (Map.prototype.state + 1) % 2;
 };

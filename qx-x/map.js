@@ -1,38 +1,39 @@
 var Map = function() {
 };
 Map.prototype = {
-		"map": [
-		[1,1,1,1,1,1,1,1,1,1,1,1],
-		[1,1,1,1,1,1,1,1,1,1,1,1],
-		[1,1,1,1,1,1,1,1,1,1,1,1],
-		[1,1,1,1,1,5,1,1,1,1,1,1],
-		[1,1,1,1,0,1,0,1,1,1,1,1],
-		[1,1,1,1,2,0,3,1,1,1,1,1],
-		[1,1,1,1,0,0,0,1,1,1,1,1],
-		[1,1,1,1,1,1,1,1,1,1,1,1],
-		[1,1,1,1,1,1,1,1,1,1,1,1],
-		[1,1,1,1,1,1,1,1,1,1,1,1],
-		[1,1,1,1,1,1,1,1,1,1,1,1],
-		[1,1,1,1,1,1,1,1,1,1,1,1]
+	"map": [
+		[ 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ],
+		[ 1, 1, 1, 1, 1, 5, 1, 1, 1, 1, 1, 1 ],
+		[ 1, 1, 1, 1, 1, 0, 0, 0, 0, 5, 1, 1 ],
+		[ 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1 ],
+		[ 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1 ],
+		[ 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1 ],
+		[ 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1 ],
+		[ 1, 1, 1, 1, 1, 3, 1, 1, 1, 1, 1, 1 ],
+		[ 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1 ],
+		[ 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1 ],
+		[ 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1 ],
+		[ 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ],
 	],
 	"start": {
 		"x": 5,
-		"y": 6,
+		"y": 7,
 		"direction": 0,
 		"life": 65534,
+		"speed": 1
 	},
-	"hint": "赤、青のじゅんでマスに行ってみよう",
+	"hint": "Enjoy BlocklyRbt Visal Flow !! ブロックリーロボット問題 ビジュアルフローを楽しんでね!!",
 	"state": 0,
 	"goals": 1,
-	"patterns": 1,
+	"patterns": 3,
 	"blocksLimit": 0,
 	"links": {
-		"question": "Q1-17",
-		"previous": "q1-16",
-		"next": "q1-18"
+		"question": "Q0-0",
+		"previous": "",
+		"next": ""
 	},
 	"robot": {
-		"type": 0,
+		"type": 6,
 		"Basic": {
 			"forward": true,
 			"turn_right": true,
@@ -94,7 +95,7 @@ Map.prototype = {
 		[ -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1 ],
 		[ -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1 ]
 	],
-	"hintBlocks": '',
+	"hintBlocks": '<xml xmlns="https://developers.google.com/blockly/xml"><block type="forward" x="-150" y="-30"><next><block type="turn_right"><next><block type="nop"><next><block type="turn_left"></block></next></block></next></block></next></block></xml>',
 	"map2": [],
 	"chars2": [],
 	
@@ -106,40 +107,21 @@ Map.prototype = {
  */
 Map.prototype.beforeStart = function(pattern) {
 	// if pettern is <empty string> selected "どれか"
+	var p = parseInt(pattern);
+	switch(p) {
+		case 0:
+		case 1:
+		case 2:
+			Map.prototype.map[0][0] = p + 2;
+			break;
+			
+		default:
+			break;
+	}
 };
 /**
  * ターンごとに発生する処理
  */
 Map.prototype.afterMoved = function(t, pos) {
 	// t is turns value, pos is robot info { "x": num, "y": num, "direction": num }
-	if (pos.x == 4 && pos.y == 5) {
-		switch(Map.prototype.state) {
-			case 0:
-			case 1:
-				Map.prototype.state = 1;
-				break;
-			default:
-				Map.prototype.state = -1;
-				break;
-		}
-	}
-	if (pos.x == 6 && pos.y == 5) {
-		switch(Map.prototype.state) {
-			case 1:
-			case 2:
-				Map.prototype.state = 2;
-				break;
-			default:
-				Map.prototype.state = -1;
-				break;
-		}
-	}
-	if (Map.prototype.state == 2) {
-		Map.prototype.map[4][5] = 0;
-	}
-	else {
-		Map.prototype.map[4][5] = 1;
-	}
-	// debug
-	//console.log(Map.prototype.state);
 };
