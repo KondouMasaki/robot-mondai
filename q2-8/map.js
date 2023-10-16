@@ -175,7 +175,8 @@ Map.prototype = {
     "x": 4,
     "y": 6,
     "direction": 0,
-    "life": 16
+    "life": 16,
+	"speed": 2
   },
   "hint": "マスの色が緑ならゴールへ行けるよ",
   "state": 0,

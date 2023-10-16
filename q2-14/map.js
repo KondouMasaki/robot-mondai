@@ -175,7 +175,8 @@ Map.prototype = {
     "x": 5,
     "y": 8,
     "direction": 0,
-    "life": 65534
+    "life": 65534,
+	"speed": 2
   },
   "hint": "曲がり角に来たら、右か左に進めるか調べてみよう",
   "state": 0,
