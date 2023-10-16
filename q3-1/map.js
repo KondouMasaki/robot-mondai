@@ -20,6 +20,7 @@ Map.prototype = {
 		"y": 10,
 		"direction": 0,
 		"life": 65534,
+		"speed": 2
 	},
 	"hint": "くり返しを使うと命令を短くできるよ",
 	"state": 0,

@@ -20,6 +20,7 @@ Map.prototype = {
 		"y": 10,
 		"direction": 1,
 		"life": 65534,
+		"speed": 2
 	},
 	"hint": "マスの色が赤なら右、青なら左に向くといいよ",
 	"state": 0,

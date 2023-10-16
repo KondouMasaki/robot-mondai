@@ -20,6 +20,7 @@ Map.prototype = {
 		"y": 10,
 		"direction": 0,
 		"life": 25,
+		"speed": 2
 	},
 	"hint": "マスの色が白でなければ、よこにゴールがあるよ",
 	"state": 0,

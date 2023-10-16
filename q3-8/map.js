@@ -20,6 +20,7 @@ Map.prototype = {
 		"y": 10,
 		"direction": 0,
 		"life": 65534,
+		"speed": 2
 	},
 	"hint": "かべがあったら右に進むといいよ!!",
 	"state": 0,
@@ -29,7 +30,7 @@ Map.prototype = {
 	"links": {
 		"question": "Q3-8",
 		"previous": "q3-7",
-		"next": "q4-1"
+		"next": "q3-9"
 	},
 	"robot": {
 		"type": 2,
