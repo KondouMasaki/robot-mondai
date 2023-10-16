@@ -20,6 +20,7 @@ Map.prototype = {
 		"y": 6,
 		"direction": 0,
 		"life": 20,
+		"speed": 2
 	},
 	"hint": "赤なら右、青なら左だよ。でも、じゅん番に気をつけてね。",
 	"state": 0,

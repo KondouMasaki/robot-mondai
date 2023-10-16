@@ -20,6 +20,7 @@ Map.prototype = {
 		"y": 5,
 		"direction": 0,
 		"life": 65534,
+		"speed": 2
 	},
 	"hint": "はじめに右や左に進めるしらべよう",
 	"state": 0,

@@ -20,6 +20,7 @@ Map.prototype = {
 		"y": 6,
 		"direction": 0,
 		"life": 14,
+		"speed": 2
 	},
 	"hint": "Enhanced ロボットで使える命令をためしてみよう",
 	"state": 0,
