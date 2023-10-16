@@ -239,9 +239,10 @@ function runNextPattern() {
 			runCodeBody();
 		}
 		else {
+			Control.prototype.patternSelector.options[0].selected = true;
 			Swal.fire({
-				title: "&#" + getClearFace() + ";",
-				text: "全てのパータンでゴールしたよ！",
+				title: getHappyIcons(),
+				text: getAllPatternClearText(),
 				confirmButtonText: "OK"
 			});
 		}
@@ -464,5 +465,82 @@ function getTiredFace() {
 			return "128560";
 		case 5:
 			return "128565";
+	}
+}
+
+function getAllPatternClearText() {
+	var txt = "全てのパターンでゴール";
+	switch(Math.floor(Math.random() * 4)) {
+		case 0:
+			txt = "やったね！" + txt;
+			break;
+		case 1:
+			txt = "すごいね！" + txt;
+			break;
+		case 2:
+			txt = "すばらしい！" + txt;
+			break;
+		case 3:
+			txt = "かんぺき！" + txt;
+			break;
+	}
+	switch(Math.floor(Math.random() * 4)) {
+		case 0:
+			txt += "したよ！";
+			break;
+		case 1:
+			txt += "できたよ！";
+			break;
+		case 2:
+			txt += "に行けたよ！";
+			break;
+		case 3:
+			txt += "に着けたよ！";
+			break;
+	}
+	return txt;
+}
+
+function getHappyIcons() {
+	var txt = "&#" + getHappyIcon() + ";&#" + getClearFace() + ";&#" + getHappyIcon() + ";";
+	switch(Map.prototype.patterns) {
+		case 2:
+			return txt;
+		case 3:
+			return "&#" + getHappyIcon() + ";" + txt + "&#" + getHappyIcon() + ";";
+		default:
+			return "&#" + getHappyIcon() + ";&#" + getHappyIcon() + ";" + txt + "&#" + getHappyIcon() + ";&#" + getHappyIcon() + ";";
+	}
+}
+function getHappyIcon() {
+	switch(Math.floor(Math.random() * 14)) {
+		case 0:
+			return "128174";
+		case 1:
+			return "127804";
+		case 2:
+			return "127800";
+		case 3:
+			return "127989";
+		case 4:
+			return "128144";
+		case 5:
+			return "127880";
+		case 6:
+			return "128147";
+		case 7:
+			return "128157";
+		case 8:
+			return "9829";
+		case 9:
+			return "10083";
+		case 10:
+			return "128149";
+		case 11:
+			return "128150";
+		case 12:
+			return "128155";
+		case 13:
+			return "128276";
 	}
 }
