@@ -28,7 +28,7 @@ Map.prototype = {
 	"blocksLimit": 0,
 	"links": {
 		"question": "Q4-1",
-		"previous": "q3-8",
+		"previous": "q3-15",
 		"next": "q4-2"
 	},
 	"robot": {
