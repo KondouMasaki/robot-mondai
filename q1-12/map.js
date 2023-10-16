@@ -20,6 +20,7 @@ Map.prototype = {
 		"y": 6,
 		"direction": 0,
 		"life": 65534,
+		"speed": 2
 	},
 	"hint": "1 つのプログラムで、どのパターンでもゴールできるようにしてみよう",
 	"state": 0,
