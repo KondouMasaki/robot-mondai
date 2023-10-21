@@ -453,6 +453,17 @@ Blockly.Blocks['expression_loop'] = {
 	}
 };
 
+// Converter & Check
+function convertToHankaku(str) {
+    return str.replace(/[０-９]/g, function(s) {
+        return String.fromCharCode(s.charCodeAt(0) - 0xFEE0);
+    });
+}
+function convertToInteger(str) {
+	var v = convertToHankaku(str);
+	return parseInt(v);
+}
+
 /**
  *	Basic
  */
@@ -476,27 +487,27 @@ Blockly.JavaScript['nop'] = function(block) {
  *	Standard
  */
 Blockly.JavaScript['floor_color_is'] = function(block) {
-	var value_color = Blockly.JavaScript.valueToCode(block, 'color', Blockly.JavaScript.ORDER_ATOMIC);
+	var value_color = convertToInteger(Blockly.JavaScript.valueToCode(block, 'color', Blockly.JavaScript.ORDER_ATOMIC));
 	var statements_equals = Blockly.JavaScript.statementToCode(block, 'equals');
 	var statements_not_equals = Blockly.JavaScript.statementToCode(block, 'not_equals');
 	var code = 'if(ControlOneTurn(\'{"opr": "get_floor_color"}\') == ' + value_color + ') { ' + statements_equals + ' } else { ' + statements_not_equals + ' };\n';
 	return code;
 };
 Blockly.JavaScript['robot_direction_is'] = function(block) {
-	var value_direction = Blockly.JavaScript.valueToCode(block, 'direction', Blockly.JavaScript.ORDER_ATOMIC);
+	var value_direction = convertToInteger(Blockly.JavaScript.valueToCode(block, 'direction', Blockly.JavaScript.ORDER_ATOMIC));
 	var statements_equals = Blockly.JavaScript.statementToCode(block, 'equals');
 	var statements_not_equals = Blockly.JavaScript.statementToCode(block, 'not_equals');
 	var code = 'if(ControlOneTurn(\'{"opr": "get_direction"}\') == ' + value_direction + ') { ' + statements_equals + ' } else { ' + statements_not_equals + ' };\n';
 	return code;
 };
 Blockly.JavaScript['movable_forward_is'] = function(block) {
-	var statements_equals = Blockly.JavaScript.statementToCode(block, 'equals');
+	var statements_equals = convertToInteger(Blockly.JavaScript.statementToCode(block, 'equals'));
 	var statements_not_equals = Blockly.JavaScript.statementToCode(block, 'not_equals');
 	var code = 'if(ControlOneTurn(\'{"opr": "is_movable_forward"}\')) { ' + statements_equals + ' } else { ' + statements_not_equals + ' };\n';
 	return code;
 };
 Blockly.JavaScript['movable_is'] = function(block) {
-	var value_direction = Blockly.JavaScript.valueToCode(block, 'direction', Blockly.JavaScript.ORDER_ATOMIC);
+	var value_direction = convertToInteger(Blockly.JavaScript.valueToCode(block, 'direction', Blockly.JavaScript.ORDER_ATOMIC));
 	var statements_equals = Blockly.JavaScript.statementToCode(block, 'equals');
 	var statements_not_equals = Blockly.JavaScript.statementToCode(block, 'not_equals');
 	var code = 'if(ControlOneTurn(\'{"opr": "is_movable", "direction": ' + value_direction + '}\')) { ' + statements_equals + ' } else { ' + statements_not_equals + ' };\n';
@@ -507,7 +518,7 @@ Blockly.JavaScript['movable_is'] = function(block) {
  * Advanced
  */
 Blockly.JavaScript['times_loop'] = function(block) {
-	var value_times = Blockly.JavaScript.valueToCode(block, 'times', Blockly.JavaScript.ORDER_ATOMIC);
+	var value_times = convertToInteger(Blockly.JavaScript.valueToCode(block, 'times', Blockly.JavaScript.ORDER_ATOMIC));
 	var statements_equals = Blockly.JavaScript.statementToCode(block, 'equals');
 	var loopVar = Blockly.JavaScript.variableDB_.getDistinctName('count', Blockly.VARIABLE_CATEGORY_NAME);
 	var code = 'ControlOneTurn(\'{"opr": "nop"}\')\n' + 
@@ -519,13 +530,13 @@ Blockly.JavaScript['times_loop'] = function(block) {
 	return code;
 };
 Blockly.JavaScript['floor_color_loop'] = function(block) {
-	var value_color = Blockly.JavaScript.valueToCode(block, 'color', Blockly.JavaScript.ORDER_ATOMIC);
+	var value_color = convertToInteger(Blockly.JavaScript.valueToCode(block, 'color', Blockly.JavaScript.ORDER_ATOMIC));
 	var statements_equals = Blockly.JavaScript.statementToCode(block, 'equals');
 	var code = 'while(ControlOneTurn(\'{"opr": "get_floor_color"}\') == ' + value_color + ') { ' + statements_equals + ';\nhighlightBlock(\'' + block.id + '\');}\n';
 	return code;
 };
 Blockly.JavaScript['movable_loop'] = function(block) {
-	var value_direction = Blockly.JavaScript.valueToCode(block, 'direction', Blockly.JavaScript.ORDER_ATOMIC);
+	var value_direction = convertToInteger(Blockly.JavaScript.valueToCode(block, 'direction', Blockly.JavaScript.ORDER_ATOMIC));
 	var statements_equals = Blockly.JavaScript.statementToCode(block, 'equals');
 	var code = 'while(ControlOneTurn(\'{"opr": "is_movable", "direction": ' + value_direction + '}\')) { ' + statements_equals + '\nhighlightBlock(\'' + block.id + '\') };\n';
 	return code;
@@ -537,7 +548,7 @@ Blockly.JavaScript['movable_loop'] = function(block) {
  */
 Blockly.JavaScript['write_register'] = function(block) {
 	var dropdown_register_name = block.getFieldValue('register_name');
-	var value_register_value = Blockly.JavaScript.valueToCode(block, 'register_value', Blockly.JavaScript.ORDER_ATOMIC);
+	var value_register_value = convertToInteger(Blockly.JavaScript.valueToCode(block, 'register_value', Blockly.JavaScript.ORDER_ATOMIC));
 	var code = 'ControlOneTurn(\'{"opr": "set_register", "target": ' + dropdown_register_name + '}\', ' + value_register_value + ');\n';
 	return code;
 };
@@ -558,8 +569,8 @@ Blockly.JavaScript['get_direction'] = function(block) {
  * Enhanced
  */
 Blockly.JavaScript['values_equal_is'] = function(block) {
-	var value_value1 = Blockly.JavaScript.valueToCode(block, 'value1', Blockly.JavaScript.ORDER_ATOMIC);
-	var value_value2 = Blockly.JavaScript.valueToCode(block, 'value2', Blockly.JavaScript.ORDER_ATOMIC);
+	var value_value1 = convertToInteger(Blockly.JavaScript.valueToCode(block, 'value1', Blockly.JavaScript.ORDER_ATOMIC));
+	var value_value2 = convertToInteger(Blockly.JavaScript.valueToCode(block, 'value2', Blockly.JavaScript.ORDER_ATOMIC));
 	var statements_equals = Blockly.JavaScript.statementToCode(block, 'equals');
 	var statements_not_equals = Blockly.JavaScript.statementToCode(block, 'not_equals');
 	var code = 'ControlOneTurn(\'{"opr": "nop"}\');\n';
@@ -567,8 +578,8 @@ Blockly.JavaScript['values_equal_is'] = function(block) {
 	return code;
 };
 Blockly.JavaScript['values_equal_loop'] = function(block) {
-	var value_value1 = Blockly.JavaScript.valueToCode(block, 'value1', Blockly.JavaScript.ORDER_ATOMIC);
-	var value_value2 = Blockly.JavaScript.valueToCode(block, 'value2', Blockly.JavaScript.ORDER_ATOMIC);
+	var value_value1 = convertToInteger(Blockly.JavaScript.valueToCode(block, 'value1', Blockly.JavaScript.ORDER_ATOMIC));
+	var value_value2 = convertToInteger(Blockly.JavaScript.valueToCode(block, 'value2', Blockly.JavaScript.ORDER_ATOMIC));
 	var statements_equals = Blockly.JavaScript.statementToCode(block, 'equals');
 	var code = 'ControlOneTurn(\'{"opr": "nop"}\');\n';
 	code += 'while(' + value_value1 + ' == ' + value_value2 + '){ ' + statements_equals + '\n';
@@ -583,7 +594,7 @@ Blockly.JavaScript['infinity_loop'] = function(block) {
   return code;
 };
 Blockly.JavaScript['is_movable_to'] = function(block) {
-  var value_direction = Blockly.JavaScript.valueToCode(block, 'direction', Blockly.JavaScript.ORDER_ATOMIC);
+  var value_direction = convertToInteger(Blockly.JavaScript.valueToCode(block, 'direction', Blockly.JavaScript.ORDER_ATOMIC));
   var code = 'ControlOneTurn(\'{"opr": "is_movable", "direction": ' + value_direction + '}\') ? 1 : 0';
   return [code, Blockly.JavaScript.ORDER_NONE];
 };
@@ -592,36 +603,36 @@ Blockly.JavaScript['is_movable_to'] = function(block) {
  */
 Blockly.JavaScript['add_register'] = function(block) {
 	var dropdown_register_name = block.getFieldValue('register_name');
-	var value_opr_value = Blockly.JavaScript.valueToCode(block, 'opr_value', Blockly.JavaScript.ORDER_ATOMIC);
+	var value_opr_value = convertToInteger(Blockly.JavaScript.valueToCode(block, 'opr_value', Blockly.JavaScript.ORDER_ATOMIC));
 	var code = 'ControlOneTurn(\'{"opr": "add_register", "target": ' + dropdown_register_name + '}\', ' + value_opr_value + ');\n';
 	return code;
 };
 Blockly.JavaScript['sub_register'] = function(block) {
 	var dropdown_register_name = block.getFieldValue('register_name');
-	var value_opr_value = Blockly.JavaScript.valueToCode(block, 'opr_value', Blockly.JavaScript.ORDER_ATOMIC);
+	var value_opr_value = convertToInteger(Blockly.JavaScript.valueToCode(block, 'opr_value', Blockly.JavaScript.ORDER_ATOMIC));
 	var code = 'ControlOneTurn(\'{"opr": "sub_register", "target": ' + dropdown_register_name + '}\', ' + value_opr_value + ');\n';
 	return code;
 };
 Blockly.JavaScript['add_register_index'] = function(block) {
-	var value_register_index = Blockly.JavaScript.valueToCode(block, 'register_index', Blockly.JavaScript.ORDER_ATOMIC);
-	var value_opr_value = Blockly.JavaScript.valueToCode(block, 'opr_value', Blockly.JavaScript.ORDER_ATOMIC);
+	var value_register_index = convertToInteger(Blockly.JavaScript.valueToCode(block, 'register_index', Blockly.JavaScript.ORDER_ATOMIC));
+	var value_opr_value = convertToInteger(Blockly.JavaScript.valueToCode(block, 'opr_value', Blockly.JavaScript.ORDER_ATOMIC));
 	var code = 'ControlOneTurn(\'{"opr": "add_register_index"}\', ' + value_register_index + ' ,' + value_opr_value + ');\n';
 	return code;
 };
 Blockly.JavaScript['sub_register_index'] = function(block) {
-	var value_register_index = Blockly.JavaScript.valueToCode(block, 'register_index', Blockly.JavaScript.ORDER_ATOMIC);
-	var value_opr_value = Blockly.JavaScript.valueToCode(block, 'opr_value', Blockly.JavaScript.ORDER_ATOMIC);
+	var value_register_index = convertToInteger(Blockly.JavaScript.valueToCode(block, 'register_index', Blockly.JavaScript.ORDER_ATOMIC));
+	var value_opr_value = convertToInteger(Blockly.JavaScript.valueToCode(block, 'opr_value', Blockly.JavaScript.ORDER_ATOMIC));
 	var code = 'ControlOneTurn(\'{"opr": "sub_register_index"}\', ' + value_register_index + ', ' + value_opr_value + ');\n';
 	return code;
 };
 Blockly.JavaScript['set_register_index'] = function(block) {
-	var value_register_index = Blockly.JavaScript.valueToCode(block, 'register_index', Blockly.JavaScript.ORDER_ATOMIC);
-	var value_opr_value = Blockly.JavaScript.valueToCode(block, 'opr_value', Blockly.JavaScript.ORDER_ATOMIC);
+	var value_register_index = convertToInteger(Blockly.JavaScript.valueToCode(block, 'register_index', Blockly.JavaScript.ORDER_ATOMIC));
+	var value_opr_value = convertToInteger(Blockly.JavaScript.valueToCode(block, 'opr_value', Blockly.JavaScript.ORDER_ATOMIC));
 	var code = 'ControlOneTurn(\'{"opr": "set_register_index"}\', ' + value_register_index + ' , ' + value_opr_value + ');\n';
 	return code;
 };
 Blockly.JavaScript['get_register_index'] = function(block) {
-	var value_register_index = Blockly.JavaScript.valueToCode(block, 'register_index', Blockly.JavaScript.ORDER_ATOMIC);
+	var value_register_index = convertToInteger(Blockly.JavaScript.valueToCode(block, 'register_index', Blockly.JavaScript.ORDER_ATOMIC));
 	var code = 'ControlOneTurn(\'{"opr": "get_register_index"}\', ' + value_register_index + ')';
 	return [code, Blockly.JavaScript.ORDER_NONE];
 };
@@ -635,24 +646,24 @@ Blockly.JavaScript['read_cell_value'] = function(block) {
 	return code;
 };
 Blockly.JavaScript['read_cell_value_index'] = function(block) {
-	var value_register_index = Blockly.JavaScript.valueToCode(block, 'register_index', Blockly.JavaScript.ORDER_ATOMIC);
+	var value_register_index = convertToInteger(Blockly.JavaScript.valueToCode(block, 'register_index', Blockly.JavaScript.ORDER_ATOMIC));
 	var code = 'ControlOneTurn(\'{"opr": "read_cell_value_index"}\', ' + value_register_index + ');\n';
 	return code;
 };
 Blockly.JavaScript['write_cell_value'] = function(block) {
-	var value_value = Blockly.JavaScript.valueToCode(block, 'value', Blockly.JavaScript.ORDER_ATOMIC);
+	var value_value = convertToInteger(Blockly.JavaScript.valueToCode(block, 'value', Blockly.JavaScript.ORDER_ATOMIC));
 	var code = 'ControlOneTurn(\'{"opr": "write_cell_value"}\', ' + value_value + ');\n';
 	return code;
 };
 Blockly.JavaScript['values_compare'] = function(block) {
-	var value_value1 = Blockly.JavaScript.valueToCode(block, 'value1', Blockly.JavaScript.ORDER_ATOMIC);
-	var value_value2 = Blockly.JavaScript.valueToCode(block, 'value2', Blockly.JavaScript.ORDER_ATOMIC);
+	var value_value1 = convertToInteger(Blockly.JavaScript.valueToCode(block, 'value1', Blockly.JavaScript.ORDER_ATOMIC));
+	var value_value2 = convertToInteger(Blockly.JavaScript.valueToCode(block, 'value2', Blockly.JavaScript.ORDER_ATOMIC));
 	var dropdown_opr = block.getFieldValue('opr');
 	var code = 'ControlOneTurn(\'{"opr": "values_compare", "type": "' + dropdown_opr + '"}\', ' + value_value1 + ', ' + value_value2 + ')';
 	return [code, Blockly.JavaScript.ORDER_NONE];
 };
 Blockly.JavaScript['expression_if'] = function(block) {
-	var value_expression = Blockly.JavaScript.valueToCode(block, 'expression', Blockly.JavaScript.ORDER_ATOMIC);
+	var value_expression = convertToInteger(Blockly.JavaScript.valueToCode(block, 'expression', Blockly.JavaScript.ORDER_ATOMIC));
 	var statements_equals = Blockly.JavaScript.statementToCode(block, 'equals');
 	var statements_not_equals = Blockly.JavaScript.statementToCode(block, 'not_equals');
 	var code = 'ControlOneTurn(\'{"opr": "nop"}\');if(' + value_expression + ')';
@@ -661,7 +672,7 @@ Blockly.JavaScript['expression_if'] = function(block) {
 	return code;
 };
 Blockly.JavaScript['expression_loop'] = function(block) {
-	var value_expression = Blockly.JavaScript.valueToCode(block, 'expression', Blockly.JavaScript.ORDER_ATOMIC);
+	var value_expression = convertToInteger(Blockly.JavaScript.valueToCode(block, 'expression', Blockly.JavaScript.ORDER_ATOMIC));
 	var statements_equals = Blockly.JavaScript.statementToCode(block, 'equals');
 	var code = 'ControlOneTurn(\'{"opr": "nop"}\')\n';
 	code += 'while(' + value_expression + ')';
