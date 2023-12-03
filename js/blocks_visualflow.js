@@ -455,13 +455,18 @@ Blockly.Blocks['expression_loop'] = {
 
 // Converter & Check
 function convertToHankaku(str) {
-    return str.replace(/[０-９]/g, function(s) {
-        return String.fromCharCode(s.charCodeAt(0) - 0xFEE0);
-    });
+	return str.replace(/[０-９]/g, function(s) {
+			return String.fromCharCode(s.charCodeAt(0) - 0xFEE0);
+	});
 }
 function convertToInteger(str) {
-	var v = convertToHankaku(str);
-	return parseInt(v);
+	if (str.startsWith("(ControlOneTurn('")) {
+		return str;
+	}
+	else {
+		var v = convertToHankaku(str);
+		return parseInt(v);
+	}
 }
 
 /**
