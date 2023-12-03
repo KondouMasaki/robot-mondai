@@ -1,6 +1,8 @@
 var Map = function() {
 };
-Map.prototype = {
+Map.prototype = 
+// %%=start
+{
 	"map": [
 		[ 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ],
 		[ 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1 ],
@@ -20,10 +22,14 @@ Map.prototype = {
 		"y": 7,
 		"direction": 0,
 		"life": 65534,
+		"speed": 1,
+		"soft": false
 	},
 	"hint": "Enjoy BlocklyRbt Visal Flow !! ブロックリーロボット問題 ビジュアルフローを楽しんでね!!",
 	"state": 0,
 	"goals": 1,
+	"patterns": 0,
+	"blocksLimit": 0,
 	"links": {
 		"question": "Q0-0",
 		"previous": "",
@@ -92,11 +98,14 @@ Map.prototype = {
 		[ -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1 ],
 		[ -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1 ]
 	],
+	"hintBlocks": '',
 	"map2": [],
 	"chars2": [],
 	
 	"image_file_dir": '../img/'
-};
+}
+// end=%%
+;
 
 /**
  * コード実行前の処理

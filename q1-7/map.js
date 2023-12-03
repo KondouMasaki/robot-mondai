@@ -1,6 +1,8 @@
 var Map = function() {
 };
-Map.prototype = {
+Map.prototype = 
+// %%=start
+{
 	"map": [
 	[1,1,1,1,1,1,1,1,1,1,1,1],
 		[1,1,1,1,1,1,1,1,1,1,1,1],
@@ -20,6 +22,8 @@ Map.prototype = {
 		"y": 5,
 		"direction": 0,
 		"life": 65534,
+		"speed": 1,
+		"soft": false
 	},
 	"hint": "4 つのうち、2 つのゴールへ行こう",
 	"state": 0,
@@ -99,7 +103,9 @@ Map.prototype = {
 	"chars2": [],
 	
 	"image_file_dir": '../img/'
-};
+}
+// end=%%
+;
 
 /**
  * コード実行前の処理
