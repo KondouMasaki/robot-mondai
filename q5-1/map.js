@@ -1,6 +1,8 @@
 var Map = function() {
 };
-Map.prototype = {
+Map.prototype = 
+// %%=start
+{
 	"map": [
 		[1,1,1,1,1,1,1,1,1,1,1,1],
 		[1,1,1,1,1,0,0,1,1,1,1,1],
@@ -19,8 +21,9 @@ Map.prototype = {
 		"x": 5,
 		"y": 10,
 		"direction": 0,
-		"life": 65535,
-		"speed": 2
+		"life": 65534,
+		"speed": 2,
+		"soft": false
 	},
 	"hint": "はじめのマスと違う色のマスのそばにゴールがあるよ",
 	"state": 0,
@@ -100,7 +103,9 @@ Map.prototype = {
 	"chars2": [],
 	
 	"image_file_dir": '../img/'
-};
+}
+// end=%%
+;
 
 /**
  * コード実行前の処理

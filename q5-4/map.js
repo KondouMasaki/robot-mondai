@@ -1,6 +1,8 @@
 var Map = function() {
 };
-Map.prototype = {
+Map.prototype = 
+// %%=start
+{
 	"map": [
 		[1,1,1,1,1,1,1,1,1,1,1,1],
 		[1,1,1,1,1,1,1,1,1,1,1,1],
@@ -20,7 +22,8 @@ Map.prototype = {
 		"y": 6,
 		"direction": 0,
 		"life": 14,
-		"speed": 2
+		"speed": 2,
+		"soft": false
 	},
 	"hint": "Enhanced ロボットで使える命令をためしてみよう",
 	"state": 0,
@@ -100,7 +103,9 @@ Map.prototype = {
 	"chars2": [],
 	
 	"image_file_dir": '../img/'
-};
+}
+// end=%%
+;
 
 /**
  * コード実行前の処理
