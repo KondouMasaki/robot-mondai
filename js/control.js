@@ -205,6 +205,7 @@ Control.prototype.initGame = function() {
 	}
 	else {
 		Control.prototype.patternSelector.setAttribute('class', 'hide');
+		document.getElementById('patternLabel').setAttribute('style', 'color: transparent');
 	}
 	
 	Control.prototype.leftBlocks = document.getElementById('capacity');
@@ -500,7 +501,7 @@ Control.prototype.execute = function(cmd, arg1, arg2, arg3) {
 		Control.prototype.drawRobot();
 	}
 	
-	var ptr = Control.prototype.registers.getElementsByTagName('table')[0].children[0].children[1];
+	var ptr = Control.prototype.registers.getElementsByTagName('table')[0].children[1].children[1];
 	for (var i = Robot.prototype.registers_index.length - 1; i >= 0; i--) {
 		for (var j = ptr.children[i].childNodes.length - 1; j >= 0; j--) {
 			ptr.children[i].removeChild(ptr.children[i].childNodes[j]);
@@ -622,6 +623,11 @@ Control.prototype.forward = function() {
 	if (Map.prototype.map[f.y][f.x] != 1) {
 		po.x = f.x;
 		po.y = f.y;
+	}
+	else {
+		if (Map.prototype.start.soft == true) {
+			Robot.prototype.life = 1;	// no life
+		}
 	}
 	
 	Map.prototype.chars[po.y][po.x] = -1;

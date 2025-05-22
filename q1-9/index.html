@@ -28,13 +28,20 @@
   </div>
 </div>
 <div class="container">
+  <div id="robotBalloon">
+    <p></p>
+  </div>
   <div class="row">
     <div class="col" id="mapColumn">
       <div id="map"></div>
       <div id="leftBlocks"><p>あと <span id="capacity"></span> ブロック</p></div>
       <div id="controlPanel">
         <p>
+          <span class="super-small" id="resetLabel">リセット</span><br>
           <button id="resetButton">&#8634;</button>
+        </p>
+        <p>
+          <span class="super-small" id="speedLabel">ロボットのはやさ</span><br>
           <select id="robotSpeed">
             <option value="0">ゆっくり</option>
             <option value="1" selected>ふつう</option>
@@ -42,39 +49,45 @@
             <option value="3">こうそく</option>
             <option value="4">☆★☆</option>
           </select>
+        </p>
+        <p>
           <button id="stopButton">ストップ</button>
+        </p>
+        <p>
           <button id="runButton">スタート</button>
+        </p>
+        <p>
+          <span class="super-small" id="patternLabel">パターン</span><br>
           <select id="patternSelector">
-            <option value="">全部</option>
+            <option value="">ぜんぶ</option>
           </select>
         </p>
-      </div>
-      <div id="robotBalloon">
-        <p></p>
-      </div>
-      <div id="registers">
-        <table>
-          <tbody>
-          <tr>
-            <th>A</th><th>B</th>
-            <th>C</th><th>D</th>
-            <th>E</th><th>F</th>
-            <th>G</th><th>H</th>
-          </tr>
-          <tr>
-            <td>0</td><td>0</td>
-            <td>0</td><td>0</td>
-            <td>0</td><td>0</td>
-            <td>0</td><td>0</td>
-          </tr>
-          </tbody>
-        </table>
-      </div>
-      <div id="controlPanel2">
+        <div class="clear"></div>
+        
         <p>
           <button id="hintButton">ヒント &#129300;</button>
           <button id="xmlButton">xml</button>
         </p>
+        <div id="registers">
+          <table>
+            <caption class="super-small">レジスター</caption>
+            <tbody>
+            <tr>
+              <th>A</th><th>B</th>
+              <th>C</th><th>D</th>
+              <th>E</th><th>F</th>
+              <th>G</th><th>H</th>
+            </tr>
+            <tr>
+              <td>0</td><td>0</td>
+              <td>0</td><td>0</td>
+              <td>0</td><td>0</td>
+              <td>0</td><td>0</td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="clear"></div>
       </div>
     </div>
     <div class="col" id="workspaceColumn">

@@ -1,6 +1,6 @@
 div#header {
 	border-bottom: #dddddd dashed 5px;
-	margin-bottom: 30px;
+	margin-bottom: 8px;
 }
 
 div#header * {
@@ -53,7 +53,10 @@ div.clear {
 	clear: both;
 }
 
-div#controlPanel > p,
+div#controlPanel > p {
+	float: left;
+	margin-left: 8px;
+}
 div#controlPanel2 > p {
 	text-align: center;
 }
@@ -70,7 +73,7 @@ button#runButton {
 button#stopButton {
 	border-radius: 4px;
 }
-button.hide, select.hide {
+button.hide, select.hide, span.hide {
 	visibility: hidden;
 }
 
@@ -82,9 +85,10 @@ option.pass {
 div#robotBalloon > p {
 	border: 1px solid #888888;
 	border-radius: 8px;
-	padding: 8px 10px;
-	width: 360px;
-	height: 70px;
+	padding: 6px 10px;
+	width: 990px;
+	height: 24px;
+	margin: 0 0 4px 0;
 }
 
 div#registers table {
@@ -109,4 +113,8 @@ div#registers td {
 .blocklyTreeLabel {
 	height: 42px;
 	line-height: 42px;
+}
+
+.super-small {
+	font-size: 60%;
 }
