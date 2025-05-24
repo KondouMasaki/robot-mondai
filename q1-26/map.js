@@ -132,5 +132,5 @@ Map.prototype.afterMoved = function(t, pos) {
 	if (count == 5) {
 		Map.prototype.map[4][5] = 0;
 	}
-	console.log(t+": "+count);
+	//console.log(t+": "+count);
 };
