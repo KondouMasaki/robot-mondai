@@ -6,37 +6,37 @@ Map.prototype =
 	"map": [
 		[1,1,1,1,1,1,1,1,1,1,1,1],
 		[1,1,1,1,1,1,1,1,1,1,1,1],
-		[1,1,1,1,1,1,1,1,1,1,1,1],
-		[1,1,1,1,1,1,1,1,1,1,1,1],
-		[1,1,1,1,1,1,1,1,1,1,1,1],
-		[1,1,1,0,0,0,0,0,1,1,1,1],
-		[1,1,1,1,1,1,1,1,1,1,1,1],
-		[1,1,1,1,1,1,1,1,1,1,1,1],
-		[1,1,1,1,1,1,1,1,1,1,1,1],
+		[1,1,1,1,1,5,1,1,1,1,1,1],
+		[1,1,1,1,1,1,0,0,1,1,1,1],
+		[1,1,1,1,1,0,0,0,1,1,1,1],
+		[1,1,1,0,0,1,1,1,1,1,1,1],
+		[1,1,1,0,0,0,1,1,1,1,1,1],
+		[1,1,1,1,1,0,1,1,1,1,1,1],
+		[1,1,1,1,1,0,1,1,1,1,1,1],
 		[1,1,1,1,1,1,1,1,1,1,1,1],
 		[1,1,1,1,1,1,1,1,1,1,1,1],
 		[1,1,1,1,1,1,1,1,1,1,1,1]
 	],
 	"start": {
 		"x": 5,
-		"y": 5,
+		"y": 8,
 		"direction": 0,
-		"life": 6,
-		"speed": 2,
-		"soft": false
+		"life": 65534,
+		"speed": 1,
+		"soft": true
 	},
-	"hint": "赤なら左、青なら右にゴールがあるよ。1 つのプログラムでどちらのパターンでもゴールできるようにしよう",
+	"hint": "かべの動きをよく見てみよう、かべにぶつからなように注意しよう",
 	"state": 0,
 	"goals": 1,
-	"patterns": 2,
+	"patterns": 1,
 	"blocksLimit": 0,
 	"links": {
-		"question": "Q2-1",
-		"previous": "q1-26",
-		"next": "q2-2"
+		"question": "Q1-22",
+		"previous": "q1-21",
+		"next": "q1-23"
 	},
 	"robot": {
-		"type": 1,
+		"type": 0,
 		"Basic": {
 			"forward": true,
 			"turn_right": true,
@@ -45,8 +45,8 @@ Map.prototype =
 		},
 		"Standard": {
 			"floor_color_is": true,
-			"robot_direction_is": false,
-			"movable_is": false
+			"robot_direction_is": true,
+			"movable_is": true
 		},
 		"Advanced": {
 			"times_loop": true,
@@ -98,7 +98,7 @@ Map.prototype =
 		[ -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1 ],
 		[ -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1 ]
 	],
-	"hintBlocks": '<xml xmlns="https://developers.google.com/blockly/xml"><block type="floor_color_is" x="10" y="10"><statement name="equals"><block type="turn_right"></block></statement><statement name="not_equals"><block type="turn_left"></block></statement></block></xml>',
+	"hintBlocks": '',
 	"map2": [],
 	"chars2": [],
 	
@@ -111,21 +111,38 @@ Map.prototype =
  * コード実行前の処理
  */
 Map.prototype.beforeStart = function(pattern) {
-	if (pattern != "") {
-		Map.prototype.state = parseInt(pattern);
-	}
-	if (Map.prototype.state == 0) {
-		Map.prototype.map[5][5] = 2;
-		Map.prototype.map[5][3] = 5;
-	}
-	else {
-		Map.prototype.map[5][5] = 3;
-		Map.prototype.map[5][7] = 5;
-	}
-	Map.prototype.state = (Map.prototype.state + 1) % 2;
+	// if pettern is <empty string> selected "どれか"
 };
 /**
  * ターンごとに発生する処理
  */
 Map.prototype.afterMoved = function(t, pos) {
+	// t is turns value, pos is robot info { "x": num, "y": num, "direction": num }
+	switch (t % 4)
+	{
+		case 1:
+			Map.prototype.map[5][5] = 0;
+			Map.prototype.map[5][4] = 1;
+			Map.prototype.map[3][5] = 0;
+			Map.prototype.map[3][6] = 1;
+			break;
+		case 2:
+			Map.prototype.map[5][4] = 0;
+			Map.prototype.map[5][3] = 1;
+			Map.prototype.map[3][6] = 0;
+			Map.prototype.map[3][7] = 1;
+			break;
+		case 3:
+			Map.prototype.map[5][3] = 0;
+			Map.prototype.map[5][4] = 1;
+			Map.prototype.map[3][7] = 0;
+			Map.prototype.map[3][6] = 1;
+			break;
+		case 0:
+			Map.prototype.map[5][4] = 0;
+			Map.prototype.map[5][5] = 1;
+			Map.prototype.map[3][6] = 0;
+			Map.prototype.map[3][5] = 1;
+			break;
+	}
 };

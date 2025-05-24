@@ -7,36 +7,36 @@ Map.prototype =
 		[1,1,1,1,1,1,1,1,1,1,1,1],
 		[1,1,1,1,1,1,1,1,1,1,1,1],
 		[1,1,1,1,1,1,1,1,1,1,1,1],
+		[1,1,1,1,1,5,1,1,1,1,1,1],
 		[1,1,1,1,1,1,1,1,1,1,1,1],
-		[1,1,1,1,1,1,1,1,1,1,1,1],
-		[1,1,1,0,0,0,0,0,1,1,1,1],
-		[1,1,1,1,1,1,1,1,1,1,1,1],
-		[1,1,1,1,1,1,1,1,1,1,1,1],
-		[1,1,1,1,1,1,1,1,1,1,1,1],
+		[1,1,1,1,1,0,1,1,1,1,1,1],
+		[1,1,1,1,0,0,1,1,1,1,1,1],
+		[1,1,1,1,1,0,1,1,1,1,1,1],
+		[1,1,1,1,1,0,1,1,1,1,1,1],
 		[1,1,1,1,1,1,1,1,1,1,1,1],
 		[1,1,1,1,1,1,1,1,1,1,1,1],
 		[1,1,1,1,1,1,1,1,1,1,1,1]
 	],
 	"start": {
 		"x": 5,
-		"y": 5,
+		"y": 8,
 		"direction": 0,
-		"life": 6,
-		"speed": 2,
+		"life": 65534,
+		"speed": 1,
 		"soft": false
 	},
-	"hint": "赤なら左、青なら右にゴールがあるよ。1 つのプログラムでどちらのパターンでもゴールできるようにしよう",
+	"hint": "白いマスをすべて通ってからゴールに行こう",
 	"state": 0,
 	"goals": 1,
-	"patterns": 2,
+	"patterns": 1,
 	"blocksLimit": 0,
 	"links": {
-		"question": "Q2-1",
-		"previous": "q1-26",
-		"next": "q2-2"
+		"question": "Q1-26",
+		"previous": "q1-25",
+		"next": "q2-1"
 	},
 	"robot": {
-		"type": 1,
+		"type": 0,
 		"Basic": {
 			"forward": true,
 			"turn_right": true,
@@ -45,8 +45,8 @@ Map.prototype =
 		},
 		"Standard": {
 			"floor_color_is": true,
-			"robot_direction_is": false,
-			"movable_is": false
+			"robot_direction_is": true,
+			"movable_is": true
 		},
 		"Advanced": {
 			"times_loop": true,
@@ -98,7 +98,7 @@ Map.prototype =
 		[ -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1 ],
 		[ -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1 ]
 	],
-	"hintBlocks": '<xml xmlns="https://developers.google.com/blockly/xml"><block type="floor_color_is" x="10" y="10"><statement name="equals"><block type="turn_right"></block></statement><statement name="not_equals"><block type="turn_left"></block></statement></block></xml>',
+	"hintBlocks": '',
 	"map2": [],
 	"chars2": [],
 	
@@ -111,21 +111,26 @@ Map.prototype =
  * コード実行前の処理
  */
 Map.prototype.beforeStart = function(pattern) {
-	if (pattern != "") {
-		Map.prototype.state = parseInt(pattern);
-	}
-	if (Map.prototype.state == 0) {
-		Map.prototype.map[5][5] = 2;
-		Map.prototype.map[5][3] = 5;
-	}
-	else {
-		Map.prototype.map[5][5] = 3;
-		Map.prototype.map[5][7] = 5;
-	}
-	Map.prototype.state = (Map.prototype.state + 1) % 2;
+	// if pettern is <empty string> selected "どれか"
 };
 /**
  * ターンごとに発生する処理
  */
 Map.prototype.afterMoved = function(t, pos) {
+	// t is turns value, pos is robot info { "x": num, "y": num, "direction": num }
+	let count = 0;
+	for (let i = 1; i < 11; i++) {
+		for (let j = 1; j < 11; j++) {
+			if (Map.prototype.map[i][j] == 0) {
+				const attr = document.getElementById('map_'+i+'_'+j).getElementsByTagName('img')[0].getAttribute('src');
+				if (attr != Map.prototype.image_file_dir+'none.png') {
+					count++;
+				}
+			}
+		}
+	}
+	if (count == 5) {
+		Map.prototype.map[4][5] = 0;
+	}
+	console.log(t+": "+count);
 };
