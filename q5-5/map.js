@@ -5,30 +5,30 @@ Map.prototype =
 {
 	"map": [
 		[1,1,1,1,1,1,1,1,1,1,1,1],
-		[1,1,1,1,1,1,1,1,1,1,1,1],
-		[1,1,1,1,1,1,1,1,1,1,1,1],
-		[1,1,1,0,1,1,1,0,1,1,1,1],
-		[1,1,1,0,0,0,0,0,1,1,1,1],
-		[1,1,1,0,1,0,1,0,1,1,1,1],
-		[1,1,1,1,1,0,1,1,1,1,1,1],
-		[1,1,1,1,1,1,1,1,1,1,1,1],
-		[1,1,1,1,1,1,1,1,1,1,1,1],
-		[1,1,1,1,1,1,1,1,1,1,1,1],
-		[1,1,1,1,1,1,1,1,1,1,1,1],
+		[1,1,1,1,0,0,0,1,1,1,1,1],
+		[1,1,1,1,0,0,0,1,1,1,1,1],
+		[1,1,1,1,0,0,0,1,1,1,1,1],
+		[1,1,1,1,0,0,0,1,1,1,1,1],
+		[1,1,1,1,0,0,0,1,1,1,1,1],
+		[1,1,1,1,0,0,0,1,1,1,1,1],
+		[1,1,1,1,0,0,0,1,1,1,1,1],
+		[1,1,1,1,0,0,0,1,1,1,1,1],
+		[1,1,1,1,0,0,0,1,1,1,1,1],
+		[1,1,1,1,0,0,0,1,1,1,1,1],
 		[1,1,1,1,1,1,1,1,1,1,1,1]
 	],
 	"start": {
 		"x": 5,
-		"y": 6,
+		"y": 10,
 		"direction": 0,
-		"life": 20,
+		"life": 65534,
 		"speed": 2,
 		"soft": false
 	},
-	"hint": "赤なら右、青なら左だよ",
+	"hint": "右と左にかべがあるか調べながら進もう",
 	"state": 0,
 	"goals": 1,
-	"patterns": 4,
+	"patterns": 3,
 	"blocksLimit": 0,
 	"links": {
 		"question": "Q5-5",
@@ -36,7 +36,7 @@ Map.prototype =
 		"next": "q5-6"
 	},
 	"robot": {
-		"type": 4,
+		"type": 2,
 		"Basic": {
 			"forward": true,
 			"turn_right": true,
@@ -44,14 +44,14 @@ Map.prototype =
 			"nop": true
 		},
 		"Standard": {
-			"floor_color_is": false,
+			"floor_color_is": true,
 			"robot_direction_is": true,
 			"movable_is": true
 		},
 		"Advanced": {
 			"times_loop": true,
-			"floor_color_loop": false,
-			"movable_loop": true
+			"floor_color_loop": true,
+			"movable_loop": false
 		},
 		"Expert": {
 			"write_register": true,
@@ -98,7 +98,7 @@ Map.prototype =
 		[ -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1 ],
 		[ -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1 ]
 	],
-	"hintBlocks": '<xml xmlns="https://developers.google.com/blockly/xml"><block type="write_register" x="10" y="10"><field name="register_name">0</field><value name="register_value"><block type="get_floor_color"></block></value><next><block type="forward"><next><block type="write_register"><field name="register_name">1</field><value name="register_value"><block type="get_floor_color"></block></value></block></next></block></next></block></xml>',
+	"hintBlocks": '<xml xmlns="https://developers.google.com/blockly/xml"><block type="movable_is" x="10" y="10"><value name="direction"><block type="math_number"><field name="NUM">1</field></block></value><statement name="equals"><block type="movable_is"><value name="direction"><block type="math_number"><field name="NUM">3</field></block></value></block></statement></block></xml>',
 	"map2": [],
 	"chars2": [],
 	
@@ -112,36 +112,46 @@ Map.prototype =
  */
 Map.prototype.beforeStart = function(pattern) {
 	// if pettern is <empty string> selected "どれか"
+	var x, y;
 	if (pattern != "") {
-		Map.prototype.state = parseInt(pattern);
+		switch(parseInt(pattern)) {
+			case 0:
+				y = 4;
+				x = 0;
+				break;
+			case 1:
+				y = 5;
+				x = 1;
+				break;
+			case 2:
+				do {
+					y = parseInt(Math.random() * 9);
+				} while(y == Map.prototype.state);
+				x = parseInt(Math.random() * 2);
+				break;
+		}
+	}
+	else {
+		do {
+			y = parseInt(Math.random() * 9);
+		} while(y == Map.prototype.state);
+		x = parseInt(Math.random() * 2);
 	}
 	
-	switch(Map.prototype.state) {
+	Map.prototype.state = y;
+	y++;
+	
+	switch(x) {
 		case 0:
-			Map.prototype.map[6][5] = Map.prototype.colorValue.red;
-			Map.prototype.map[5][5] = Map.prototype.colorValue.red;
-			Map.prototype.map[5][7] = Map.prototype.colorValue.yellow;
+			Map.prototype.map[y][4] = 1;
+			Map.prototype.map[y][6] = 5;
 			break;
 			
 		case 1:
-			Map.prototype.map[6][5] = Map.prototype.colorValue.red;
-			Map.prototype.map[5][5] = Map.prototype.colorValue.blue;
-			Map.prototype.map[3][7] = Map.prototype.colorValue.yellow;
-			break;
-			
-		case 2:
-			Map.prototype.map[6][5] = Map.prototype.colorValue.blue;
-			Map.prototype.map[5][5] = Map.prototype.colorValue.blue;
-			Map.prototype.map[5][3] = Map.prototype.colorValue.yellow;
-			break;
-			
-		case 3:
-			Map.prototype.map[6][5] = Map.prototype.colorValue.blue;
-			Map.prototype.map[5][5] = Map.prototype.colorValue.red;
-			Map.prototype.map[3][3] = Map.prototype.colorValue.yellow;
+			Map.prototype.map[y][6] = 1;
+			Map.prototype.map[y][4] = 5;
 			break;
 	}
-	Map.prototype.state = (Map.prototype.state + 1) % 4;
 };
 /**
  * ターンごとに発生する処理

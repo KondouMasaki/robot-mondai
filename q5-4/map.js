@@ -6,37 +6,37 @@ Map.prototype =
 	"map": [
 		[1,1,1,1,1,1,1,1,1,1,1,1],
 		[1,1,1,1,1,1,1,1,1,1,1,1],
-		[1,1,1,1,1,0,1,1,1,1,1,1],
-		[1,1,1,1,1,0,1,1,1,1,1,1],
-		[1,1,1,0,0,0,0,0,1,1,1,1],
-		[1,1,1,1,1,0,1,1,1,1,1,1],
-		[1,1,1,1,1,0,1,1,1,1,1,1],
-		[1,1,1,1,1,1,1,1,1,1,1,1],
-		[1,1,1,1,1,1,1,1,1,1,1,1],
-		[1,1,1,1,1,1,1,1,1,1,1,1],
-		[1,1,1,1,1,1,1,1,1,1,1,1],
+		[1,1,1,1,2,0,5,1,1,1,1,1],
+		[1,1,1,1,0,1,1,1,1,1,1,1],
+		[1,1,1,1,2,0,3,1,1,1,1,1],
+		[1,1,1,1,1,1,0,1,1,1,1,1],
+		[1,1,1,1,2,0,3,1,1,1,1,1],
+		[1,1,1,1,0,1,1,1,1,1,1,1],
+		[1,1,1,1,2,0,3,1,1,1,1,1],
+		[1,1,1,1,1,1,0,1,1,1,1,1],
+		[1,1,1,1,0,0,3,1,1,1,1,1],
 		[1,1,1,1,1,1,1,1,1,1,1,1]
 	],
 	"start": {
-		"x": 5,
-		"y": 6,
-		"direction": 0,
-		"life": 14,
+		"x": 4,
+		"y": 10,
+		"direction": 1,
+		"life": 65534,
 		"speed": 2,
 		"soft": false
 	},
-	"hint": "Enhanced ロボットで使える命令をためしてみよう",
+	"hint": "マスの色が赤なら右、青なら左に向くといいよ",
 	"state": 0,
 	"goals": 1,
-	"patterns": 3,
-	"blocksLimit": 0,
+	"patterns": 1,
+	"blocksLimit": 10,
 	"links": {
 		"question": "Q5-4",
 		"previous": "q5-3",
 		"next": "q5-5"
 	},
 	"robot": {
-		"type": 4,
+		"type": 2,
 		"Basic": {
 			"forward": true,
 			"turn_right": true,
@@ -44,14 +44,14 @@ Map.prototype =
 			"nop": true
 		},
 		"Standard": {
-			"floor_color_is": false,
+			"floor_color_is": true,
 			"robot_direction_is": true,
 			"movable_is": true
 		},
 		"Advanced": {
 			"times_loop": true,
 			"floor_color_loop": false,
-			"movable_loop": true
+			"movable_loop": false
 		},
 		"Expert": {
 			"write_register": true,
@@ -98,7 +98,7 @@ Map.prototype =
 		[ -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1 ],
 		[ -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1 ]
 	],
-	"hintBlocks": '<xml xmlns="https://developers.google.com/blockly/xml"><block type="write_register" x="10" y="10"><field name="register_name">0</field><value name="register_value"><block type="get_floor_color"></block></value></block></xml>',
+	"hintBlocks": '<xml xmlns="https://developers.google.com/blockly/xml"><block type="floor_color_is" x="10" y="10"><statement name="equals"><block type="turn_right"></block></statement><statement name="not_equals"><block type="turn_left"></block></statement></block></xml>',
 	"map2": [],
 	"chars2": [],
 	
@@ -112,26 +112,6 @@ Map.prototype =
  */
 Map.prototype.beforeStart = function(pattern) {
 	// if pettern is <empty string> selected "どれか"
-	if (pattern != "") {
-		Map.prototype.state = parseInt(pattern);
-	}
-	switch(Map.prototype.state) {
-		case 0:
-			Map.prototype.map[6][5] = Map.prototype.colorValue.red;
-			Map.prototype.map[2][5] = Map.prototype.colorValue.yellow;
-			break;
-			
-		case 1:
-			Map.prototype.map[6][5] = Map.prototype.colorValue.green;
-			Map.prototype.map[4][7] = Map.prototype.colorValue.yellow;
-			break;
-		
-		case 2:
-			Map.prototype.map[6][5] = Map.prototype.colorValue.blue;
-			Map.prototype.map[4][3] = Map.prototype.colorValue.yellow;
-			break;
-	}
-	Map.prototype.state = (Map.prototype.state + 1) % 3;
 };
 /**
  * ターンごとに発生する処理

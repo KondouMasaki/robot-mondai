@@ -5,27 +5,27 @@ Map.prototype =
 {
 	"map": [
 		[1,1,1,1,1,1,1,1,1,1,1,1],
-		[1,1,1,1,1,1,1,1,1,1,1,1],
-		[1,1,1,1,1,0,1,1,1,1,1,1],
 		[1,1,1,1,0,0,0,1,1,1,1,1],
-		[1,1,1,0,1,0,1,0,1,1,1,1],
-		[1,1,0,0,0,0,0,0,0,1,1,1],
-		[1,1,1,0,1,0,1,0,1,1,1,1],
-		[1,1,1,1,1,0,1,1,1,1,1,1],
-		[1,1,1,1,1,1,1,1,1,1,1,1],
-		[1,1,1,1,1,1,1,1,1,1,1,1],
-		[1,1,1,1,1,1,1,1,1,1,1,1],
+		[1,1,1,1,0,0,0,1,1,1,1,1],
+		[1,1,1,1,0,0,0,1,1,1,1,1],
+		[1,1,1,1,0,0,0,1,1,1,1,1],
+		[1,1,1,1,0,0,0,1,1,1,1,1],
+		[1,1,1,1,0,0,0,1,1,1,1,1],
+		[1,1,1,1,0,0,0,1,1,1,1,1],
+		[1,1,1,1,0,0,0,1,1,1,1,1],
+		[1,1,1,1,0,0,0,1,1,1,1,1],
+		[1,1,1,1,0,0,0,1,1,1,1,1],
 		[1,1,1,1,1,1,1,1,1,1,1,1]
 	],
 	"start": {
 		"x": 5,
-		"y": 7,
+		"y": 10,
 		"direction": 0,
 		"life": 65534,
 		"speed": 2,
 		"soft": false
 	},
-	"hint": "マスの色が3色あるよ。赤なら右、青なら左、緑ならまっすぐだよ。",
+	"hint": "ゴールは、マスの色が白ではなくて、右か左にかべがあるところだよ",
 	"state": 0,
 	"goals": 1,
 	"patterns": 3,
@@ -33,10 +33,10 @@ Map.prototype =
 	"links": {
 		"question": "Q5-7",
 		"previous": "q5-6",
-		"next": "q5-8"
+		"next": "q6-1"
 	},
 	"robot": {
-		"type": 4,
+		"type": 2,
 		"Basic": {
 			"forward": true,
 			"turn_right": true,
@@ -98,7 +98,7 @@ Map.prototype =
 		[ -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1 ],
 		[ -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1 ]
 	],
-	"hintBlocks": '<xml xmlns="https://developers.google.com/blockly/xml"><block type="write_register" x="10" y="10"><field name="register_name">0</field><value name="register_value"><block type="get_floor_color"></block></value><next><block type="forward"><next><block type="write_register"><field name="register_name">1</field><value name="register_value"><block type="get_floor_color"></block></value></block></next></block></next></block></xml>',
+	"hintBlocks": '<xml xmlns="https://developers.google.com/blockly/xml"><block type="floor_color_is" x="10" y="10"><value name="color"><block type="math_number"><field name="NUM">0</field></block></value><statement name="equals"><block type="forward"></block></statement><statement name="not_equals"><block type="movable_is"><value name="direction"><block type="math_number"><field name="NUM">1</field></block></value><statement name="equals"><block type="movable_is"><value name="direction"><block type="math_number"><field name="NUM">3</field></block></value></block></statement></block></statement></block></xml>',
 	"map2": [],
 	"chars2": [],
 	
@@ -112,71 +112,69 @@ Map.prototype =
  */
 Map.prototype.beforeStart = function(pattern) {
 	// if pettern is <empty string> selected "どれか"
+	var x, y, z;
 	if (pattern != "") {
 		switch(parseInt(pattern)) {
 			case 0:
-				Map.prototype.state = 1;
+				y = 4;
+				x = 0;
+				z = 0;
 				break;
 			case 1:
-				Map.prototype.state = 5;
+				y = 5;
+				x = 1;
+				z = 1;
 				break;
 			case 2:
-				var v;
 				do {
-					v = parseInt(Math.random() * 9);
-				}while (Map.prototype.state == v);
-				Map.prototype.state = v;
+					y = parseInt(Math.random() * 9);
+				} while(y == Map.prototype.state);
+				x = parseInt(Math.random() * 2);
+				z = parseInt(Math.random() * 32);
 				break;
 		}
 	}
-	switch(Map.prototype.state) {
+	else {
+		do {
+			y = parseInt(Math.random() * 9);
+		} while(y == Map.prototype.state);
+		x = parseInt(Math.random() * 2);
+		z = parseInt(Math.random() * 32);
+	}
+	
+	Map.prototype.state = y;
+	y++;
+	
+	switch(x) {
 		case 0:
-			Map.prototype.map[7][5] = Map.prototype.colorValue.red;
-			Map.prototype.map[6][5] = Map.prototype.colorValue.red;
-			Map.prototype.map[6][7] = Map.prototype.colorValue.yellow;
+			Map.prototype.map[y][4] = 1;
+			Map.prototype.map[y][6] = 5;
+			Map.prototype.map[y][5] = parseInt(Math.random() * 3) + 2;
 			break;
+			
 		case 1:
-			Map.prototype.map[7][5] = Map.prototype.colorValue.red;
-			Map.prototype.map[6][5] = Map.prototype.colorValue.blue;
-			Map.prototype.map[4][7] = Map.prototype.colorValue.yellow;
-			break;
-		case 2:
-			Map.prototype.map[7][5] = Map.prototype.colorValue.red;
-			Map.prototype.map[6][5] = Map.prototype.colorValue.green;
-			Map.prototype.map[5][8] = Map.prototype.colorValue.yellow;
-			break;
-		case 3:
-			Map.prototype.map[7][5] = Map.prototype.colorValue.blue;
-			Map.prototype.map[6][5] = Map.prototype.colorValue.red;
-			Map.prototype.map[4][3] = Map.prototype.colorValue.yellow;
-			break;
-		case 4:
-			Map.prototype.map[7][5] = Map.prototype.colorValue.blue;
-			Map.prototype.map[6][5] = Map.prototype.colorValue.blue;
-			Map.prototype.map[6][3] = Map.prototype.colorValue.yellow;
-			break;
-		case 5:
-			Map.prototype.map[7][5] = Map.prototype.colorValue.blue;
-			Map.prototype.map[6][5] = Map.prototype.colorValue.green;
-			Map.prototype.map[5][2] = Map.prototype.colorValue.yellow;
-			break;
-		case 6:
-			Map.prototype.map[7][5] = Map.prototype.colorValue.green;
-			Map.prototype.map[6][5] = Map.prototype.colorValue.red;
-			Map.prototype.map[3][6] = Map.prototype.colorValue.yellow;
-			break;
-		case 7:
-			Map.prototype.map[7][5] = Map.prototype.colorValue.green;
-			Map.prototype.map[6][5] = Map.prototype.colorValue.blue;
-			Map.prototype.map[3][4] = Map.prototype.colorValue.yellow;
-			break;
-		case 8:
-			Map.prototype.map[7][5] = Map.prototype.colorValue.green;
-			Map.prototype.map[6][5] = Map.prototype.colorValue.green;
-			Map.prototype.map[2][5] = Map.prototype.colorValue.yellow;
+			Map.prototype.map[y][6] = 1;
+			Map.prototype.map[y][4] = 5;
+			Map.prototype.map[y][5] = parseInt(Math.random() * 3) + 2;
 			break;
 	}
-	Map.prototype.state = (Map.prototype.state + 1) % 9;
+	
+	for (var i = y + 1; i <= 9; i++) {
+		switch(z % 4) {
+			case 0:
+				break;
+			case 1:
+				Map.prototype.map[i][4] = 1;
+				break;
+			case 2:
+				Map.prototype.map[i][6] = 1;
+				break;
+			case 3:
+				Map.prototype.map[i][5] = parseInt(Math.random() * 3) + 2;
+				break;
+		}
+		z = (z + 13) % 32;
+	}
 };
 /**
  * ターンごとに発生する処理

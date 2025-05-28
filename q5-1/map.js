@@ -5,38 +5,38 @@ Map.prototype =
 {
 	"map": [
 		[1,1,1,1,1,1,1,1,1,1,1,1],
-		[1,1,1,1,1,0,0,1,1,1,1,1],
-		[1,1,1,1,1,0,0,1,1,1,1,1],
-		[1,1,1,1,1,0,0,1,1,1,1,1],
-		[1,1,1,1,1,0,0,1,1,1,1,1],
-		[1,1,1,1,1,0,0,1,1,1,1,1],
-		[1,1,1,1,1,0,0,1,1,1,1,1],
-		[1,1,1,1,1,0,0,1,1,1,1,1],
-		[1,1,1,1,1,0,0,1,1,1,1,1],
-		[1,1,1,1,1,0,0,1,1,1,1,1],
-		[1,1,1,1,1,0,0,1,1,1,1,1],
+		[1,1,1,1,1,1,1,1,1,1,1,1],
+		[1,1,1,1,1,1,1,1,1,1,1,1],
+		[1,1,1,1,1,5,1,1,1,1,1,1],
+		[1,1,1,1,1,0,1,1,1,1,1,1],
+		[1,1,1,1,1,0,0,5,1,1,1,1],
+		[1,1,1,1,1,0,1,1,1,1,1,1],
+		[1,1,1,1,1,5,1,1,1,1,1,1],
+		[1,1,1,1,1,1,1,1,1,1,1,1],
+		[1,1,1,1,1,1,1,1,1,1,1,1],
+		[1,1,1,1,1,1,1,1,1,1,1,1],
 		[1,1,1,1,1,1,1,1,1,1,1,1]
 	],
 	"start": {
 		"x": 5,
-		"y": 10,
+		"y": 5,
 		"direction": 0,
 		"life": 65534,
 		"speed": 2,
 		"soft": false
 	},
-	"hint": "はじめのマスと違う色のマスのそばにゴールがあるよ",
+	"hint": "くり返しを使い、少ない命令で 3 つのゴールへ行こう",
 	"state": 0,
-	"goals": 1,
-	"patterns": 3,
-	"blocksLimit": 0,
+	"goals": 3,
+	"patterns": 1,
+	"blocksLimit": 10,
 	"links": {
 		"question": "Q5-1",
-		"previous": "q4-4",
+		"previous": "q4-6",
 		"next": "q5-2"
 	},
 	"robot": {
-		"type": 4,
+		"type": 2,
 		"Basic": {
 			"forward": true,
 			"turn_right": true,
@@ -46,11 +46,11 @@ Map.prototype =
 		"Standard": {
 			"floor_color_is": true,
 			"robot_direction_is": true,
-			"movable_is": false
+			"movable_is": true
 		},
 		"Advanced": {
 			"times_loop": true,
-			"floor_color_loop": true,
+			"floor_color_loop": false,
 			"movable_loop": false
 		},
 		"Expert": {
@@ -60,10 +60,10 @@ Map.prototype =
 			"get_direction": true
 		},
 		"Enhanced": {
-			"values_equal_is": false,
+			"values_equal_is": true,
 			"values_equal_loop": true,
-			"infinity_loop": false,
-			"is_movable_to": false
+			"infinity_loop": true,
+			"is_movable_to": true
 		},
 		"Superior": {
 			"add_register": true,
@@ -98,7 +98,7 @@ Map.prototype =
 		[ -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1 ],
 		[ -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1 ]
 	],
-	"hintBlocks": '<xml xmlns="https://developers.google.com/blockly/xml"><block type="write_register" x="10" y="10"><field name="register_name">0</field><value name="register_value"><block type="get_floor_color"></block></value><next><block type="floor_color_loop"><statement name="equals"><block type="forward"></block></statement></block></next></block></xml>',
+	"hintBlocks": '<xml xmlns="https://developers.google.com/blockly/xml"><block type="times_loop" x="10" y="10"><value name="times"><block type="math_number"><field name="NUM">3</field></block></value></block></xml>',
 	"map2": [],
 	"chars2": [],
 	
@@ -112,54 +112,6 @@ Map.prototype =
  */
 Map.prototype.beforeStart = function(pattern) {
 	// if pettern is <empty string> selected "どれか"
-	var y, c;
-	if (pattern != "") {
-		switch(parseInt(pattern)) {
-			case 0:
-				y = 5;
-				c = 0;
-				break;
-			case 1:
-				y = 6;
-				c = 2;
-				break;
-			case 2:
-				do {
-					y = parseInt(Math.random() * 9);
-				} while(Map.prototype.state == y);
-				c = parseInt(Math.random() * 3);
-				break;
-		}
-	}
-	else {
-		do {
-			y = parseInt(Math.random() * 9);
-		} while(Map.prototype.state == y);
-		c = parseInt(Math.random() * 3);
-	}
-	
-	Map.prototype.state = y;
-	y++;
-	
-	Map.prototype.map[y][6] = 5;
-	Map.prototype.map[y - 1][6] = 1;
-	Map.prototype.map[y + 1][6] = 1;
-	
-	var t;
-	switch(c) {
-		case 0:
-			t = 2;
-			break;
-		case 1:
-			t = 3;
-			break;
-		case 2:
-			t = 4;
-			break;
-	}
-	for (var i = y + 1; i <= 10; i++) {
-		Map.prototype.map[i][5] = t;
-	}
 };
 /**
  * ターンごとに発生する処理
