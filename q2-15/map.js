@@ -189,7 +189,7 @@ Map.prototype =
   "links": {
     "question": "Q2-15",
     "previous": "q2-14",
-    "next": "q3-1"
+    "next": "q2-16"
   },
   "robot": {
     "type": 1,
@@ -422,7 +422,7 @@ Map.prototype =
  * コード実行前の処理
  */
 Map.prototype.beforeStart = function(pattern) {
-if (pattern != "") {
+	if (pattern != "") {
 		Map.prototype.state = parseInt(pattern);
 	}
 	if (Map.prototype.state == 0) {
