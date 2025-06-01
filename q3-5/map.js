@@ -5,30 +5,30 @@ Map.prototype =
 {
 	"map": [
 		[1,1,1,1,1,1,1,1,1,1,1,1],
+		[1,1,1,1,1,1,1,1,1,1,1,1],
+		[1,0,0,1,1,1,1,1,1,0,5,1],
+		[1,1,0,0,1,1,1,1,0,0,1,1],
+		[1,1,1,0,0,1,1,0,0,1,1,1],
+		[1,1,1,1,0,0,0,0,1,1,1,1],
 		[1,1,1,1,1,0,0,1,1,1,1,1],
-		[1,1,1,1,1,0,0,1,1,1,1,1],
-		[1,1,1,1,1,0,0,1,1,1,1,1],
-		[1,1,1,1,1,0,0,1,1,1,1,1],
-		[1,1,1,1,1,0,0,1,1,1,1,1],
-		[1,1,1,1,1,0,0,1,1,1,1,1],
-		[1,1,1,1,1,0,0,1,1,1,1,1],
-		[1,1,1,1,1,0,0,1,1,1,1,1],
-		[1,1,1,1,1,0,0,1,1,1,1,1],
-		[1,1,1,1,1,0,1,1,1,1,1,1],
+		[1,1,1,1,1,1,1,1,1,1,1,1],
+		[1,1,1,1,1,1,1,1,1,1,1,1],
+		[1,1,1,1,1,1,1,1,1,1,1,1],
+		[1,1,1,1,1,1,1,1,1,1,1,1],
 		[1,1,1,1,1,1,1,1,1,1,1,1]
 	],
 	"start": {
-		"x": 5,
-		"y": 10,
-		"direction": 0,
+		"x": 1,
+		"y": 2,
+		"direction": 1,
 		"life": 65534,
 		"speed": 2,
 		"soft": false
 	},
-	"hint": "赤いマスの先のあたりにゴールがあるよ",
+	"hint": "1だんずつ上や下へ行く命令をくり返してみよう",
 	"state": 0,
 	"goals": 1,
-	"patterns": 3,
+	"patterns": 1,
 	"blocksLimit": 0,
 	"links": {
 		"question": "Q3-5",
@@ -45,12 +45,12 @@ Map.prototype =
 		},
 		"Standard": {
 			"floor_color_is": false,
-			"robot_direction_is": true,
-			"movable_is": true
+			"robot_direction_is": false,
+			"movable_is": false
 		},
 		"Advanced": {
-			"times_loop": false,
-			"floor_color_loop": true,
+			"times_loop": true,
+			"floor_color_loop": false,
 			"movable_loop": false
 		},
 		"Expert": {
@@ -98,7 +98,7 @@ Map.prototype =
 		[ -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1 ],
 		[ -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1 ]
 	],
-	"hintBlocks": '<xml xmlns="https://developers.google.com/blockly/xml"><block type="floor_color_loop" x="10" y="10"><statement name="equals"><block type="forward"></block></statement></block></xml>',
+	"hintBlocks": '',
 	"map2": [],
 	"chars2": [],
 	
@@ -110,39 +110,7 @@ Map.prototype =
 /**
  * コード実行前の処理
  */
-Map.prototype.beforeStart = function(pattern) {
-	if (pattern != "") {
-		switch(parseInt(pattern)) {
-			case 0:
-				var v = 2;
-				break;
-			case 1:
-				var v = 5;
-				break;
-			case 2:
-				var v;
-				do {
-					v = parseInt(Math.random() * 8);
-				}while(v == Map.prototype.state);
-				break;
-		}
-	}
-	else {
-		var v;
-		do {
-			v = parseInt(Math.random() * 8);
-		}while(v == Map.prototype.state);
-	}
-	Map.prototype.state = v;
-	
-	v = v + 2;
-	
-	for (var i = 10; i >= v; i--) {
-		Map.prototype.map[i][5] = 2;
-	}
-	Map.prototype.map[v - 1][6] = 5;
-	Map.prototype.map[v - 2][6] = 1;
-	Map.prototype.map[v][6] = 1;
+Map.prototype.beforeStart = function() {
 };
 /**
  * ターンごとに発生する処理

@@ -5,35 +5,35 @@ Map.prototype =
 {
   "map": [
 		[1,1,1,1,1,1,1,1,1,1,1,1],
-		[1,1,1,1,0,1,2,1,1,1,1,1],
-		[1,1,1,1,0,1,2,1,1,1,1,1],
-		[1,1,1,1,0,1,2,1,1,1,1,1],
-		[1,1,1,1,0,1,2,1,1,1,1,1],
-		[1,1,1,1,0,1,2,1,1,1,1,1],
-		[1,1,1,1,0,1,2,1,1,1,1,1],
-		[1,1,1,1,0,1,2,1,1,1,1,1],
-		[1,1,1,1,0,1,2,1,1,1,1,1],
-		[1,1,1,1,0,1,2,1,1,1,1,1],
-		[1,1,1,1,0,1,0,5,1,1,1,1],
+		[1,1,1,1,1,0,1,1,1,1,1,1],
+		[1,1,1,1,1,0,1,1,1,1,1,1],
+		[1,1,1,1,1,0,1,1,1,1,1,1],
+		[1,1,1,1,1,0,1,1,1,1,1,1],
+		[1,1,1,1,1,0,1,1,1,1,1,1],
+		[1,1,1,1,1,0,1,1,1,1,1,1],
+		[1,1,1,1,1,0,1,1,1,1,1,1],
+		[1,1,1,1,1,0,1,1,1,1,1,1],
+		[1,1,1,1,1,0,1,1,1,1,1,1],
+		[1,1,1,1,1,0,1,1,1,1,1,1],
 		[1,1,1,1,1,1,1,1,1,1,1,1]
 	],
   "start": {
-    "x": 4,
+    "x": 5,
     "y": 10,
     "direction": 0,
     "life": 65534,
     "speed": 2,
     "soft": true
   },
-  "hint": "マスの色を見ながらゴールへ行こう、かべにぶつからないように注意しよう",
+  "hint": "つきあたりの右にゴールがあるよ、かべにぶつからないように注意しよう",
   "state": 0,
   "goals": 1,
   "patterns": 3,
   "blocksLimit": 0,
   "links": {
-    "question": "Q3-8",
-    "previous": "q3-7",
-    "next": "q3-9"
+    "question": "Q3-13",
+    "previous": "q3-12",
+    "next": "q3-14"
   },
   "robot": {
     "type": 2,
@@ -50,8 +50,8 @@ Map.prototype =
 	},
     "Advanced": {
       "times_loop": false,
-      "floor_color_loop": true,
-      "movable_loop": false
+      "floor_color_loop": false,
+      "movable_loop": true
     },
     "Expert": {
       "write_register": true,
@@ -253,11 +253,14 @@ Map.prototype =
       -1
     ]
   ],
-  "hintBlocks": '',
+  "hintBlocks": "<xml xmlns=\"https://developers.google.com/blockly/xml\"><block type=\"movable_loop\" x=\"10\" y=\"10\"><statement name=\"equals\"><block type=\"forward\"></block></statement></block></xml>",
   "map2": [],
   "chars2": [],
   "image_file_dir": "../img/"
 }// end=%%
+
+
+
 
 ;
 
@@ -268,29 +271,25 @@ Map.prototype.beforeStart = function(pattern) {
 	if (pattern == "") {
 		pattern = 0;
 	}
-	
-	let v;
+	let y;
 	switch(parseInt(pattern)) {
 		case 0:
-			v = 3;
+			y = 2;
 			break;
 		case 1:
-			v = 6;
+			y = 4;
 			break;
 		case 2:
 			do {
-				v = parseInt(Math.random() * 8);
-			} while(v == Map.prototype.state);
+				y = parseInt(Math.random() * 8)
+			}while(y == Map.prototype.state);
 			break;
 	}
-	Map.prototype.state = v;
+	Map.prototype.state = y;
 	
-	v = v + 2;
-	Map.prototype.map[v][5] = 0;
-	for (let i = v + 1; i <= 10; i++) {
-		Map.prototype.map[i][4] = 3;
-	}
-	Map.prototype.map[v - 1][4] = 1;
+	y = y + 2;
+	Map.prototype.map[y][6] = 5;
+	Map.prototype.map[y - 1][5] = 1;
 };
 /**
  * ターンごとに発生する処理

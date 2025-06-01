@@ -44,9 +44,9 @@ Map.prototype =
 			"nop": true
 		},
 		"Standard": {
-			"floor_color_is": true,
-			"robot_direction_is": true,
-			"movable_is": true
+			"floor_color_is": false,
+			"robot_direction_is": false,
+			"movable_is": false
 		},
 		"Advanced": {
 			"times_loop": true,
