@@ -4,192 +4,36 @@ Map.prototype =
 // %%=start
 {
   "map": [
-    [
-      1,
-      1,
-      1,
-      1,
-      1,
-      1,
-      1,
-      1,
-      1,
-      1,
-      1,
-      1
-    ],
-    [
-      1,
-      0,
-      0,
-      0,
-      0,
-      0,
-      0,
-      0,
-      0,
-      0,
-      0,
-      1
-    ],
-    [
-      1,
-      0,
-      0,
-      0,
-      0,
-      0,
-      0,
-      0,
-      0,
-      0,
-      0,
-      1
-    ],
-    [
-      1,
-      0,
-      0,
-      0,
-      0,
-      0,
-      0,
-      0,
-      0,
-      0,
-      0,
-      1
-    ],
-    [
-      1,
-      0,
-      0,
-      0,
-      0,
-      0,
-      0,
-      0,
-      0,
-      0,
-      0,
-      1
-    ],
-    [
-      1,
-      0,
-      0,
-      0,
-      0,
-      0,
-      0,
-      0,
-      0,
-      0,
-      0,
-      1
-    ],
-    [
-      1,
-      0,
-      0,
-      0,
-      0,
-      0,
-      0,
-      0,
-      0,
-      0,
-      0,
-      1
-    ],
-    [
-      1,
-      0,
-      0,
-      0,
-      0,
-      0,
-      0,
-      0,
-      0,
-      0,
-      0,
-      1
-    ],
-    [
-      1,
-      0,
-      0,
-      0,
-      0,
-      0,
-      0,
-      0,
-      0,
-      0,
-      0,
-      1
-    ],
-    [
-      1,
-      0,
-      0,
-      0,
-      0,
-      0,
-      0,
-      0,
-      0,
-      0,
-      0,
-      1
-    ],
-    [
-      1,
-      0,
-      0,
-      0,
-      0,
-      0,
-      0,
-      0,
-      0,
-      0,
-      0,
-      1
-    ],
-    [
-      1,
-      1,
-      1,
-      1,
-      1,
-      1,
-      1,
-      1,
-      1,
-      1,
-      1,
-      1
-    ]
-  ],
+		[1,1,1,1,1,1,1,1,1,1,1,1],
+		[1,0,0,0,0,0,0,0,0,0,0,1],
+		[1,0,0,0,0,0,0,0,0,0,0,1],
+		[1,0,0,0,0,0,0,0,0,0,0,1],
+		[1,0,0,0,0,0,0,0,0,0,0,1],
+		[1,0,0,0,0,0,0,0,0,0,0,1],
+		[1,0,0,0,0,0,0,0,0,0,0,1],
+		[1,0,0,0,0,0,0,0,0,0,0,1],
+		[1,0,0,0,0,0,0,0,0,0,0,1],
+		[1,0,0,0,0,0,0,0,0,0,0,1],
+		[1,0,0,0,0,0,0,0,0,0,0,1],
+		[1,1,1,1,1,1,1,1,1,1,1,1]
+	],
   "start": {
     "x": 1,
     "y": 10,
     "direction": 0,
     "life": 65534,
     "speed": 2,
-    "soft": false
+    "soft": true
   },
-  "hint": "かべがあったら右に進むといいよ!!",
+  "hint": "いろいろなくり返しを組み合わせてゴールへ行こう、青いマスには乗らず、かべにもぶつからないように注意しよう",
   "state": 0,
   "goals": 1,
   "patterns": 3,
   "blocksLimit": 0,
   "links": {
-    "question": "Q3-17",
-    "previous": "q3-16",
-    "next": "q3-18"
+    "question": "Q3-20",
+    "previous": "q3-19",
+    "next": "q3-21"
   },
   "robot": {
     "type": 2,
@@ -206,7 +50,7 @@ Map.prototype =
     },
     "Advanced": {
       "times_loop": false,
-      "floor_color_loop": false,
+      "floor_color_loop": true,
       "movable_loop": true
     },
     "Expert": {
@@ -409,57 +253,63 @@ Map.prototype =
       -1
     ]
   ],
-  "hintBlocks": "<xml xmlns=\"https://developers.google.com/blockly/xml\"><block type=\"movable_loop\" x=\"10\" y=\"10\"><value name=\"direction\"><block type=\"math_number\"><field name=\"NUM\">0</field></block></value><next><block type=\"turn_right\"></block></next></block></xml>",
+  "hintBlocks": '',
   "map2": [],
   "chars2": [],
   "image_file_dir": "../img/"
 }// end=%%
-
-
-
-
 ;
 
 /**
  * コード実行前の処理
  */
 Map.prototype.beforeStart = function(pattern) {
-	var w1;
-	var w2;
-	if (pattern != "") {
-		switch(parseInt(pattern)) {
-			case 0:
-				w1 = 3;
-				w2 = 6;
-				break;
-				
-			case 1:
-				w1 = 4;
-				w2 = 4;
-				break;
-				
-			case 2:
-				do {
-					w1 = parseInt(Math.random() * 9);
-				}while(w1 == Map.prototype.state);
-				w2 = parseInt(Math.random() * 9) + 3;
-				break;
-		}
+	if (pattern == "") {
+		pattern = 0;
 	}
-	else {
-		do {
-			w1 = parseInt(Math.random() * 9);
-		}while(w1 == Map.prototype.state);
-		w2 = parseInt(Math.random() * 9) + 3;
+	let a;	// 0-7
+	let b;	// 0-7
+	switch(parseInt(pattern)) {
+		case 0:
+			a = 6;
+			b = 5;
+			break;
+		case 1:
+			a = 3;
+			b = 7;
+			break;
+		case 2:
+			a = Math.floor(Math.random() * 8);
+			b = Math.floor(Math.random() * 8);
+			break;
 	}
-	Map.prototype.state = w1;
+	a += 2;
+	b += 3;
 	
-	Map.prototype.map[w1][1] = 1;
-	Map.prototype.map[w1 + 1][w2] = 1;
-	Map.prototype.map[w1 + 2][w2 - 1] = 5;
+	for (let i = 1; i <= 10; i++) {
+		Map.prototype.map[a - 2][i] = 1;
+	}
+	
+	for (let i = 2; i < b; i++) {
+		Map.prototype.map[a - 1][i] = 2;
+		Map.prototype.map[a][i] = 3;
+	}
+	for (let i = b + 1; i <= 10; i++) {
+		Map.prototype.map[a][i] = 3;
+	}
+	
+	Map.prototype.map[a][b] = 5;
 };
 /**
  * ターンごとに発生する処理
  */
 Map.prototype.afterMoved = function(t, pos) {
+	const x = pos.x;
+	const y = pos.y;
+	if (Map.prototype.map[y][x] == 3) {
+		Map.prototype.map[y - 1][x] = 1;
+		Map.prototype.map[y + 1][x] = 1;
+		Map.prototype.map[y][x - 1] = 1;
+		Map.prototype.map[y][x + 1] = 1;
+	}
 };

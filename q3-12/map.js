@@ -279,7 +279,7 @@ Map.prototype.beforeStart = function(pattern) {
 			break;
 		case 2:
 			do {
-				v = parseInt(Math.random() * 7);
+				v = parseInt(Math.random() * 8);
 			} while(v == Map.prototype.state);
 			break;
 	}
