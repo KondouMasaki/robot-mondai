@@ -586,16 +586,16 @@ Control.prototype.getRobotBackPosition = function() {
 	
 	switch(Robot.prototype.direction) {
 		case 0:
-			pos.x++;
+			pos.y++;
 			break;
 		case 1:
-			pos.y--;
-			break;
-		case 2:
 			pos.x--;
 			break;
+		case 2:
+			pos.y--;
+			break;
 		case 3:
-			pos.y++;
+			pos.x++;
 			break;
 		default:
 			break;
