@@ -25,7 +25,7 @@ Map.prototype =
 		"speed": 2,
 		"soft": false
 	},
-	"hint": "「もし」の命令を組み合わせてゴールへ行こう",
+	"hint": "「もし」の命令を組み合わせよう。まずはロボットを上向きにして色のついたマスへ行こう",
 	"state": 0,
 	"goals": 1,
 	"patterns": 4,
