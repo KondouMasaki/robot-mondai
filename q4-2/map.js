@@ -6,13 +6,13 @@ Map.prototype =
 	"map": [
 		[1,1,1,1,1,1,1,1,1,1,1,1],
 		[1,1,1,1,1,1,1,1,1,1,1,1],
-		[1,1,1,1,1,1,1,1,1,1,1,1],
+		[1,1,1,1,1,4,1,1,1,1,1,1],
 		[1,1,1,1,1,0,1,1,1,1,1,1],
 		[1,1,1,1,1,0,1,1,1,1,1,1],
-		[1,1,1,0,0,0,0,0,1,1,1,1],
+		[1,1,2,0,0,0,0,0,3,1,1,1],
 		[1,1,1,1,1,0,1,1,1,1,1,1],
 		[1,1,1,1,1,0,1,1,1,1,1,1],
-		[1,1,1,1,1,1,1,1,1,1,1,1],
+		[1,1,1,1,1,0,1,1,1,1,1,1],
 		[1,1,1,1,1,1,1,1,1,1,1,1],
 		[1,1,1,1,1,1,1,1,1,1,1,1],
 		[1,1,1,1,1,1,1,1,1,1,1,1]
@@ -98,7 +98,7 @@ Map.prototype =
 		[ -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1 ],
 		[ -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1 ]
 	],
-	"hintBlocks": '<xml xmlns="https://developers.google.com/blockly/xml"><block type="floor_color_is" x="10" y="10"><statement name="not_equals"><block type="floor_color_is"></block></statement></block></xml>',
+	"hintBlocks": '<xml xmlns="https://developers.google.com/blockly/xml"><block type="floor_color_is" x="10" y="10"><statement name="not_equals"><block type="floor_color_is"><statement name="not_equals"><block type="floor_color_is"></block></statement></block></statement></block></xml>',
 	"map2": [],
 	"chars2": [],
 	

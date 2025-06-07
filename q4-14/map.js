@@ -4,192 +4,36 @@ Map.prototype =
 // %%=start
 {
   "map": [
-    [
-      1,
-      1,
-      1,
-      1,
-      1,
-      1,
-      1,
-      1,
-      1,
-      1,
-      1,
-      1
-    ],
-    [
-      1,
-      1,
-      1,
-      1,
-      1,
-      1,
-      1,
-      1,
-      1,
-      1,
-      1,
-      1
-    ],
-    [
-      1,
-      1,
-      0,
-      1,
-      1,
-      1,
-      1,
-      1,
-      0,
-      1,
-      1,
-      1
-    ],
-    [
-      1,
-      1,
-      0,
-      1,
-      1,
-      1,
-      1,
-      1,
-      0,
-      1,
-      1,
-      1
-    ],
-    [
-      1,
-      1,
-      0,
-      0,
-      0,
-      0,
-      0,
-      0,
-      0,
-      1,
-      1,
-      1
-    ],
-    [
-      1,
-      1,
-      0,
-      1,
-      1,
-      0,
-      1,
-      1,
-      0,
-      1,
-      1,
-      1
-    ],
-    [
-      1,
-      1,
-      0,
-      1,
-      1,
-      0,
-      1,
-      1,
-      0,
-      1,
-      1,
-      1
-    ],
-    [
-      1,
-      1,
-      1,
-      1,
-      1,
-      0,
-      1,
-      1,
-      1,
-      1,
-      1,
-      1
-    ],
-    [
-      1,
-      1,
-      1,
-      1,
-      1,
-      1,
-      1,
-      1,
-      1,
-      1,
-      1,
-      1
-    ],
-    [
-      1,
-      1,
-      1,
-      1,
-      1,
-      1,
-      1,
-      1,
-      1,
-      1,
-      1,
-      1
-    ],
-    [
-      1,
-      1,
-      1,
-      1,
-      1,
-      1,
-      1,
-      1,
-      1,
-      1,
-      1,
-      1
-    ],
-    [
-      1,
-      1,
-      1,
-      1,
-      1,
-      1,
-      1,
-      1,
-      1,
-      1,
-      1,
-      1
-    ]
-  ],
+		[1,1,1,1,1,1,1,1,1,1,1,1],
+		[1,1,1,1,1,1,1,1,1,1,1,1],
+		[1,1,1,3,1,1,1,2,1,1,1,1],
+		[1,1,1,5,1,1,1,5,1,1,1,1],
+		[1,1,1,0,0,0,0,0,1,1,1,1],
+		[1,1,1,5,1,0,1,5,1,1,1,1],
+		[1,1,1,1,1,0,1,1,1,1,1,1],
+		[1,1,1,1,1,1,1,1,1,1,1,1],
+		[1,1,1,1,1,1,1,1,1,1,1,1],
+		[1,1,1,1,1,1,1,1,1,1,1,1],
+		[1,1,1,1,1,1,1,1,1,1,1,1],
+		[1,1,1,1,1,1,1,1,1,1,1,1]
+	],
   "start": {
     "x": 5,
-    "y": 7,
+    "y": 6,
     "direction": 0,
-    "life": 64,
+    "life": 32,
     "speed": 2,
-    "soft": false
+    "soft": true
   },
-  "hint": "マスの色とゴールにかん係はあるのかな？",
+  "hint": "ロボットの向きはいつもちがうよ、かべにぶつからないように注意してゴールへ行こう",
   "state": 0,
   "goals": 1,
   "patterns": 4,
   "blocksLimit": 0,
   "links": {
-    "question": "Q4-5",
-    "previous": "q4-4",
-    "next": "q4-6"
+    "question": "Q4-14",
+    "previous": "q4-13",
+    "next": "q4-15"
   },
   "robot": {
     "type": 1,
@@ -201,8 +45,8 @@ Map.prototype =
     },
     "Standard": {
       "floor_color_is": true,
-      "robot_direction_is": false,
-      "movable_is": false
+      "robot_direction_is": true,
+      "movable_is": true
     },
     "Advanced": {
       "times_loop": true,
@@ -409,13 +253,13 @@ Map.prototype =
       -1
     ]
   ],
-  "hintBlocks": "<xml xmlns=\"https://developers.google.com/blockly/xml\"><block type=\"floor_color_is\" x=\"10\" y=\"10\"><next><block type=\"forward\"><next><block type=\"forward\"><next><block type=\"forward\"><next><block type=\"floor_color_is\"></block></next></block></next></block></next></block></next></block></xml>",
+  "hintBlocks": '',
   "map2": [],
   "chars2": [],
   "image_file_dir": "../img/"
 }// end=%%
-
 ;
+
 
 
 
@@ -429,24 +273,28 @@ Map.prototype.beforeStart = function(pattern) {
 	}
 	switch(Map.prototype.state) {
 		case 0:
-			Map.prototype.map[4][5] = 2;
-			Map.prototype.map[4][8] = 2;
-			Map.prototype.map[6][8] = 5;
+			Map.prototype.map[5][5] = 2;
+			Map.prototype.map[4][3] = 1;
+			Map.prototype.map[3][7] = 1;
+			Robot.prototype.direction = 1;
 			break;
 		case 1:
-			Map.prototype.map[4][5] = 2;
-			Map.prototype.map[4][8] = 3;
-			Map.prototype.map[2][8] = 5;
+			Map.prototype.map[5][5] = 2;
+			Map.prototype.map[4][3] = 1;
+			Map.prototype.map[5][7] = 1;
+			Robot.prototype.direction = 3;
 			break;
 		case 2:
-			Map.prototype.map[4][5] = 3;
-			Map.prototype.map[4][2] = 3;
-			Map.prototype.map[6][2] = 5;
+			Map.prototype.map[5][5] = 3;
+			Map.prototype.map[4][7] = 1;
+			Map.prototype.map[5][3] = 1;
+			Robot.prototype.direction = 3;
 			break;
 		case 3:
-			Map.prototype.map[4][5] = 3;
-			Map.prototype.map[4][2] = 2;
-			Map.prototype.map[2][2] = 5;
+			Map.prototype.map[5][5] = 3;
+			Map.prototype.map[4][7] = 1;
+			Map.prototype.map[3][3] = 1;
+			Robot.prototype.direction = 1;
 			break;
 	}
 	Map.prototype.state = (Map.prototype.state + 1) % 4;
