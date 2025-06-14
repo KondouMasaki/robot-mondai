@@ -4,36 +4,192 @@ Map.prototype =
 // %%=start
 {
   "map": [
-		[1,1,1,1,1,1,1,1,1,1,1,1],
-		[1,1,0,0,0,0,5,1,1,1,1,1],
-		[1,1,0,1,1,1,1,1,1,1,1,1],
-		[1,1,0,1,0,0,0,0,0,1,1,1],
-		[1,1,0,1,1,1,1,1,0,1,1,1],
-		[1,1,0,1,1,1,1,1,0,1,1,1],
-		[1,1,0,1,1,1,1,1,0,1,1,1],
-		[1,1,0,0,0,0,0,0,0,1,1,1],
-		[1,1,1,1,1,1,1,1,1,1,1,1],
-		[1,1,1,1,1,1,1,1,1,1,1,1],
-		[1,1,1,1,1,1,1,1,1,1,1,1],
-		[1,1,1,1,1,1,1,1,1,1,1,1]
-	],
+    [
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1
+    ],
+    [
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1
+    ],
+    [
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1
+    ],
+    [
+      1,
+      1,
+      1,
+      1,
+      1,
+      5,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1
+    ],
+    [
+      1,
+      1,
+      1,
+      1,
+      1,
+      0,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1
+    ],
+    [
+      1,
+      1,
+      1,
+      1,
+      1,
+      0,
+      0,
+      5,
+      1,
+      1,
+      1,
+      1
+    ],
+    [
+      1,
+      1,
+      1,
+      1,
+      1,
+      0,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1
+    ],
+    [
+      1,
+      1,
+      1,
+      1,
+      1,
+      5,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1
+    ],
+    [
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1
+    ],
+    [
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1
+    ],
+    [
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1
+    ],
+    [
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1
+    ]
+  ],
   "start": {
-    "x": 4,
-    "y": 3,
-    "direction": 1,
+    "x": 5,
+    "y": 5,
+    "direction": 0,
     "life": 65534,
     "speed": 2,
-    "soft": true
+    "soft": false
   },
-  "hint": "くり返しを使い、少ない命令でゴールへ行こう。前に進めるか調べながら、かべにぶつからないように注意しよう",
+  "hint": "くり返しを使い、少ない命令で 3 つのゴールへ行こう",
   "state": 0,
-  "goals": 1,
+  "goals": 3,
   "patterns": 1,
-  "blocksLimit": 6,
+  "blocksLimit": 10,
   "links": {
-    "question": "Q5-3",
-    "previous": "q5-2",
-    "next": "q5-4"
+    "question": "Q5-11",
+    "previous": "q5-10",
+    "next": "q5-12"
   },
   "robot": {
     "type": 2,
@@ -51,7 +207,7 @@ Map.prototype =
     "Advanced": {
       "times_loop": true,
       "floor_color_loop": false,
-      "movable_loop": true
+      "movable_loop": false
     },
     "Expert": {
       "write_register": true,
@@ -253,7 +409,7 @@ Map.prototype =
       -1
     ]
   ],
-  "hintBlocks": '<xml xmlns="https://developers.google.com/blockly/xml"><block type="times_loop" x="10" y="10"><statement name="equals"><block type="movable_loop"><value name="direction"><block type="math_number"><field name="NUM">0</field></block></value></block></statement></block></xml>',
+  "hintBlocks": "<xml xmlns=\"https://developers.google.com/blockly/xml\"><block type=\"times_loop\" x=\"10\" y=\"10\"><value name=\"times\"><block type=\"math_number\"><field name=\"NUM\">3</field></block></value></block></xml>",
   "map2": [],
   "chars2": [],
   "image_file_dir": "../img/"

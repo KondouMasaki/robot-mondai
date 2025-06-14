@@ -5,35 +5,35 @@ Map.prototype =
 {
   "map": [
 		[1,1,1,1,1,1,1,1,1,1,1,1],
-		[1,1,0,0,0,0,5,1,1,1,1,1],
-		[1,1,0,1,1,1,1,1,1,1,1,1],
-		[1,1,0,1,0,0,0,0,0,1,1,1],
-		[1,1,0,1,1,1,1,1,0,1,1,1],
-		[1,1,0,1,1,1,1,1,0,1,1,1],
-		[1,1,0,1,1,1,1,1,0,1,1,1],
-		[1,1,0,0,0,0,0,0,0,1,1,1],
+		[1,0,0,1,1,1,1,1,1,1,1,1],
+		[1,1,2,2,2,1,1,1,1,1,1,1],
+		[1,1,1,1,3,3,3,3,1,1,1,1],
+		[1,1,1,1,1,1,1,4,4,1,1,1],
+		[1,1,1,1,1,1,1,1,0,0,0,1],
+		[1,1,1,1,1,1,1,1,1,1,5,1],
+		[1,1,1,1,1,1,1,1,1,1,1,1],
 		[1,1,1,1,1,1,1,1,1,1,1,1],
 		[1,1,1,1,1,1,1,1,1,1,1,1],
 		[1,1,1,1,1,1,1,1,1,1,1,1],
 		[1,1,1,1,1,1,1,1,1,1,1,1]
 	],
   "start": {
-    "x": 4,
-    "y": 3,
+    "x": 1,
+    "y": 1,
     "direction": 1,
     "life": 65534,
     "speed": 2,
     "soft": true
   },
-  "hint": "くり返しを使い、少ない命令でゴールへ行こう。前に進めるか調べながら、かべにぶつからないように注意しよう",
+  "hint": "かべにぶつからないように注意しよう",
   "state": 0,
   "goals": 1,
   "patterns": 1,
-  "blocksLimit": 6,
+  "blocksLimit": 8,
   "links": {
-    "question": "Q5-3",
-    "previous": "q5-2",
-    "next": "q5-4"
+    "question": "Q5-9",
+    "previous": "q5-8",
+    "next": "q5-10"
   },
   "robot": {
     "type": 2,
@@ -253,7 +253,7 @@ Map.prototype =
       -1
     ]
   ],
-  "hintBlocks": '<xml xmlns="https://developers.google.com/blockly/xml"><block type="times_loop" x="10" y="10"><statement name="equals"><block type="movable_loop"><value name="direction"><block type="math_number"><field name="NUM">0</field></block></value></block></statement></block></xml>',
+  "hintBlocks": '<xml xmlns="https://developers.google.com/blockly/xml"><block type="movable_loop" x="10" y="10"><next><block type="turn_right"><next><block type="forward"></block></next></block></next></block></xml>',
   "map2": [],
   "chars2": [],
   "image_file_dir": "../img/"

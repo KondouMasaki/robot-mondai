@@ -5,35 +5,35 @@ Map.prototype =
 {
   "map": [
 		[1,1,1,1,1,1,1,1,1,1,1,1],
-		[1,1,0,0,0,0,5,1,1,1,1,1],
-		[1,1,0,1,1,1,1,1,1,1,1,1],
-		[1,1,0,1,0,0,0,0,0,1,1,1],
-		[1,1,0,1,1,1,1,1,0,1,1,1],
-		[1,1,0,1,1,1,1,1,0,1,1,1],
-		[1,1,0,1,1,1,1,1,0,1,1,1],
-		[1,1,0,0,0,0,0,0,0,1,1,1],
-		[1,1,1,1,1,1,1,1,1,1,1,1],
+		[1,1,5,0,0,2,5,0,0,1,1,1],
+		[1,1,0,1,1,0,1,1,0,1,1,1],
+		[1,1,0,0,5,2,0,5,0,1,1,1],
+		[1,1,1,1,1,0,1,1,1,1,1,1],
+		[1,1,1,1,1,0,1,1,1,1,1,1],
+		[1,1,0,0,1,5,1,1,1,1,1,1],
+		[1,1,0,1,1,0,1,1,1,1,1,1],
+		[1,1,5,0,0,0,1,1,1,1,1,1],
 		[1,1,1,1,1,1,1,1,1,1,1,1],
 		[1,1,1,1,1,1,1,1,1,1,1,1],
 		[1,1,1,1,1,1,1,1,1,1,1,1]
 	],
   "start": {
-    "x": 4,
-    "y": 3,
-    "direction": 1,
+    "x": 3,
+    "y": 6,
+    "direction": 3,
     "life": 65534,
     "speed": 2,
-    "soft": true
+    "soft": false
   },
-  "hint": "くり返しを使い、少ない命令でゴールへ行こう。前に進めるか調べながら、かべにぶつからないように注意しよう",
+  "hint": "一筆書きですべてのゴールへ行こう、赤いマスは何度　行ってもいいよ",
   "state": 0,
-  "goals": 1,
+  "goals": 6,
   "patterns": 1,
-  "blocksLimit": 6,
+  "blocksLimit": 8,
   "links": {
-    "question": "Q5-3",
-    "previous": "q5-2",
-    "next": "q5-4"
+    "question": "Q5-12",
+    "previous": "q5-11",
+    "next": "q5-13"
   },
   "robot": {
     "type": 2,
@@ -253,7 +253,7 @@ Map.prototype =
       -1
     ]
   ],
-  "hintBlocks": '<xml xmlns="https://developers.google.com/blockly/xml"><block type="times_loop" x="10" y="10"><statement name="equals"><block type="movable_loop"><value name="direction"><block type="math_number"><field name="NUM">0</field></block></value></block></statement></block></xml>',
+  "hintBlocks": '',
   "map2": [],
   "chars2": [],
   "image_file_dir": "../img/"
@@ -272,4 +272,8 @@ Map.prototype.beforeStart = function(pattern) {
  */
 Map.prototype.afterMoved = function(t, pos) {
 	// t is turns value, pos is robot info { "x": num, "y": num, "direction": num }
+	if (Map.prototype.map[pos.y][pos.x] == 5) {
+		const b = Control.prototype.getRobotBackPosition();
+		Map.prototype.map[b.y][b.x] = 1;
+	}
 };

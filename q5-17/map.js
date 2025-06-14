@@ -5,35 +5,35 @@ Map.prototype =
 {
   "map": [
 		[1,1,1,1,1,1,1,1,1,1,1,1],
-		[1,1,0,0,0,0,5,1,1,1,1,1],
-		[1,1,0,1,1,1,1,1,1,1,1,1],
-		[1,1,0,1,0,0,0,0,0,1,1,1],
-		[1,1,0,1,1,1,1,1,0,1,1,1],
-		[1,1,0,1,1,1,1,1,0,1,1,1],
-		[1,1,0,1,1,1,1,1,0,1,1,1],
-		[1,1,0,0,0,0,0,0,0,1,1,1],
+		[1,2,1,1,1,1,1,1,1,1,3,1],
+		[1,1,1,1,1,1,1,1,1,1,1,1],
+		[1,1,1,1,1,1,1,1,1,1,1,1],
+		[1,1,1,1,1,1,1,1,1,1,1,1],
+		[1,0,0,0,0,0,0,0,0,0,0,1],
+		[1,1,1,1,1,1,1,1,1,1,1,1],
+		[1,1,1,1,1,1,1,1,1,1,1,1],
 		[1,1,1,1,1,1,1,1,1,1,1,1],
 		[1,1,1,1,1,1,1,1,1,1,1,1],
 		[1,1,1,1,1,1,1,1,1,1,1,1],
 		[1,1,1,1,1,1,1,1,1,1,1,1]
 	],
   "start": {
-    "x": 4,
-    "y": 3,
-    "direction": 1,
+    "x": 5,
+    "y": 5,
+    "direction": 0,
     "life": 65534,
     "speed": 2,
     "soft": true
   },
-  "hint": "くり返しを使い、少ない命令でゴールへ行こう。前に進めるか調べながら、かべにぶつからないように注意しよう",
+  "hint": "「もし」と「くり返し」を使ってゴールへ行こう。マスの色を見て、かべにぶつからないように注意しよう",
   "state": 0,
   "goals": 1,
-  "patterns": 1,
-  "blocksLimit": 6,
+  "patterns": 4,
+  "blocksLimit": 0,
   "links": {
-    "question": "Q5-3",
-    "previous": "q5-2",
-    "next": "q5-4"
+    "question": "Q5-17",
+    "previous": "q5-16",
+    "next": "q5-18"
   },
   "robot": {
     "type": 2,
@@ -44,12 +44,12 @@ Map.prototype =
       "nop": true
     },
     "Standard": {
-      "floor_color_is": false,
+      "floor_color_is": true,
       "robot_direction_is": false,
       "movable_is": false
     },
     "Advanced": {
-      "times_loop": true,
+      "times_loop": false,
       "floor_color_loop": false,
       "movable_loop": true
     },
@@ -253,11 +253,12 @@ Map.prototype =
       -1
     ]
   ],
-  "hintBlocks": '<xml xmlns="https://developers.google.com/blockly/xml"><block type="times_loop" x="10" y="10"><statement name="equals"><block type="movable_loop"><value name="direction"><block type="math_number"><field name="NUM">0</field></block></value></block></statement></block></xml>',
+  "hintBlocks": '<xml xmlns="https://developers.google.com/blockly/xml"><block type="floor_color_is" x="10" y="10"><next><block type="movable_loop"></block></next></block></xml>',
   "map2": [],
   "chars2": [],
   "image_file_dir": "../img/"
 }// end=%%
+
 
 ;
 
@@ -266,6 +267,43 @@ Map.prototype =
  */
 Map.prototype.beforeStart = function(pattern) {
 	// if pettern is <empty string> selected "どれか"
+	if (pattern == "") {
+		pattern = 0;
+	}
+	
+	let x;	// 0-3
+	let c;
+	switch(parseInt(pattern)) {
+		case 0:
+			x = 2;
+			c = 2;
+			break;
+		case 1:
+			x = 3;
+			c = 3;
+			break;
+		case 2:
+			x = 2;
+			c = 3;
+			break;
+		case 3:
+			do {
+				x = Math.floor(Math.random() * 4);
+			} while(Map.prototype.state == x);
+			c = Math.floor(Math.random() * 2) + 2;
+			break;
+	}
+	Map.prototype.state = x;
+	
+	Map.prototype.map[5][5] = c;
+	if (c == 2) {
+		Map.prototype.map[5][5 - x - 2] = 1;
+		Map.prototype.map[4][5 - x - 1] = 5;
+	}
+	else {	// c == 3
+		Map.prototype.map[5][5 + x + 2] = 1;
+		Map.prototype.map[6][5 + x + 1] = 5;
+	}
 };
 /**
  * ターンごとに発生する処理

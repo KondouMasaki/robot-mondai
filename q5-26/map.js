@@ -5,35 +5,35 @@ Map.prototype =
 {
   "map": [
 		[1,1,1,1,1,1,1,1,1,1,1,1],
-		[1,1,0,0,0,0,5,1,1,1,1,1],
-		[1,1,0,1,1,1,1,1,1,1,1,1],
-		[1,1,0,1,0,0,0,0,0,1,1,1],
-		[1,1,0,1,1,1,1,1,0,1,1,1],
-		[1,1,0,1,1,1,1,1,0,1,1,1],
-		[1,1,0,1,1,1,1,1,0,1,1,1],
-		[1,1,0,0,0,0,0,0,0,1,1,1],
 		[1,1,1,1,1,1,1,1,1,1,1,1],
+		[1,1,1,1,1,5,0,0,5,1,1,1],
+		[1,1,1,1,1,0,1,1,0,1,1,1],
+		[1,1,1,1,1,0,1,1,0,1,1,1],
+		[1,1,5,0,0,0,0,0,5,1,1,1],
+		[1,1,0,1,1,0,1,1,1,1,1,1],
+		[1,1,0,1,1,0,1,1,1,1,1,1],
+		[1,1,5,0,0,5,1,1,1,1,1,1],
 		[1,1,1,1,1,1,1,1,1,1,1,1],
 		[1,1,1,1,1,1,1,1,1,1,1,1],
 		[1,1,1,1,1,1,1,1,1,1,1,1]
 	],
   "start": {
-    "x": 4,
-    "y": 3,
-    "direction": 1,
+    "x": 5,
+    "y": 5,
+    "direction": 0,
     "life": 65534,
     "speed": 2,
     "soft": true
   },
-  "hint": "くり返しを使い、少ない命令でゴールへ行こう。前に進めるか調べながら、かべにぶつからないように注意しよう",
+  "hint": "前に進めるときは前、右に行けるときは右、左に行けるときは左だよ。かべにぶつからないように注意して6このゴールへ行こう",
   "state": 0,
-  "goals": 1,
+  "goals": 6,
   "patterns": 1,
-  "blocksLimit": 6,
+  "blocksLimit": 10,
   "links": {
-    "question": "Q5-3",
-    "previous": "q5-2",
-    "next": "q5-4"
+    "question": "Q5-26",
+    "previous": "q5-25",
+    "next": "q5-27"
   },
   "robot": {
     "type": 2,
@@ -46,12 +46,12 @@ Map.prototype =
     "Standard": {
       "floor_color_is": false,
       "robot_direction_is": false,
-      "movable_is": false
+      "movable_is": true
     },
     "Advanced": {
       "times_loop": true,
       "floor_color_loop": false,
-      "movable_loop": true
+      "movable_loop": false
     },
     "Expert": {
       "write_register": true,
@@ -253,19 +253,17 @@ Map.prototype =
       -1
     ]
   ],
-  "hintBlocks": '<xml xmlns="https://developers.google.com/blockly/xml"><block type="times_loop" x="10" y="10"><statement name="equals"><block type="movable_loop"><value name="direction"><block type="math_number"><field name="NUM">0</field></block></value></block></statement></block></xml>',
+  "hintBlocks": '',
   "map2": [],
   "chars2": [],
   "image_file_dir": "../img/"
 }// end=%%
-
 ;
 
 /**
  * コード実行前の処理
  */
 Map.prototype.beforeStart = function(pattern) {
-	// if pettern is <empty string> selected "どれか"
 };
 /**
  * ターンごとに発生する処理

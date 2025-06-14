@@ -5,35 +5,35 @@ Map.prototype =
 {
   "map": [
 		[1,1,1,1,1,1,1,1,1,1,1,1],
-		[1,1,0,0,0,0,5,1,1,1,1,1],
-		[1,1,0,1,1,1,1,1,1,1,1,1],
-		[1,1,0,1,0,0,0,0,0,1,1,1],
-		[1,1,0,1,1,1,1,1,0,1,1,1],
-		[1,1,0,1,1,1,1,1,0,1,1,1],
-		[1,1,0,1,1,1,1,1,0,1,1,1],
-		[1,1,0,0,0,0,0,0,0,1,1,1],
+		[1,0,1,1,1,1,1,1,1,1,5,1],
+		[1,0,0,1,1,1,1,1,1,2,0,1],
+		[1,1,0,0,1,1,1,1,0,0,1,1],
+		[1,1,1,0,0,1,1,0,0,1,1,1],
+		[1,1,1,1,0,0,0,0,1,1,1,1],
+		[1,1,1,1,1,0,0,1,1,1,1,1],
+		[1,1,1,1,1,1,1,1,1,1,1,1],
 		[1,1,1,1,1,1,1,1,1,1,1,1],
 		[1,1,1,1,1,1,1,1,1,1,1,1],
 		[1,1,1,1,1,1,1,1,1,1,1,1],
 		[1,1,1,1,1,1,1,1,1,1,1,1]
 	],
   "start": {
-    "x": 4,
-    "y": 3,
+    "x": 1,
+    "y": 1,
     "direction": 1,
     "life": 65534,
     "speed": 2,
     "soft": true
   },
-  "hint": "くり返しを使い、少ない命令でゴールへ行こう。前に進めるか調べながら、かべにぶつからないように注意しよう",
+  "hint": "かべにぶつからないように注意しながら、すべてのマスを通ってゴールへ行こう",
   "state": 0,
   "goals": 1,
   "patterns": 1,
-  "blocksLimit": 6,
+  "blocksLimit": 12,
   "links": {
-    "question": "Q5-3",
-    "previous": "q5-2",
-    "next": "q5-4"
+    "question": "Q5-10",
+    "previous": "q5-9",
+    "next": "q5-11"
   },
   "robot": {
     "type": 2,
@@ -51,7 +51,7 @@ Map.prototype =
     "Advanced": {
       "times_loop": true,
       "floor_color_loop": false,
-      "movable_loop": true
+      "movable_loop": false
     },
     "Expert": {
       "write_register": true,
@@ -253,7 +253,7 @@ Map.prototype =
       -1
     ]
   ],
-  "hintBlocks": '<xml xmlns="https://developers.google.com/blockly/xml"><block type="times_loop" x="10" y="10"><statement name="equals"><block type="movable_loop"><value name="direction"><block type="math_number"><field name="NUM">0</field></block></value></block></statement></block></xml>',
+  "hintBlocks": '<xml xmlns="https://developers.google.com/blockly/xml"><block type="times_loop" x="10" y="10"><value name="times"><block type="math_number"><field name="NUM">2</field></block></value><statement name="equals"><block type="times_loop"><value name="times"><block type="math_number"><field name="NUM">5</field></block></value><next><block type="turn_left"><next><block type="forward"></block></next></block></next></block></statement></block></xml>',
   "map2": [],
   "chars2": [],
   "image_file_dir": "../img/"
@@ -272,4 +272,20 @@ Map.prototype.beforeStart = function(pattern) {
  */
 Map.prototype.afterMoved = function(t, pos) {
 	// t is turns value, pos is robot info { "x": num, "y": num, "direction": num }
+	if ((pos.x == 9) && (pos.y == 2)) {
+		let count = 0;
+		for (let i = 1; i < 11; i++) {
+			for (let j = 1; j < 11; j++) {
+				if (Map.prototype.map[i][j] == 0) {
+					const attr = document.getElementById('map_'+i+'_'+j).getElementsByTagName('img')[0].getAttribute('src');
+					if (attr != Map.prototype.image_file_dir+'none.png') {
+						count++;
+					}
+				}
+			}
+		}
+		if (count < 17) {
+			Map.prototype.map[2][10] = 1;
+		}
+	}
 };
