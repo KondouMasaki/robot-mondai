@@ -29,7 +29,7 @@ Map.prototype =
   "state": 0,
   "goals": 1,
   "patterns": 4,
-  "blocksLimit": 0,
+  "blocksLimit": 16,
   "links": {
     "question": "Q5-28",
     "previous": "q5-27",
