@@ -25,7 +25,7 @@ Map.prototype =
     "speed": 2,
     "soft": false
   },
-  "hint": "一筆書きですべてのゴールへ行こう、赤いマスは何度　行ってもいいよ",
+  "hint": "一筆書きですべてのゴールへ行こう、赤いマスは何度 行ってもいいよ",
   "state": 0,
   "goals": 6,
   "patterns": 1,
