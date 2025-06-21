@@ -5,20 +5,20 @@ Map.prototype =
 {
   "map": [
 		[1,1,1,1,1,1,1,1,1,1,1,1],
-		[1,1,1,1,1,0,1,1,1,1,1,1],
-		[1,1,1,1,1,0,1,1,1,1,1,1],
-		[1,1,1,1,1,0,1,1,1,1,1,1],
-		[1,1,1,1,1,0,1,1,1,1,1,1],
-		[1,1,1,1,1,0,1,1,1,1,1,1],
-		[1,1,1,1,1,0,1,1,1,1,1,1],
-		[1,1,1,1,1,0,1,1,1,1,1,1],
-		[1,1,1,1,1,0,1,1,1,1,1,1],
-		[1,1,1,1,1,0,1,1,1,1,1,1],
-		[1,1,1,0,1,0,1,1,1,1,1,1],
+		[1,0,1,1,1,1,1,1,1,1,1,1],
+		[1,0,1,1,1,1,1,1,1,1,1,1],
+		[1,0,1,1,1,1,1,1,1,1,1,1],
+		[1,0,1,1,1,1,1,1,1,1,1,1],
+		[1,0,1,1,1,1,1,1,1,1,1,1],
+		[1,0,1,1,1,1,1,1,1,1,1,1],
+		[1,0,1,1,1,1,1,1,1,1,1,1],
+		[1,0,1,1,1,1,1,1,1,1,1,1],
+		[1,0,1,1,1,1,1,1,1,1,1,1],
+		[1,0,1,1,1,1,1,1,1,1,1,1],
 		[1,1,1,1,1,1,1,1,1,1,1,1]
 	],
   "start": {
-    "x": 5,
+    "x": 1,
     "y": 10,
     "direction": 0,
     "life": 65535,
@@ -28,12 +28,12 @@ Map.prototype =
   "hint": "マスの色とゴールまでのきょりに、かん係があると思うよ。かべにぶつからないように注意しよう",
   "state": 0,
   "goals": 1,
-  "patterns": 3,
+  "patterns": 4,
   "blocksLimit": 0,
   "links": {
-    "question": "Q6-1",
-    "previous": "q5-28",
-    "next": "q6-2"
+    "question": "Q6-5",
+    "previous": "q6-4",
+    "next": "q6-6"
   },
   "robot": {
     "type": 3,
@@ -268,26 +268,40 @@ Map.prototype.beforeStart = function(pattern) {
 	if (pattern == "") {
 		pattern = 0;
 	}
-	let bias = 0;
+	
+	let b1 = 0;
+	let b2 = 0;
 	switch(parseInt(pattern)) {
 		case 0:
-			bias = 1;
-			Map.prototype.map[9][5] = 2;
+			b1 = 1;
+			b2 = 1;
 			break;
 		case 1:
-			bias = 2;
-			Map.prototype.map[9][5] = 3;
+			b1 = 2;
+			b2 = 3;
 			break;
 		case 2:
-			bias = 3;
-			Map.prototype.map[9][5] = 4;
+			b1 = 3;
+			b2 = 1;
+			break;
+		case 3:
+			do {
+				b1 = Math.floor(Math.random() * 3) + 1;
+			} while(Map.prototype.state == b1);
+			b2 = Math.floor(Math.random() * 3) + 1;
 			break;
 	}
-	Map.prototype.state = (pattern + 1) % 3;
+	Map.prototype.state = b1;
 	
-	Map.prototype.chars[10][3] = bias;
-	Map.prototype.map[8 - bias][5] = 1;
-	Map.prototype.map[8 - bias + 1][6] = 5;
+	const row = 9 - b1;
+	Map.prototype.map[9][1] = (b1 + 1);
+	Map.prototype.map[row][2] = (b2 + 1);
+	Map.prototype.map[row - 1][1] = 1;
+	
+	for (let i = b2 * 2 - 1; i >= 0; i--) {
+		Map.prototype.map[row][3 + i] = 0;
+	}
+	Map.prototype.map[row + 1][3 + (b2 * 2) - 1] = 5;
 };
 /**
  * ターンごとに発生する処理

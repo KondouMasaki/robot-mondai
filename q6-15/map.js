@@ -4,36 +4,192 @@ Map.prototype =
 // %%=start
 {
   "map": [
-		[1,1,1,1,1,1,1,1,1,1,1,1],
-		[1,1,1,1,1,0,1,1,1,1,1,1],
-		[1,1,1,1,1,0,1,1,1,1,1,1],
-		[1,1,1,1,1,0,1,1,1,1,1,1],
-		[1,1,1,1,1,0,1,1,1,1,1,1],
-		[1,1,1,1,1,0,1,1,1,1,1,1],
-		[1,1,1,1,1,0,1,1,1,1,1,1],
-		[1,1,1,1,1,0,1,1,1,1,1,1],
-		[1,1,1,1,1,0,1,1,1,1,1,1],
-		[1,1,1,1,1,0,1,1,1,1,1,1],
-		[1,1,1,0,1,0,1,1,1,1,1,1],
-		[1,1,1,1,1,1,1,1,1,1,1,1]
-	],
+    [
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1
+    ],
+    [
+      1,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      1
+    ],
+    [
+      1,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      1
+    ],
+    [
+      1,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      1
+    ],
+    [
+      1,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      1
+    ],
+    [
+      1,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      1
+    ],
+    [
+      1,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      1
+    ],
+    [
+      1,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      1
+    ],
+    [
+      1,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      1
+    ],
+    [
+      1,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      1
+    ],
+    [
+      1,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      1
+    ],
+    [
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1
+    ]
+  ],
   "start": {
-    "x": 5,
+    "x": 1,
     "y": 10,
     "direction": 0,
-    "life": 65535,
-    "speed": 1,
-    "soft": true
+    "life": 65534,
+    "speed": 2,
+    "soft": false
   },
-  "hint": "マスの色とゴールまでのきょりに、かん係があると思うよ。かべにぶつからないように注意しよう",
+  "hint": "色のついたマスから、右、左のじゅんで曲がるといいらしいよ。何マス進むかは考えてみよう。",
   "state": 0,
   "goals": 1,
-  "patterns": 3,
+  "patterns": 1,
   "blocksLimit": 0,
   "links": {
-    "question": "Q6-1",
-    "previous": "q5-28",
-    "next": "q6-2"
+    "question": "Q6-15",
+    "previous": "q6-14",
+    "next": "q6-16"
   },
   "robot": {
     "type": 3,
@@ -253,7 +409,7 @@ Map.prototype =
       -1
     ]
   ],
-  "hintBlocks": '<xml xmlns="https://developers.google.com/blockly/xml"><block type="write_register" x="10" y="10"><field name="register_name">0</field><value name="register_value"><block type="get_floor_color"></block></value><next><block type="times_loop"><value name="times"><block type="read_register"><field name="register_name">0</field></block></value></block></next></block></xml>',
+  "hintBlocks": "<xml xmlns=\"https://developers.google.com/blockly/xml\"><block type=\"write_register\" x=\"10\" y=\"10\"><field name=\"register_name\">0</field><value name=\"register_value\"><block type=\"get_floor_color\"></block></value><next><block type=\"times_loop\"><value name=\"times\"><block type=\"read_register\"><field name=\"register_name\">0</field></block></value></block></next></block></xml>",
   "map2": [],
   "chars2": [],
   "image_file_dir": "../img/"
@@ -264,30 +420,56 @@ Map.prototype =
 /**
  * コード実行前の処理
  */
-Map.prototype.beforeStart = function(pattern) {
-	if (pattern == "") {
-		pattern = 0;
-	}
-	let bias = 0;
-	switch(parseInt(pattern)) {
-		case 0:
-			bias = 1;
-			Map.prototype.map[9][5] = 2;
-			break;
+Map.prototype.beforeStart = function() {
+	var f = parseInt(Math.random() * 3) + 1;
+	switch(f) {
 		case 1:
-			bias = 2;
-			Map.prototype.map[9][5] = 3;
+			Map.prototype.map[10][1] = Map.prototype.colorValue.red;
 			break;
+			
 		case 2:
-			bias = 3;
-			Map.prototype.map[9][5] = 4;
+			Map.prototype.map[10][1] = Map.prototype.colorValue.blue;
+			break;
+			
+		case 3:
+			Map.prototype.map[10][1] = Map.prototype.colorValue.green;
 			break;
 	}
-	Map.prototype.state = (pattern + 1) % 3;
+	var y = 10 - f;
 	
-	Map.prototype.chars[10][3] = bias;
-	Map.prototype.map[8 - bias][5] = 1;
-	Map.prototype.map[8 - bias + 1][6] = 5;
+	f = parseInt(Math.random() * 3) + 1;
+	switch(f) {
+		case 1:
+			Map.prototype.map[y][1] = Map.prototype.colorValue.red;
+			break;
+			
+		case 2:
+			Map.prototype.map[y][1] = Map.prototype.colorValue.blue;
+			break;
+			
+		case 3:
+			Map.prototype.map[y][1] = Map.prototype.colorValue.green;
+			break;
+	}
+	
+	var x = 1 + f;
+	
+	f = parseInt(Math.random() * 3) + 1;
+	switch(f) {
+		case 1:
+			Map.prototype.map[y][x] = Map.prototype.colorValue.red;
+			break;
+			
+		case 2:
+			Map.prototype.map[y][x] = Map.prototype.colorValue.blue;
+			break;
+			
+		case 3:
+			Map.prototype.map[y][x] = Map.prototype.colorValue.green;
+			break;
+	}
+	
+	Map.prototype.map[y - f][x] = Map.prototype.colorValue.yellow;
 };
 /**
  * ターンごとに発生する処理
