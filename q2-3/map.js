@@ -98,7 +98,7 @@ Map.prototype =
 		[ -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1 ],
 		[ -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1 ]
 	],
-	"hintBlocks": '<xml xmlns="https://developers.google.com/blockly/xml"><block type="floor_color_is" x="10" y="10"><statement name="equals"><block type="turn_right"></block></statement><statement name="not_equals"><block type="turn_left"></block></statement></block></xml>',
+	"hintBlocks": '<xml xmlns="https://developers.google.com/blockly/xml"><block type="floor_color_is" x="10" y="10"><statement name="equals"><block type="turn_left"></block></statement><statement name="not_equals"><block type="turn_right"></block></statement></block></xml>',
 	"map2": [],
 	"chars2": [],
 	
