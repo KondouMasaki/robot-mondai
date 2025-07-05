@@ -3,16 +3,15 @@ var Map = function() {
 Map.prototype = 
 // %%=start
 {
-	
-		"map": [
+	"map": [
 		[1,1,1,1,1,1,1,1,1,1,1,1],
 		[1,1,1,1,1,1,1,1,1,1,1,1],
 		[1,1,1,1,1,1,1,1,1,1,1,1],
-		[1,1,1,0,0,5,0,0,1,1,1,1],
-		[1,1,1,0,3,0,0,0,1,1,1,1],
-		[1,1,1,0,0,0,0,0,1,1,1,1],
-		[1,1,1,0,0,0,2,0,1,1,1,1],
-		[1,1,1,0,0,0,0,0,1,1,1,1],
+		[1,1,1,1,1,5,1,1,1,1,1,1],
+		[1,1,1,1,1,1,1,1,1,1,1,1],
+		[1,1,1,1,1,0,1,1,1,1,1,1],
+		[1,1,1,1,0,0,1,1,1,1,1,1],
+		[1,1,1,1,1,0,1,1,1,1,1,1],
 		[1,1,1,1,1,0,1,1,1,1,1,1],
 		[1,1,1,1,1,1,1,1,1,1,1,1],
 		[1,1,1,1,1,1,1,1,1,1,1,1],
@@ -23,18 +22,18 @@ Map.prototype =
 		"y": 8,
 		"direction": 0,
 		"life": 65534,
-		"speed": 2,
+		"speed": 1,
 		"soft": false
 	},
-	"hint": "1 つのプログラムで、どのパターンでもゴールできるようにしてみよう",
+	"hint": "白いマスをすべて通ってからゴールに行こう",
 	"state": 0,
 	"goals": 1,
-	"patterns": 2,
+	"patterns": 1,
 	"blocksLimit": 0,
 	"links": {
-		"question": "Q1-14",
-		"previous": "q1-13",
-		"next": "q1-15"
+		"question": "Q1-26",
+		"previous": "q1-25",
+		"next": "q2-1"
 	},
 	"robot": {
 		"type": 0,
@@ -112,26 +111,26 @@ Map.prototype =
  * コード実行前の処理
  */
 Map.prototype.beforeStart = function(pattern) {
-	if (pattern != "") {
-		Map.prototype.state = parseInt(pattern);
-	}
-	if (Map.prototype.state == 0) {
-		Map.prototype.map[6][3] = 1;
-		Map.prototype.map[6][4] = 1;
-		Map.prototype.map[6][5] = 1;
-		Map.prototype.map[8][5] = 2;
-	}
-	else {
-		Map.prototype.map[4][5] = 1;
-		Map.prototype.map[4][6] = 1;
-		Map.prototype.map[4][7] = 1;
-		Map.prototype.map[8][5] = 3;
-	}
-	Map.prototype.state = (Map.prototype.state + 1) % 2;
+	// if pettern is <empty string> selected "どれか"
 };
 /**
  * ターンごとに発生する処理
  */
 Map.prototype.afterMoved = function(t, pos) {
 	// t is turns value, pos is robot info { "x": num, "y": num, "direction": num }
+	let count = 0;
+	for (let i = 1; i < 11; i++) {
+		for (let j = 1; j < 11; j++) {
+			if (Map.prototype.map[i][j] == 0) {
+				const attr = document.getElementById('map_'+i+'_'+j).getElementsByTagName('img')[0].getAttribute('src');
+				if (attr != Map.prototype.image_file_dir+'none.png') {
+					count++;
+				}
+			}
+		}
+	}
+	if (count == 5) {
+		Map.prototype.map[4][5] = 0;
+	}
+	//console.log(t+": "+count);
 };
