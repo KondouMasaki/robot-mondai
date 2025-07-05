@@ -165,3 +165,25 @@ Map.prototype.compareMap = function(oldMap, oldChars) {
 	}
 	return ret;
 };
+
+/**
+ * パターン数が妥当か調べる
+ */
+Map.prototype.isValidPatterns = function() {
+	return ((Map.prototype.patterns > 1) && (Map.prototype.patterns <= 16));
+};
+
+/**
+ * ロボットの初期の速さを取得する
+ */
+Map.prototype.getFirstSpeed = function() {
+	if (Map.prototype.start.hasOwnProperty('speed')) {
+		const spd = Map.prototype.start.speed;
+		if (spd >= 0 && spd <= 4) {
+			return spd;
+		}
+	}
+	else {
+		return -1;
+	}
+};

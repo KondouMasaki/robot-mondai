@@ -30,7 +30,7 @@ div.hide {
 div#map {
 }
 
-div#leftBlocks {
+div#leftBlocks, div#remainingEnergy {
 	text-align: center;
 }
 

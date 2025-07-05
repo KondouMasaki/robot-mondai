@@ -25,18 +25,6 @@ var workspace = Blockly.inject(
 
 workspace.addChangeListener(updateCapacity);
 
-var runButton = document.getElementById('runButton');
-var stopButton = document.getElementById('stopButton');
-var resetButton = document.getElementById('resetButton');
-var hintButton = document.getElementById('hintButton');
-var xmlButton = document.getElementById('xmlButton');
-
-var robotSpeed = document.getElementById('robotSpeed');
-
-const resetLabel = document.getElementById('resetLabel');
-const speedLabel = document.getElementById('speedLabel');
-const patternLabel = document.getElementById('patternLabel');
-
 var myInterpreter = null;
 
 var highlightPause = false;
@@ -56,73 +44,14 @@ workspace.addChangeListener(function(event) {
 	}
 });
 
-createNavigate();
-
 Control.prototype.initGame();
 updateCapacity();
-
-runButton.addEventListener("click", runCode, false);
-stopButton.addEventListener("click", forceStop, false);
-resetButton.addEventListener("click", resetMap, false);
-hintButton.addEventListener("click", putHint, false);
-xmlButton.addEventListener("click", showXML, false);
-stopButton.disabled = true;
-stopButton.setAttribute('class', 'hide');
-Control.prototype.patternSelector.addEventListener("change", Control.prototype.beforeRun);
 
 // resize workspace
 var wsWidth = document.getElementById('workspaceColumn').parentNode.clientWidth - document.getElementById('mapColumn').clientWidth - 20;
 if (wsWidth > 550) {
 	document.getElementById('blocklyDiv').setAttribute('style', 'width: '+wsWidth+'px');
 	Blockly.svgResize(workspace);
-}
-
-// hide buttons
-xmlButton.setAttribute("style", "display: none");	// when develop, comment out here
-if (Map.prototype.hintBlocks.length == 0) {
-	hintButton.setAttribute("style", "display: none");
-}
-
-// set default speed
-if (Map.prototype.start.hasOwnProperty('speed')) {
-	var spd = Map.prototype.start.speed;
-	if (spd >= 0 && spd <= 4) {
-		robotSpeed.options[Map.prototype.start.speed].selected = true;
-	}
-}
-
-function createNavigate() {
-	var pre = document.getElementById('previousLink');
-	var nex = document.getElementById('nextLink');
-	var linkText;
-	if (Map.prototype.links.previous != "") {
-		pre.setAttribute('href', '../' + Map.prototype.links.previous.toLowerCase() + '/');
-		linkText = Map.prototype.links.previous.toUpperCase();
-	}
-	else {
-		pre.removeAttribute('href');
-		linkText = '前の問題';
-	}
-	for (var i = pre.childNodes.length - 1; i >= 0; i--) {
-		pre.removeChild(pre.childNodes[i]);
-	}
-	pre.appendChild(document.createTextNode(linkText));
-	if (Map.prototype.links.next != "") {
-		nex.setAttribute('href', '../' + Map.prototype.links.next.toLowerCase() + '/');
-		linkText = Map.prototype.links.next.toUpperCase();
-	}
-	else {
-		nex.removeAttribute('href');
-		linkText = '次の問題';
-	}
-	for (var i = nex.childNodes.length - 1; i >= 0; i--) {
-		nex.removeChild(nex.childNodes[i]);
-	}
-	nex.appendChild(document.createTextNode(linkText));
-	
-	if (Map.prototype.links.question != "") {
-		document.getElementById('title').appendChild(document.createTextNode(' (' + Map.prototype.links.question + ')'));
-	}
 }
 
 function initApi(interpreter, globalObject) {
@@ -201,23 +130,15 @@ function stopStep() {
 	myInterpreter = null;
 	resetStepUi(false);
 	setTimeout(function() {
-		runButton.disabled = false;
-		runButton.setAttribute('class', '');
-		stopButton.disabled = true;
-		stopButton.setAttribute('class', 'hide');
-		resetButton.disabled = false;
-		resetButton.setAttribute('class', '');
-		hintButton.disabled = false;
-		hintButton.setAttribute('class', '');
-		robotSpeed.setAttribute('class', '');
-		
-		resetLabel.setAttribute('class', 'super-small');
-		speedLabel.setAttribute('class', 'super-small');
-		patternLabel.setAttribute('class', 'super-small');
-		
-		Control.prototype.balloon.setAttribute('class', '');
+		Control.prototype.showRunButton();
+		Control.prototype.hideStopButton();
+		Control.prototype.showResetButton();
+		Control.prototype.showHintButton();
+		Control.prototype.showRobotSpeed();
 		Control.prototype.showPatternSelector();
+		Control.prototype.showMessageBalloon();
 		Control.prototype.showLeftBlocks();
+		Control.prototype.hideRemainingEnergy();
 	}, 1000);
 }
 
@@ -243,7 +164,7 @@ function runNextPattern() {
 	if ((Map.prototype.patterns > 1) && (selectedPattern == "")) {
 		if (currentPattern < Map.prototype.patterns) {
 			currentPattern++;
-			Control.prototype.patternSelector.options[currentPattern].selected = true;
+			Control.prototype.selectPattern(currentPattern);
 			runCodeBody();
 		}
 		else {
@@ -264,24 +185,15 @@ function runCodeBody() {
 		// DBG
 		//alert(latestCode);
 		
-		runButton.disabled = true;
-		runButton.setAttribute('class', 'hide');
-		stopButton.disabled = false;
-		stopButton.setAttribute('class', '');
-		resetButton.disabled = true;
-		resetButton.setAttribute('class', 'hide');
-		hintButton.disabled = true;
-		hintButton.setAttribute('class', 'hide');
-		robotSpeed.setAttribute('class', 'hide');
-		
-		resetLabel.setAttribute('class', 'super-small hide');
-		speedLabel.setAttribute('class', 'super-small hide');
-		patternLabel.setAttribute('class', 'super-small hide');
-		
-		Control.prototype.balloon.setAttribute('class', 'hide');
-		
-		Control.prototype.patternSelector.setAttribute('class', 'hide');
-		Control.prototype.leftBlocksDiv.setAttribute('class', 'hide');
+		Control.prototype.hideRunButton();
+		Control.prototype.showStopButton();
+		Control.prototype.hideResetButton();
+		Control.prototype.hideHintButton();
+		Control.prototype.hideRobotSpeed();
+		Control.prototype.hidePatternSelector();
+		Control.prototype.hideMessageBalloon();
+		Control.prototype.hideLeftBlocks();
+		Control.prototype.hideRemainingEnergy();
 		
 		resetStepUi(true);
 		myInterpreter = new Interpreter(latestCode, initApi);
@@ -290,7 +202,7 @@ function runCodeBody() {
 		//alert(latestCode);
 		
 		var spd = 1000;
-		switch(parseInt(robotSpeed.value)) {
+		switch(parseInt(Control.prototype.getRobotSpeed())) {
 			case 0:
 				spd = 1500;
 				break;
@@ -317,7 +229,7 @@ function ControlOneTurn(cmd, arg1, arg2, arg3) {
 	
 	if (Control.prototype.goal) {
 		stopStep();
-		Control.prototype.patternSelector.children[Control.prototype.patternSelector.selectedIndex].setAttribute('class', 'pass');
+		Control.prototype.setPatternPass();
 		setTimeout(function() {
 			Swal.fire({
 				title: "&#" + getClearFace() + ";",
@@ -354,7 +266,7 @@ function resetMap() {
 }
 
 function updateCapacity() {
-	Control.prototype.leftBlocks.textContent = workspace.remainingCapacity();
+	Control.prototype.updateLeftBlocks(workspace.remainingCapacity());
 }
 
 function putHint() {
@@ -427,6 +339,7 @@ function getClearText() {
 			break;
 		case 4:
 			txt += "ありがとう！";
+			break;
 	}
 	if (Math.floor(Math.random() * 2) == 0) {
 		txt += "ゴール";

@@ -6,19 +6,31 @@ Control.prototype = {
 	"broken": false,
 	"goalNum": 1,
 	"time": 0,
+	// GUI elements
 	"balloon": null,
+	"runButton": null,
+	"stopButton": null,
+	"resetButton": null,
+	"resetLabel": null,
+	"xmlButton": null,
 	"registers": null,
+	"robotSpeed": null,
+	"robotSpeedLabel": null,
 	"patternSelector": null,
+	"patternLabel": null,
+	"hintButton": null,
 	"leftBlocks": null,
-	"leftBlocksDiv": null
+	"leftBlocksDiv": null,
+	"remainingEnergy": null,
+	"remainingEnergyDiv": null,
 };
 
 /**
  * ツールボックスの作成
  */
 Control.prototype.createToolBox = function() {
-	var ptr = Map.prototype.robot;
-	var xml = '<xml>';
+	const ptr = Map.prototype.robot;
+	let xml = '<xml>';
 	// Basic
 	if (ptr.type >= 0) {
 		xml += '<category name="Basic" colour="120">';
@@ -191,33 +203,107 @@ Control.prototype.initGame = function() {
 	Control.prototype.balloon = document.getElementById('robotBalloon');
 	Control.prototype.balloon.children[0].appendChild(document.createTextNode(Map.prototype.hint));
 	
+	Control.prototype.runButton = document.getElementById('runButton');
+	Control.prototype.runButton.addEventListener('click', runCode, false);
+	
+	Control.prototype.stopButton = document.getElementById('stopButton');
+	Control.prototype.stopButton.addEventListener('click', forceStop, false);
+	Control.prototype.hideStopButton();
+	
+	Control.prototype.resetButton = document.getElementById('resetButton');
+	Control.prototype.resetLabel = document.getElementById('resetLabel');
+	Control.prototype.resetButton.addEventListener('click', resetMap, false);
+	
+	Control.prototype.xmlButton = document.getElementById('xmlButton');
+	Control.prototype.xmlButton.addEventListener('click', showXML, false);
+	Control.prototype.hideXMLButton();	// when develop, comment out here
+	
 	Control.prototype.registers = document.getElementById('registers');
 	
+	Control.prototype.robotSpeed = document.getElementById('robotSpeed');
+	Control.prototype.robotSpeedLabel = document.getElementById('speedLabel');
+	
 	Control.prototype.patternSelector = document.getElementById('patternSelector');
-	if ((Map.prototype.patterns > 1) && (Map.prototype.patterns <= 16)) {
-		var frg = document.createDocumentFragment();
-		for (var i = 0; i < Map.prototype.patterns; i++) {
-			var op = document.createElement('option');
+	Control.prototype.patternLabel = document.getElementById('patternLabel');
+	if (Map.prototype.isValidPatterns()) {
+		let frg = document.createDocumentFragment();
+		for (let i = 0; i < Map.prototype.patterns; i++) {
+			const op = document.createElement('option');
 			op.appendChild(document.createTextNode('パターン '+(i+1)));
 			op.setAttribute('value', i);
 			frg.appendChild(op);
 		}
 		Control.prototype.patternSelector.appendChild(frg);
 	}
-	else {
-		Control.prototype.patternSelector.setAttribute('class', 'hide');
-		document.getElementById('patternLabel').setAttribute('style', 'color: transparent');
-	}
+	Control.prototype.setPatternSelectorVisible();
+	Control.prototype.patternSelector.addEventListener('change', Control.prototype.beforeRun);
+	
+	Control.prototype.hintButton = document.getElementById('hintButton');
+	Control.prototype.hintButton.addEventListener('click', putHint, false);
+	Control.prototype.setHintButtonVisible();
 	
 	Control.prototype.leftBlocks = document.getElementById('capacity');
-	if (Map.prototype.blocksLimit <= 0) {
-		document.getElementById('leftBlocks').setAttribute('class', 'hide');
-	}
-	
 	Control.prototype.leftBlocksDiv = document.getElementById('leftBlocks');
+	Control.prototype.setLeftBlocksVisible();
+	
+	Control.prototype.remainingEnergy = document.getElementById('energy');
+	Control.prototype.remainingEnergyDiv = document.getElementById('remainingEnergy');
+	Control.prototype.hideRemainingEnergy();
+
+	Control.prototype.createNavigate();
+	
+	Control.prototype.setFirstSpeed();
 
 	Control.prototype.beforeRun();
 };
+
+/**
+ * ナビゲーションを作る
+ */
+Control.prototype.createNavigate = function() {
+	const pre = document.getElementById('previousLink');
+	const nex = document.getElementById('nextLink');
+	let linkText;
+	if (Map.prototype.links.previous != '') {
+		pre.setAttribute('href', '../' + Map.prototype.links.previous.toLowerCase() + '/');
+		linkText = Map.prototype.links.previous.toUpperCase();
+	}
+	else {
+		pre.removeAttribute('href');
+		linkText = '前の問題';
+	}
+	for (let i = pre.childNodes.length - 1; i >= 0; i--) {
+		pre.removeChild(pre.childNodes[i]);
+	}
+	pre.appendChild(document.createTextNode(linkText));
+	if (Map.prototype.links.next != '') {
+		nex.setAttribute('href', '../' + Map.prototype.links.next.toLowerCase() + '/');
+		linkText = Map.prototype.links.next.toUpperCase();
+	}
+	else {
+		nex.removeAttribute('href');
+		linkText = '次の問題';
+	}
+	for (var i = nex.childNodes.length - 1; i >= 0; i--) {
+		nex.removeChild(nex.childNodes[i]);
+	}
+	nex.appendChild(document.createTextNode(linkText));
+	
+	if (Map.prototype.links.question != '') {
+		document.getElementById('title').appendChild(document.createTextNode(' (' + Map.prototype.links.question + ')'));
+	}
+};
+
+/**
+ * ロボットの最初の速さを設定する
+ */
+Control.prototype.setFirstSpeed = function() {
+	const speed = Map.prototype.getFirstSpeed();
+	if (speed >= 0) {
+		Control.prototype.setRobotSpeed(speed);
+	}
+};
+
 /**
  * コード実行前の処理
  */
@@ -250,15 +336,31 @@ Control.prototype.initRobot = function() {
 	Robot.prototype.initRegisters();
 };
 
+
 /**
- * マップパターン選択を開く
+ * メッセージバルーンを表示
  */
-Control.prototype.showPatternSelector = function() {
-	if ((Map.prototype.patterns > 1) && (Map.prototype.patterns <= 16)) {
-		Control.prototype.patternSelector.setAttribute('class', '');
-	}
+Control.prototype.showMessageBalloon = function() {
+	Control.prototype.balloon.setAttribute('class', '');
+};
+/**
+ * メッセージバルーンを非表示にする
+ */
+Control.prototype.hideMessageBalloon = function() {
+	Control.prototype.balloon.setAttribute('class', 'hide');
 };
 
+/**
+ * のこりブロックの状態をセット
+ */
+Control.prototype.setLeftBlocksVisible = function() {
+	if (Map.prototype.blocksLimit >= 1) {
+		Control.prototype.showLeftBlocks();
+	}
+	else {
+		Control.prototype.hideLeftBlocks();
+	}
+};
 /**
  * のこりブロックを表示
  */
@@ -266,6 +368,209 @@ Control.prototype.showLeftBlocks = function() {
 	if (Map.prototype.blocksLimit >= 1) {
 		Control.prototype.leftBlocksDiv.setAttribute('class', '');
 	}
+};
+/**
+ * のこりブロックを非表示
+ */
+Control.prototype.hideLeftBlocks = function() {
+	Control.prototype.leftBlocksDiv.setAttribute('class', 'hide');
+};
+
+/**
+ * のこりブロックを更新
+ */
+Control.prototype.updateLeftBlocks = function(num) {
+	Control.prototype.leftBlocks.textContent = num;
+};
+
+/**
+ * 残りエネルギーを表示
+ */
+Control.prototype.showRemainingEnery = function() {
+	Control.prototype.remainingEnergyDiv.setAttribute('class', '');
+};
+/**
+ * 残りエネルギーを非表示
+ */
+Control.prototype.hideRemainingEnergy = function() {
+	Control.prototype.remainingEnergyDiv.setAttribute('class', 'hide');
+};
+
+/**
+ * スタートボタンを表示
+ */
+Control.prototype.showRunButton = function() {
+	Control.prototype.showButton(Control.prototype.runButton);
+};
+/**
+ * スタートボタンを非表示
+ */
+Control.prototype.hideRunButton = function() {
+	Control.prototype.hideButton(Control.prototype.runButton);
+};
+/**
+ * ストップボタンを表示
+ */
+Control.prototype.showStopButton = function() {
+	Control.prototype.showButton(Control.prototype.stopButton);
+};
+/**
+ * ストップボタンを非表示
+ */
+Control.prototype.hideStopButton = function() {
+	Control.prototype.hideButton(Control.prototype.stopButton);
+};
+/**
+ * リセットボタンを表示
+ */
+Control.prototype.showResetButton = function() {
+	Control.prototype.showButton(Control.prototype.resetButton);
+	Control.prototype.showLabel(Control.prototype.resetLabel);
+};
+/**
+ * リセットボタンを非表示
+ */
+Control.prototype.hideResetButton = function() {
+	Control.prototype.hideButton(Control.prototype.resetButton);
+	Control.prototype.hideLabel(Control.prototype.resetLabel);
+};
+/**
+ * ロボットの速さを表示
+ */
+Control.prototype.showRobotSpeed = function() {
+	Control.prototype.showButton(Control.prototype.robotSpeed);
+	Control.prototype.showLabel(Control.prototype.robotSpeedLabel);
+};
+/**
+ * ロボットの速さを非表示
+ */
+Control.prototype.hideRobotSpeed = function() {
+	Control.prototype.hideButton(Control.prototype.robotSpeed);
+	Control.prototype.hideLabel(Control.prototype.robotSpeedLabel);
+};
+/**
+ * パターンを表示
+ */
+Control.prototype.showPatternSelector = function() {
+	if (Map.prototype.isValidPatterns()) {
+		Control.prototype.patternSelector.setAttribute('class', '');
+		Control.prototype.showLabel(Control.prototype.patternLabel);
+	}
+};
+/**
+ * パターンを非表示
+ */
+Control.prototype.hidePatternSelector = function() {
+	Control.prototype.patternSelector.setAttribute('class', 'hide');
+	Control.prototype.hideLabel(Control.prototype.patternLabel);
+};
+/**
+ * パータン表示状態をセットする
+ */
+Control.prototype.setPatternSelectorVisible = function() {
+	if (Map.prototype.isValidPatterns()) {
+		Control.prototype.showPatternSelector();
+	}
+	else {
+		Control.prototype.hidePatternSelector();
+	}
+};
+/**
+ * ヒントボタンの表示状態をセットする
+ */
+Control.prototype.setHintButtonVisible = function() {
+	if (Map.prototype.hintBlocks.length > 0) {
+		Control.prototype.showHintButton();
+	}
+	else {
+		Control.prototype.hideHintButton();
+	}
+};
+/**
+ * ヒントボタンを表示
+ */
+Control.prototype.showHintButton = function() {
+	if (Map.prototype.hintBlocks.length > 0) {
+		Control.prototype.showButton(Control.prototype.hintButton);
+	}
+};
+/**
+ * ヒントボタンを非表示
+ */
+Control.prototype.hideHintButton = function() {
+	Control.prototype.hideButton(Control.prototype.hintButton);
+};
+/**
+ * xmlボタンを表示
+ */
+Control.prototype.showXMLButton = function() {
+	Control.prototype.showButton(Control.prototype.xmlButton);
+};
+/**
+ * xmlボタンを非表示
+ */
+Control.prototype.hideXMLButton = function() {
+	Control.prototype.hideButton(Control.prototype.xmlButton);
+};
+
+/**
+ * 指定したボタンを表示する
+ */
+Control.prototype.showButton = function(btn) {
+	btn.disabled = false;
+	btn.setAttribute('class', '');
+};
+/**
+ * 指定したボタンを非表示にする
+ */
+Control.prototype.hideButton = function(btn) {
+	btn.disabled = true;
+	btn.setAttribute('class', 'hide');
+};
+/**
+ * 指定したラベルを表示する
+ */
+Control.prototype.showLabel = function(lbl) {
+	lbl.setAttribute('class', 'super-small');
+};
+/**
+ * 指定したラベルを非表示にする
+ */
+Control.prototype.hideLabel = function(lbl) {
+	lbl.setAttribute('class', 'super-small hide');
+};
+
+/**
+ * ロボットの速さを取得
+ */
+Control.prototype.getRobotSpeed = function() {
+	return Control.prototype.robotSpeed.value;
+};
+/**
+ * ロボットの速さをセット
+ */
+Control.prototype.setRobotSpeed = function(speed) {
+	Control.prototype.robotSpeed.options[speed].selected = true;
+};
+
+/**
+ * パターンを選択する
+ */
+Control.prototype.selectPattern = function(pattern) {
+	Control.prototype.patternSelector.options[pattern].selected = true;
+};
+/**
+ * パターンを取得する
+ */
+Control.prototype.getPattern = function() {
+	return Control.prototype.patternSelector.selectedIndex;
+};
+/**
+ * 現在のパターンをパスの状態にする
+ */
+Control.prototype.setPatternPass = function() {
+	const p = Control.prototype.getPattern();
+	Control.prototype.patternSelector.children[p].setAttribute('class', 'pass');
 };
 
 /**
@@ -377,6 +682,10 @@ Control.prototype.oneTurn = function(cmd, arg1, arg2, arg3) {
 	Robot.prototype.life--;
 	if (Robot.prototype.life == 0) {
 		Control.prototype.emptyLife = true;
+	}
+	Control.prototype.remainingEnergy.textContent = Robot.prototype.life;
+	if (Robot.prototype.life <= 15) {
+		Control.prototype.remainingEnergyDiv.setAttribute('class', '');
 	}
 	Control.prototype.time++;
 	
