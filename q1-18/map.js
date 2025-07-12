@@ -118,7 +118,7 @@ Map.prototype.beforeStart = function(pattern) {
  */
 Map.prototype.afterMoved = function(t, pos) {
 	// t is turns value, pos is robot info { "x": num, "y": num, "direction": num }
-	if (Map.prototype.map[pos.y][pos.x] == 4) {
-		Map.prototype.map[4][5] = 1;
+	if (Control.prototype.getRobotFloor() == 4) {
+		Map.prototype.map[4][5] = Map.prototype.colorValue.black;
 	}
 };

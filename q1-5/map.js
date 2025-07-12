@@ -116,7 +116,7 @@ Map.prototype.beforeStart = function() {
  * ターンごとに発生する処理
  */
 Map.prototype.afterMoved = function(t, pos) {
-	if (pos.y == 5 && pos.x == 3) {
-		Map.prototype.map[5][7] = 0;
+	if ((pos.y == 5) && (pos.x == 3)) {
+		Map.prototype.map[5][7] = Map.prototype.colorValue.white;
 	}
 };

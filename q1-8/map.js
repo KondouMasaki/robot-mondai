@@ -116,20 +116,8 @@ Map.prototype.beforeStart = function() {
  * ターンごとに発生する処理
  */
 Map.prototype.afterMoved = function(t, pos) {
-	if (Map.prototype.map[pos.y][pos.x] == 5) {
-		switch(pos.direction) {
-			case 0:
-				Map.prototype.map[pos.y + 1][pos.x] = 1;
-				break;
-			case 1:
-				Map.prototype.map[pos.y][pos.x - 1] = 1;
-				break;
-			case 2:
-				Map.prototype.map[pos.y - 1][pos.x] = 1;
-				break;
-			case 3:
-				Map.prototype.map[pos.y][pos.x + 1] = 1;
-				break;
-		}
+	if (Map.prototype.map[pos.y][pos.x] == Map.prototype.colorValue.yellow) {
+		const bp = Control.prototype.getRobotBackPosition();
+		Map.prototype.map[bp.y][bp.x] = Map.prototype.colorValue.black;
 	}
 };

@@ -118,13 +118,13 @@ Map.prototype.beforeStart = function(pattern) {
  */
 Map.prototype.afterMoved = function(t, pos) {
 	// t is turns value, pos is robot info { "x": num, "y": num, "direction": num }
-	switch(Map.prototype.map[pos.y][pos.x]) {
+	switch(Control.prototype.getRobotFloor()) {
 		case 0:
 		case 4:
 		case 5:
 			break;
 		default:
-			Map.prototype.map[3][7] = 1;
+			Map.prototype.map[3][7] = Map.prototype.colorValue.black;
 			break;
 	}
 };

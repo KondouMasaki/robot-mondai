@@ -117,7 +117,7 @@ Map.prototype.beforeStart = function(pattern) {
  * ターンごとに発生する処理
  */
 Map.prototype.afterMoved = function(t, pos) {
-	var row = -1;
+	let row = -1;
 	switch(t) {
 		case 1:
 			row = 1;
@@ -151,7 +151,7 @@ Map.prototype.afterMoved = function(t, pos) {
 			break;
 	}
 	if (row > 0) {
-		for (var i = 3; i <= 8; i++) {
+		for (let i = 3; i <= 8; i++) {
 			Map.prototype.map[row][i] = 1;
 		}
 	}

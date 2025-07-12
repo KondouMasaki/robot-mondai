@@ -141,11 +141,9 @@ Map.prototype.afterMoved = function(t, pos) {
 		}
 	}
 	if (Map.prototype.state == 2) {
-		Map.prototype.map[4][5] = 0;
+		Map.prototype.map[4][5] = Map.prototype.colorValue.white;
 	}
 	else {
-		Map.prototype.map[4][5] = 1;
+		Map.prototype.map[4][5] = Map.prototype.colorValue.black;
 	}
-	// debug
-	//console.log(Map.prototype.state);
 };

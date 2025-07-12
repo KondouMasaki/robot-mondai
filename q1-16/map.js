@@ -122,9 +122,9 @@ Map.prototype.afterMoved = function(t, pos) {
 		Map.prototype.state++;
 	}
 	if ((Map.prototype.state >= 3) && (Map.prototype.state <= 5)) {
-		Map.prototype.map[5][5] = 0;
+		Map.prototype.map[5][5] = Map.prototype.colorValue.white;
 	}
 	else{
-		Map.prototype.map[5][5] = 1;
+		Map.prototype.map[5][5] = Map.prototype.colorValue.black;
 	}
 };
