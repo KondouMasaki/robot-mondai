@@ -111,30 +111,28 @@ Map.prototype =
  * コード実行前の処理
  */
 Map.prototype.beforeStart = function(pattern) {
-	if (pattern != "") {
-		Map.prototype.state = parseInt(pattern);
+	if (pattern == "") {
+		pattern = Map.prototype.state;
 	}
-	switch(Map.prototype.state) {
+	const b = Map.prototype.colorValue.black;
+	switch(parseInt(pattern)) {
 		case 0:
 			Robot.prototype.direction = 1;
-			Map.prototype.map[4][4] = 1;
+			Map.prototype.map[4][4] = b;
 			break;
 		case 1:
 			Robot.prototype.direction = 1;
-			Map.prototype.map[4][6] = 1;
+			Map.prototype.map[4][6] = b;
 			break;
 		case 2:
 			Robot.prototype.direction = 3;
-			Map.prototype.map[4][4] = 1;
+			Map.prototype.map[4][4] = b;
 			break;
 		case 3:
 			Robot.prototype.direction = 3;
-			Map.prototype.map[4][6] = 1;
-			break;
-		default:
+			Map.prototype.map[4][6] = b;
 			break;
 	}
-	Map.prototype.state = (Map.prototype.state + 1) % 4;
 };
 /**
  * ターンごとに発生する処理

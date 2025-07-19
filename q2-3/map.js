@@ -111,24 +111,24 @@ Map.prototype =
  * コード実行前の処理
  */
 Map.prototype.beforeStart = function(pattern) {
-	if (pattern != "") {
-		Map.prototype.state = parseInt(pattern);
+	if (pattern == "") {
+		pattern = Map.prototype.state;
 	}
-	switch(Map.prototype.state) {
+	const c = Map.prototype.colorValue;
+	switch(parseInt(pattern)) {
 		case 0:
-			Map.prototype.map[5][5] = 2;
-			Map.prototype.map[5][3] = 5;
+			Map.prototype.map[5][5] = c.red;
+			Map.prototype.map[5][3] = c.yellow;
 			break;
 		case 1:
-			Map.prototype.map[5][5] = 3;
-			Map.prototype.map[5][7] = 5;
+			Map.prototype.map[5][5] = c.blue;
+			Map.prototype.map[5][7] = c.yellow;
 			break;
 		case 2:
-			Map.prototype.map[5][5] = 4;
-			Map.prototype.map[5][7] = 5;
+			Map.prototype.map[5][5] = c.green;
+			Map.prototype.map[5][7] = c.yellow;
 			break;
 	}
-	Map.prototype.state = (Map.prototype.state + 1) % 3;
 };
 /**
  * ターンごとに発生する処理
