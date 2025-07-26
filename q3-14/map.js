@@ -424,7 +424,7 @@ Map.prototype =
  * コード実行前の処理
  */
 Map.prototype.beforeStart = function(pattern) {
-	var y;
+	let y;
 	if (pattern != "") {
 		switch(parseInt(pattern)) {
 			case 0:
@@ -435,24 +435,26 @@ Map.prototype.beforeStart = function(pattern) {
 				break;
 			case 2:
 				do {
-					y = parseInt(Math.random() * 8)
+					y = Math.floor(Math.random() * 8)
 				}while(y == Map.prototype.state);
 				break;
 		}
 	}
 	else {
 		do {
-			y = parseInt(Math.random() * 8)
+			y = Math.floor(Math.random() * 8)
 		}while(y == Map.prototype.state);
 	}
 	Map.prototype.state = y;
 	
 	y = y + 2;
-	for (var i = 10; i > y; i--) {
-		Map.prototype.map[i][4] = 0;
+	
+	const c = Map.prototype.colorValue;
+	for (let i = 10; i > y; i--) {
+		Map.prototype.map[i][4] = c.white;
 	}
-	Map.prototype.map[y][6] = 0;
-	Map.prototype.map[y][7] = 5;
+	Map.prototype.map[y][6] = c.white;
+	Map.prototype.map[y][7] = c.yellow;
 };
 /**
  * ターンごとに発生する処理

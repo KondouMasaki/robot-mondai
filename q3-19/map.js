@@ -285,17 +285,19 @@ Map.prototype.beforeStart = function(pattern) {
 	}
 	a += 3;
 	b += 3;
+	
+	const c = Map.prototype.colorValue;
 	for (let i = a; i <= 10; i++) {
-		Map.prototype.map[i][1] = 2;
-		Map.prototype.map[i][2] = 1;
+		Map.prototype.map[i][1] = c.red;
+		Map.prototype.map[i][2] = c.black;
 	}
 	for (let i = 2; i <= 10; i++) {
-		Map.prototype.map[a][i] = 1;
+		Map.prototype.map[a][i] = c.black;
 	}
-	Map.prototype.map[a][b] = 5;
+	Map.prototype.map[a][b] = c.yellow;
 	
 	for (let i = b; i <= 10; i++) {
-		Map.prototype.map[a - 2][i] = 1;
+		Map.prototype.map[a - 2][i] = c.black;
 	}
 };
 /**

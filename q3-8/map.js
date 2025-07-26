@@ -286,11 +286,13 @@ Map.prototype.beforeStart = function(pattern) {
 	Map.prototype.state = v;
 	
 	v = v + 2;
-	Map.prototype.map[v][5] = 0;
+	
+	const c = Map.prototype.colorValue;
+	Map.prototype.map[v][5] = c.white;
 	for (let i = v + 1; i <= 10; i++) {
-		Map.prototype.map[i][4] = 3;
+		Map.prototype.map[i][4] = c.blue;
 	}
-	Map.prototype.map[v - 1][4] = 1;
+	Map.prototype.map[v - 1][4] = c.black;
 };
 /**
  * ターンごとに発生する処理

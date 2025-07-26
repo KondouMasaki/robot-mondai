@@ -283,7 +283,7 @@ Map.prototype.beforeStart = function(pattern) {
 	}
 	Map.prototype.state = a;
 	a += 2;
-	Map.prototype.map[10 - a][5] = 2;
+	Map.prototype.map[10 - a][5] = Map.prototype.colorValue.red;
 };
 /**
  * ターンごとに発生する処理

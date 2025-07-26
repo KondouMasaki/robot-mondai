@@ -284,8 +284,10 @@ Map.prototype.beforeStart = function(pattern) {
 	Map.prototype.state = y;
 	
 	y = y + 2;
-	Map.prototype.map[y][5] = 0;
-	Map.prototype.map[y - 1][4] = 1;
+	
+	const c = Map.prototype.colorValue;
+	Map.prototype.map[y][5] = c.white;
+	Map.prototype.map[y - 1][4] = c.black;
 };
 /**
  * ターンごとに発生する処理

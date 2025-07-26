@@ -286,19 +286,20 @@ Map.prototype.beforeStart = function(pattern) {
 	a += 2;
 	b += 3;
 	
+	const c = Map.prototype.colorValue;
 	for (let i = 1; i <= 10; i++) {
-		Map.prototype.map[a - 2][i] = 1;
+		Map.prototype.map[a - 2][i] = c.black;
 	}
 	
 	for (let i = 2; i < b; i++) {
-		Map.prototype.map[a - 1][i] = 2;
-		Map.prototype.map[a][i] = 3;
+		Map.prototype.map[a - 1][i] = c.red;
+		Map.prototype.map[a][i] = c.blue;
 	}
 	for (let i = b + 1; i <= 10; i++) {
-		Map.prototype.map[a][i] = 3;
+		Map.prototype.map[a][i] = c.blue;
 	}
 	
-	Map.prototype.map[a][b] = 5;
+	Map.prototype.map[a][b] = c.yellow;
 };
 /**
  * ターンごとに発生する処理
