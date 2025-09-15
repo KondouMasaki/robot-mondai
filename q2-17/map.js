@@ -119,25 +119,25 @@ Map.prototype.beforeStart = function(pattern) {
 		case 0:
 			Robot.prototype.direction = 1;
 			Map.prototype.map[5][5] = c.red;
-			Map.prototype.map[6][6] = c.white;
+			//Map.prototype.map[6][6] = c.white;
 			Map.prototype.map[5][7] = c.yellow;
 			break;
 		case 1:
 			Robot.prototype.direction = 1;
 			Map.prototype.map[5][5] = c.blue;
-			Map.prototype.map[6][4] = c.white;
+			//Map.prototype.map[6][4] = c.white;
 			Map.prototype.map[5][3] = c.yellow;
 			break;
 		case 2:
 			Robot.prototype.direction = 3;
 			Map.prototype.map[5][5] = c.red;
-			Map.prototype.map[6][6] = c.white;
+			//Map.prototype.map[6][6] = c.white;
 			Map.prototype.map[5][7] = c.yellow;
 			break;
 		case 3:
 			Robot.prototype.direction = 3;
 			Map.prototype.map[5][5] = c.blue;
-			Map.prototype.map[6][4] = c.white;
+			//Map.prototype.map[6][4] = c.white;
 			Map.prototype.map[5][3] = c.yellow;
 			break;
 	}
