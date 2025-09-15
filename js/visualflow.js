@@ -23,7 +23,7 @@ var workspace = Blockly.inject(
 	}
 );
 
-workspace.addChangeListener(updateCapacity);
+workspace.addChangeListener(workspaceBlocksChanged);
 
 var myInterpreter = null;
 
@@ -35,6 +35,8 @@ var currentPattern = 1;
 
 var timeoutId = null;
 
+let oldXMLCode = '';
+
 // Load the interpreter now, and upon future changes.
 generateCodeAndLoadIntoInterpreter();
 workspace.addChangeListener(function(event) {
@@ -45,10 +47,10 @@ workspace.addChangeListener(function(event) {
 });
 
 Control.prototype.initGame();
-updateCapacity();
+workspaceBlocksChanged();
 
 // resize workspace
-var wsWidth = document.getElementById('workspaceColumn').parentNode.clientWidth - document.getElementById('mapColumn').clientWidth - 20;
+const wsWidth = document.getElementById('workspaceColumn').parentNode.clientWidth - document.getElementById('mapColumn').clientWidth - 20;
 if (wsWidth > 550) {
 	document.getElementById('blocklyDiv').setAttribute('style', 'width: '+wsWidth+'px');
 	Blockly.svgResize(workspace);
@@ -105,7 +107,7 @@ function generateCodeAndLoadIntoInterpreter() {
 
 function stepOneBlock() {
 	highlightPause = false;
-	var hasMoreCode = false;
+	let hasMoreCode = false;
 	if (myInterpreter instanceof Interpreter) {
 		do {
 			try {
@@ -161,21 +163,66 @@ function runCode() {
 }
 
 function runNextPattern() {
-	if ((Map.prototype.patterns > 1) && (selectedPattern == "")) {
-		if (currentPattern < Map.prototype.patterns) {
-			currentPattern++;
-			Control.prototype.selectPattern(currentPattern);
-			runCodeBody();
+	if (Map.prototype.patterns > 1) {
+		let allPassed = false;
+		
+		if (selectedPattern == "") {
+			// ぜんぶ を選択している場合
+			if (currentPattern < Map.prototype.patterns) {
+				currentPattern++;
+				Control.prototype.selectPattern(currentPattern);
+				runCodeBody();
+			}
+			else {
+				Control.prototype.patternSelector.options[0].selected = true;
+				showAllClearDialog();
+			}
 		}
 		else {
-			Control.prototype.patternSelector.options[0].selected = true;
-			Swal.fire({
-				title: getHappyIcons(),
-				text: getAllPatternClearText(),
-				confirmButtonText: "OK"
-			});
+			// 特定パターンを選択している場合
+			const p = Map.prototype.patterns;
+			let passNum = 0;
+			let notPass = -1;
+			for (let i = p; i > 0; i--) {
+				if (Control.prototype.patternSelector.options[i].getAttribute('class') == 'pass') {
+					passNum++;
+				}
+				else {
+					notPass = i;
+				}
+			}
+			if (passNum == p) {
+				// 全パターンをクリアーしている
+				showAllClearDialog();
+			}
+			else {
+				Swal.fire({
+					title: getNextPatternTitle(),
+					text: 'つぎはパターン ' + notPass + ' をやってみる？',
+					showDenyButton: true,
+					confirmButtonText: 'はい',
+					denyButtonText: 'いいえ',
+				}).then((result) => {
+					if (result.isConfirmed) {
+						currentPattern = notPass;
+						Control.prototype.selectPattern(currentPattern);
+						runCodeBody();
+					}
+				});;
+			}
 		}
 	}
+}
+
+/**
+ * すべてのパターンをクリアーしたときのメッセージを表示する
+ */
+function showAllClearDialog() {
+	Swal.fire({
+		title: getHappyIcons(),
+		text: getAllPatternClearText(),
+		confirmButtonText: "OK"
+	});
 }
 
 function runCodeBody() {
@@ -201,7 +248,7 @@ function runCodeBody() {
 		// DBG
 		//alert(latestCode);
 		
-		var spd = 1000;
+		let spd = 1000;
 		switch(parseInt(Control.prototype.getRobotSpeed())) {
 			case 0:
 				spd = 1500;
@@ -225,7 +272,7 @@ function runCodeBody() {
 }
 
 function ControlOneTurn(cmd, arg1, arg2, arg3) {
-	var ret = Control.prototype.oneTurn(cmd, arg1, arg2, arg3);
+	const ret = Control.prototype.oneTurn(cmd, arg1, arg2, arg3);
 	
 	if (Control.prototype.goal) {
 		stopStep();
@@ -265,12 +312,18 @@ function resetMap() {
 	Control.prototype.beforeRun();
 }
 
-function updateCapacity() {
+function workspaceBlocksChanged() {
 	Control.prototype.updateLeftBlocks(workspace.remainingCapacity());
+	
+	const currentCode = createXML();
+	if (oldXMLCode != currentCode) {
+		Control.prototype.setPatternsNotPass();
+		oldXMLCode = currentCode;
+	}
 }
 
 function putHint() {
-	var xml = Blockly.Xml.textToDom(Map.prototype.hintBlocks);
+	const xml = Blockly.Xml.textToDom(Map.prototype.hintBlocks);
 	Blockly.Xml.domToWorkspace(xml, workspace);
 	Swal.fire({
 		title: "&#129300;",
@@ -278,14 +331,24 @@ function putHint() {
 	});
 }
 
+/**
+ * 現在のブロックのXMLを作る
+ */
+function createXML() {
+	const xml = Blockly.Xml.workspaceToDom(workspace);
+	return Blockly.Xml.domToText(xml);
+}
+
+/**
+ * ヒント用のXMLを作る
+ */
 function showXML() {
-	var xml = Blockly.Xml.workspaceToDom(workspace);
-	var myBlockXml = Blockly.Xml.domToText(xml);
+	const myBlockXml = createXML();
 	
 	// remove id attr
-	var txt = "";
+	let txt = "";
 	while(myBlockXml.indexOf(" id=\"") >= 0) {
-		var idx = myBlockXml.indexOf(" id=\"");
+		const idx = myBlockXml.indexOf(" id=\"");
 		txt += myBlockXml.substring(0, idx);
 		myBlockXml = myBlockXml.substring(idx + 5);
 		myBlockXml = myBlockXml.substring(myBlockXml.indexOf("\"") + 1);
@@ -293,8 +356,8 @@ function showXML() {
 	txt += myBlockXml;
 	
 	// position fix
-	var idx = txt.indexOf("x=\"");
-	var newTxt = txt.substring(0, idx) + "x=\"10\" y=\"10\">";
+	const idx = txt.indexOf("x=\"");
+	let newTxt = txt.substring(0, idx) + "x=\"10\" y=\"10\">";
 	txt = txt.substring(txt.indexOf("y=\"") + 3);
 	newTxt += txt.substring(txt.indexOf("<"));
 	
@@ -323,7 +386,7 @@ function getClearFace() {
 }
 
 function getClearText() {
-	var txt = "";
+	let txt = "";
 	switch(Math.floor(Math.random() * 5)) {
 		case 0:
 			txt += "やったー！";
@@ -394,7 +457,7 @@ function getTiredFace() {
 }
 
 function getAllPatternClearText() {
-	var txt = "全てのパターンでゴール";
+	let txt = "全てのパターンでゴール";
 	switch(Math.floor(Math.random() * 4)) {
 		case 0:
 			txt = "やったね！" + txt;
@@ -427,7 +490,7 @@ function getAllPatternClearText() {
 }
 
 function getHappyIcons() {
-	var txt = "&#" + getHappyIcon() + ";&#" + getClearFace() + ";&#" + getHappyIcon() + ";";
+	let txt = "&#" + getHappyIcon() + ";&#" + getClearFace() + ";&#" + getHappyIcon() + ";";
 	switch(Map.prototype.patterns) {
 		case 2:
 			return txt;
@@ -437,6 +500,7 @@ function getHappyIcons() {
 			return "&#" + getHappyIcon() + ";&#" + getHappyIcon() + ";" + txt + "&#" + getHappyIcon() + ";&#" + getHappyIcon() + ";";
 	}
 }
+
 function getHappyIcon() {
 	switch(Math.floor(Math.random() * 14)) {
 		case 0:
@@ -468,4 +532,26 @@ function getHappyIcon() {
 		case 13:
 			return "128276";
 	}
+}
+
+function getNextPatternTitle() {
+	let txt = '&#';
+	switch(Math.floor(Math.random() * 2)) {
+		case 0:
+			txt += '129300';
+			break;
+		case 1:
+			txt += '129488';
+			break;
+	}
+	txt += '&#';
+	switch(Math.floor(Math.random() * 2)) {
+		case 0:
+			txt += '128073';
+			break;
+		case 1:
+			txt += '8594';
+			break;
+	}
+	return txt;
 }

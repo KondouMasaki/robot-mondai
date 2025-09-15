@@ -216,7 +216,7 @@ Control.prototype.initGame = function() {
 	
 	Control.prototype.xmlButton = document.getElementById('xmlButton');
 	Control.prototype.xmlButton.addEventListener('click', showXML, false);
-	Control.prototype.hideXMLButton();	// when develop, comment out here
+	//Control.prototype.hideXMLButton();	// when develop, comment out here
 	
 	Control.prototype.registers = document.getElementById('registers');
 	
@@ -571,6 +571,17 @@ Control.prototype.getPattern = function() {
 Control.prototype.setPatternPass = function() {
 	const p = Control.prototype.getPattern();
 	Control.prototype.patternSelector.children[p].setAttribute('class', 'pass');
+};
+/**
+ * すべてのパターンをパスではない状態にする
+ */
+Control.prototype.setPatternsNotPass = function() {
+	const count = Map.prototype.patterns;
+	if (count > 1) {
+		for (let i = 1; i <= count; i++) {
+			Control.prototype.patternSelector.children[i].setAttribute('class', '');
+		}
+	}
 };
 
 /**
