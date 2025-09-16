@@ -216,7 +216,7 @@ Control.prototype.initGame = function() {
 	
 	Control.prototype.xmlButton = document.getElementById('xmlButton');
 	Control.prototype.xmlButton.addEventListener('click', showXML, false);
-	//Control.prototype.hideXMLButton();	// when develop, comment out here
+	Control.prototype.hideXMLButton();	// when develop, comment out here
 	
 	Control.prototype.registers = document.getElementById('registers');
 	
