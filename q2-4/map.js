@@ -191,6 +191,8 @@ Map.prototype =
     "previous": "q2-3",
     "next": "q2-5"
   },
+  "useMapPreProcess": false,
+  "preProcessDescription": '',
   "robot": {
     "type": 1,
     "Basic": {
@@ -412,10 +414,19 @@ Map.prototype =
   "hintBlocks": "<xml xmlns=\"https://developers.google.com/blockly/xml\"><block type=\"forward\" x=\"10\" y=\"10\"><next><block type=\"forward\"><next><block type=\"floor_color_is\"></block></next></block></next></block></xml>",
   "map2": [],
   "chars2": [],
+  "pmaps": [],	// [ <map>, ... ]
+  "pcords": [],	// [ { "y": num, "x": num, "v": str }, ... ]
+  
   "image_file_dir": "../img/"
 }
 // end=%%
 ;
+
+/**
+ * マップに数字以外の場合を埋め込んだ場合のプリプロセス
+ */
+Map.prototype.mapPreProcess = function() {
+};
 
 /**
  * コード実行前の処理
