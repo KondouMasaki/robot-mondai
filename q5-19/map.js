@@ -35,6 +35,8 @@ Map.prototype =
     "previous": "q5-18",
     "next": "q5-20"
   },
+  "useMapPreProcess": false,
+  "preProcessDescription": '',
   "robot": {
     "type": 2,
     "Basic": {
@@ -256,11 +258,18 @@ Map.prototype =
   "hintBlocks": '',
   "map2": [],
   "chars2": [],
+  "pmaps": [],	// [ <map>, ... ]
+  "pcords": [],	// [ { "y": num, "x": num, "v": str }, ... ]
   "image_file_dir": "../img/"
 }// end=%%
 
 
 ;
+/**
+ * マップに数字以外の場合を埋め込んだ場合のプリプロセス
+ */
+Map.prototype.mapPreProcess = function() {
+};
 
 /**
  * コード実行前の処理
