@@ -192,7 +192,7 @@ Map.prototype =
     "next": "q6-7"
   },
   "useMapPreProcess": false,
-  "preProcessDescription": '',
+  "preProcessDescriptions": [],
   "robot": {
     "type": 3,
     "Basic": {
