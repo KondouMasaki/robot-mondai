@@ -35,6 +35,8 @@ Map.prototype =
 		"previous": "",
 		"next": ""
 	},
+	"useMapPreProcess": false,
+	"preProcessDescription": '',
 	"robot": {
 		"type": 6,
 		"Basic": {
@@ -101,6 +103,8 @@ Map.prototype =
 	"hintBlocks": '<xml xmlns="https://developers.google.com/blockly/xml"><block type="forward" x="-150" y="-30"><next><block type="turn_right"><next><block type="nop"><next><block type="turn_left"></block></next></block></next></block></next></block></xml>',
 	"map2": [],
 	"chars2": [],
+	"pmaps": [],	// [ <map>, ... ]
+	"pcords": [],	// [ { "y": num, "x": num, "v": str }, ... ]
 	
 	"image_file_dir": '../img/'
 }
@@ -108,21 +112,27 @@ Map.prototype =
 ;
 
 /**
+ * マップに数字以外の場合を埋め込んだ場合のプリプロセス
+ */
+Map.prototype.mapPreProcess = function() {
+};
+
+/**
  * コード実行前の処理
  */
 Map.prototype.beforeStart = function(pattern) {
-	// if pettern is <empty string> selected "どれか"
-	var p = parseInt(pattern);
-	switch(p) {
-		case 0:
-		case 1:
-		case 2:
-			Map.prototype.map[0][0] = p + 2;
-			break;
-			
-		default:
-			break;
+	// if pettern is <empty string> selected "ぜんぶ"
+	if (pattern != "") {
+		Map.prototype.state = parseInt(pattern);
 	}
+	if (Map.prototype.state == 0) {
+		Map.prototype.map[7][3] = 1;
+		Map.prototype.map[7][5] = 1;
+	}
+	else {
+		Map.prototype.map[5][5] = 1;
+	}
+	Map.prototype.state = (Map.prototype.state + 1) % 2;
 };
 /**
  * ターンごとに発生する処理
