@@ -35,6 +35,8 @@ Map.prototype =
 		"previous": "q1-22",
 		"next": "q1-24"
 	},
+	"useMapPreProcess": false,
+	"preProcessDescription": '',
 	"robot": {
 		"type": 0,
 		"Basic": {
@@ -101,6 +103,8 @@ Map.prototype =
 	"hintBlocks": '',
 	"map2": [],
 	"chars2": [],
+	"pmaps": [],	// [ <map>, ... ]
+	"pcords": [],	// [ { "y": num, "x": num, "v": str }, ... ]
 	
 	"image_file_dir": '../img/'
 }

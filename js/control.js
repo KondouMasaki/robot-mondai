@@ -310,9 +310,11 @@ Control.prototype.setFirstSpeed = function() {
 Control.prototype.beforeRun = function() {
 	Control.prototype.initRobot();	// ロボット初期化
 	
-	Map.prototype.restoreMap();
+	const pattern = Control.prototype.patternSelector.value;
+	
+	Map.prototype.restoreMap(pattern);
 	Map.prototype.restoreChars();
-	Map.prototype.beforeStart(Control.prototype.patternSelector.value);
+	Map.prototype.beforeStart(pattern);
 	
 	Control.prototype.goal = false;
 	Control.prototype.emptyLife = false;
